@@ -10,8 +10,6 @@
 		private var dialog:Array = new Array();
 		private var textBox:TextBox;
 		
-		randomDialog = ["Hi", "Hey", "Hello", "Bonjour", "Hello there"]
-
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
 		//dialog is an array of things for him to say in the order given after prompted
@@ -33,6 +31,9 @@
 			nameBox.y = this.y - 40; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
 			addChild(nameBox); //adds the box
+			
+			//Sets the random dialog
+			randomDialog = ["Hi", "Hey", "Hello", "Bonjour", "Hello there"]
 		}
 				
 		private function sayRandomDialog(event:Event):void { //Function for random dialog)
