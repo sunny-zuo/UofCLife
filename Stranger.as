@@ -15,7 +15,7 @@
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
 		//dialog is an array of things for him to say in the order given after prompted
-		public function Stranger(strangerName:String, dialog:Array) {
+		public function Stranger(dialog:Array, strangerName:String) {
 			// constructor code
 			this.strangerName = stangerName; //sets parameters to local variables
 			this.dialog = dialog;
