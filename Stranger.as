@@ -17,6 +17,7 @@
 		private var canTalk: Boolean = true;
 		private var canTalkRand: Boolean = true;
 		private var randomDistance: int;
+		private var strHeight:Number; //static height of the stranger when created (also where text boxes should spawn)
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -31,7 +32,9 @@
 			this.canTalk = canTalk;
 			this.randomDistance = randomDistance;
 			this.canTalkRand = canTalkRand;
-
+			
+			strHeight = height;
+			
 			init();
 		}
 
@@ -42,12 +45,16 @@
 			if (canTalkRand) {
 				this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
 			}
+			trace(height);
+			
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
 			nameBox.x = 0; //sets x to the x of the character
 			nameBox.y = 35; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
 			addChild(nameBox); //adds the box
+			
+			trace(height);
 
 			//Sets the random dialog
 			randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"]
@@ -61,7 +68,7 @@
 				var textChoice = (Math.floor(Math.random() * (randomDialog.length))) //selects a random number between 0 and array length minus 1
 				textBox = new TextBox(randomDialog[textChoice], this); //Creates text box using the textChoice as a parameter and this)
 
-				textBox.y = -height / 2 - 10;
+				textBox.y = -strHeight - 10;
 				//set textbox position so it appears above the person's head
 
 				addChild(textBox);
@@ -102,8 +109,8 @@
 			}
 
 			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
-			trace(textBox.x);
-			textBox.y = -height / 2 - 10;
+			
+			textBox.y = -strHeight - 10;
 			//set textbox position so it appears above the person's head
 
 			addChild(textBox); //adds to stage
