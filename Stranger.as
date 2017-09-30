@@ -67,6 +67,10 @@
 		}
 
 		private function sayDialog(): void { //function to have him say his lines that were given
+			
+			var timer: Timer;
+			timer = null;
+			
 			if (textBox) { //if textbox exists, remove it using close function of textBox
 				textBox.close();
 				textBox = null;
@@ -74,15 +78,6 @@
 
 			if (dialogTemp.length < 1) {
 				return;
-				if (timer) { //checks to see if timer exists
-					timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //if it does exist, remove it
-					timer = null;
-				}
-			}
-
-			if (timer) { //checks to see if timer exists
-				timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //if it does exist, remove it
-				timer = null;
 			}
 
 			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
@@ -96,7 +91,8 @@
 			dialogTemp.splice(0, 1); //removes the first value of the array since it has been said
 
 			if (dialogTemp.length >= 2) { //checks to see if more text is left in array
-				var timer: Timer = new Timer(2000); //sets a timer of X seconds between next speech
+				timer = new Timer(2000);
+
 				timer.addEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
 				timer.start(); //starts timer
 			}
