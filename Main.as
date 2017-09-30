@@ -4,7 +4,6 @@
 	import flash.events.Event;
 	import flash.ui.Multitouch;
 	import flash.events.TouchEvent;
-	import flash.ui.Multitouch;
 	import flash.events.MouseEvent;
 
 
