@@ -68,7 +68,6 @@
 
 			if (timer) { //checks to see if timer exists
 				timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //if it does exist, remove it
-				timer = null; //remove the timer
 			}
 
 			if (textBox) { //if textbox exists, remove it using close function of textBox
