@@ -12,6 +12,7 @@
 		private var dialog: Array = new Array();
 		private var dialogTemp: Array = new Array();
 		private var textBox: TextBox;
+		private var timer = new Timer(2000);
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -63,14 +64,12 @@
 		}
 
 		private function continueSpeech(event: TimerEvent) { //function to trigger sayDialog after a timer is run
+			timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
 			sayDialog();
 		}
 
 		private function sayDialog(): void { //function to have him say his lines that were given
-			
-			var timer: Timer;
-			timer = null;
-			
+						
 			if (textBox) { //if textbox exists, remove it using close function of textBox
 				textBox.close();
 				textBox = null;
@@ -81,7 +80,9 @@
 			}
 
 			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
-
+			
+			trace(dialogTemp[0]);
+			
 			textBox.x = x;
 			textBox.y = -height / 2 - 10;
 			//set textbox position so it appears above the person's head
@@ -90,9 +91,7 @@
 
 			dialogTemp.splice(0, 1); //removes the first value of the array since it has been said
 
-			if (dialogTemp.length >= 2) { //checks to see if more text is left in array
-				timer = new Timer(2000);
-
+			if (dialogTemp.length >= 0) { //checks to see if more text is left in array
 				timer.addEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
 				timer.start(); //starts timer
 			}
