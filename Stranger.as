@@ -1,5 +1,6 @@
 ﻿package  {
 	import flash.display.MovieClip;
+	import flash.events.Event;
 	
 	public class Stranger extends MovieClip{
 		
@@ -16,6 +17,10 @@
 		
 		private function init():void {
 			//stage.addEventListener(Event.ENTER_FRAME, randomDialog); //Creates function to randomly say dialog
+		}
+		
+		private function randomDialog(event:Event) {
+			
 		}
 
 	}
