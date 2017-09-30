@@ -10,6 +10,7 @@
 
 		private var strangerName: String = "";
 		private var dialog: Array = new Array();
+		private var dialogTemp: Array = new Array();
 		private var textBox: TextBox;
 
 		//For below parameters:
@@ -55,40 +56,51 @@
 				addChild(textBox);
 			}
 		}
-		
-		private function clickTalk(event:MouseEvent) { //function to trigger sayDialog after the character is clicked
-			sayDialog();
-		}
-		
-		private function continueSpeech(event:TimerEvent) { //function to trigger sayDialog after a timer is run
+
+		private function clickTalk(event: MouseEvent) { //function to trigger sayDialog after the character is clicked
+			dialogTemp = dialog;
 			sayDialog();
 		}
 
-		private function sayDialog():void { //function to have him say his lines that were given
+		private function continueSpeech(event: TimerEvent) { //function to trigger sayDialog after a timer is run
+			sayDialog();
+		}
+
+		private function sayDialog(): void { //function to have him say his lines that were given
+			if (textBox) { //if textbox exists, remove it using close function of textBox
+				textBox.close();
+				textBox = null;
+			}
+
+			if (dialogTemp.length < 1) {
+				return;
+				if (timer) { //checks to see if timer exists
+					timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //if it does exist, remove it
+					timer = null;
+				}
+			}
 
 			if (timer) { //checks to see if timer exists
 				timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //if it does exist, remove it
+				timer = null;
 			}
 
-			if (textBox) { //if textbox exists, remove it using close function of textBox
-				textBox.close();
-			}
-
-			textBox = new TextBox(dialog[0], this); //creates textBox using provided dialog array as text
+			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
 
 			textBox.x = x;
 			textBox.y = -height / 2 - 10;
 			//set textbox position so it appears above the person's head
 
 			addChild(textBox); //adds to stage
-			
-			dialog.splice(0, 1); //removes the first value of the array since it has been said
 
-			if (dialog.length != 0) { //checks to see if more text is left in array
-				var timer: Timer = new Timer(4000); //sets a timer of X seconds between next speech
+			dialogTemp.splice(0, 1); //removes the first value of the array since it has been said
+
+			if (dialogTemp.length >= 2) { //checks to see if more text is left in array
+				var timer: Timer = new Timer(2000); //sets a timer of X seconds between next speech
 				timer.addEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
 				timer.start(); //starts timer
 			}
+
 		}
 
 	}
