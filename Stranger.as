@@ -17,14 +17,22 @@
 		//dialog is an array of things for him to say in the order given after prompted
 		public function Stranger(dialog:Array, strangerName:String) {
 			// constructor code
-			this.strangerName = stangerName; //sets parameters to local variables
 			this.dialog = dialog;
+			this.strangerName = stangerName; //sets parameters to local variables
+			
 			init();
 		}
 		
 		private function init():void {
 			this.addEventListener(Event.ENTER_FRAME, randomDialog); //Creates function to randomly say dialog
 			this.addEventListener(MouseEvent.CLICK, sayDialog); //Event Listener for a tap on Stranger
+			
+			//Sets up his name info
+			private var nameBox:TextBox = new TextBox; //creates a textbox to store his name
+			nameBox.x = this.x; //sets x to the x of the character
+			nameBox.y = this.y - 40; //sets y to the y of the charater minus 40
+			nameBox.text = strangerName; //sets the text of the box to his name
+			addChild(nameBox); //adds the box
 		}
 				
 		private function randomDialog(event:Event) { //Function for random dialog)
@@ -33,11 +41,13 @@
 			if (randomNum == 1) {
 				var textChoice = (Math.floor(Math.random() * (randomDialog.length - 1))) //selects a random number between 0 and array length minus 1
 				textBox = new TextBox(randomDialog[textChoice], this); //Creates text box using the textChoice as a parameter and this)
+				addChild(textBox);
 			}
 		}
 		
 		private function sayDialog (event:Event) {
 			textBox = new TextBox(dialog, this); //creates textBox using provided dialog array as text
+			addChild(textBox);
 		}
 
 	}
