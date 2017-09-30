@@ -35,8 +35,8 @@
 			}
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
-			nameBox.x = this.x + 20; //sets x to the x of the character
-			nameBox.y = this.y - 40; //sets y to the y of the charater minus 40
+			nameBox.x = this.x + 35; //sets x to the x of the character
+			nameBox.y = this.y - 35; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
 			addChild(nameBox); //adds the box
 
