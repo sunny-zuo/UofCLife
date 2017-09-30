@@ -5,6 +5,10 @@
 	public class Stranger extends MovieClip{
 		
 		private var randomDialog:Array = new Array(); //creates array that will store random dialog
+		private var strangerName:String;
+		private var dialog:Array = new Array();
+		private var textBox:TextBox;
+		
 		randomDialog[0] = ["Hi", "Hey", "Hello", "Bonjour", "Hello there"]
 		
 		//For below parameters:
@@ -12,6 +16,8 @@
 		//dialog is an array of things for him to say in the order given after prompted
 		public function Stranger(strangerName:String, dialog:Array) {
 			// constructor code
+			this.strangerName = stangerName; //sets parameters to local variables
+			this.dialog = dialog;
 			init();
 		}
 		
