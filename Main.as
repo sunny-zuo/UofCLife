@@ -46,8 +46,8 @@
 		//makes the controls and player and adds them to the stage
 		private function makeControls(): void { 
 			//makes the moement buttons
-			buttonRight = new ButtonRight();
-			buttonLeft = new ButtonLeft();
+			buttonRight = new ButtonRight(100,50)
+			buttonLeft = new ButtonLeft(100,50);
 			stage.addChild(buttonLeft);
 			stage.addChild(buttonRight);
 			buttonRight.x = stage.stageWidth - (stage.stageWidth / 5)
