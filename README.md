@@ -21,6 +21,8 @@ function exampleFunc(param1:Type, param2:Type):Type{
 	RETURN VALUE:
 	Returns (describe what this function returns)
 	*/
+	//^If there is no parameters or return value, omit those sections
+	//^If it is a get/set function, don't have to write comments
 	
 	//WRITE FUNCTION HERE
 	

@@ -2,8 +2,10 @@
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.text.TextFieldAutoSize;
 	import flash.text.TextField;
 	import Controllers.TextController;
+	import flash.events.Event;
 
 	public class TextBox extends MovieClip {
 		//TextBox that displays text
@@ -23,6 +25,11 @@
 		private var textSource:Stranger;
 		//person who is spearking the text in this textbox
 		
+		//SCALING VARIABLES
+		
+		private var scaleAssist:Delta;
+		//controls scaling of the text box (used for popping up and out)
+		
 		public function TextBox(displayString:String, textSource:Stranger) {
 			/*CONSTRUCTOR
 			PARAMETERS:
@@ -34,6 +41,8 @@
 			this.displayString = displayString;
 			this.textSource = textSource;
 			//store parameters as local variables
+			
+			scaleAssist = new Delta(this, ["scaleX", "scaleY"]);
 			
 			open();
 			//open the textbox
@@ -54,6 +63,12 @@
 			
 			txt_display.text = displayString;
 			//display the text
+			
+			scaleX = scaleY = 0;
+			//completely collapse textbox as it spawns
+			
+			scaleAssist.setLogarithmic(1, 0.25);
+			scaleAssist.setActive(true);
 		}
 		
 		public function close():void{
@@ -64,8 +79,25 @@
 			Returns whether the box was closed before all text has been displayed.
 			*/
 			
-			parent.removeChild(this);
-			//remove the text box
+			scaleAssist.setAccelerate(0.1, -0.02);
+			scaleAssist.setActive(true);
+			//set a pop-out scaling mode for the textbox
+			
+			addEventListener(Event.ENTER_FRAME, checkFullCollapse);
+			//begin collapse of the text box
+		}
+		
+		private function checkFullCollapse(event:Event):void{
+			if(scaleX < 0){
+				scaleAssist.setActive(false);
+				//stop allowing the textbox to change scale
+				
+				removeEventListener(Event.ENTER_FRAME, checkFullCollapse);
+				//removes this event function
+				
+				parent.removeChild(this);
+				//remove the text box
+			}
 		}
 		
 		private function drawOutline():void{
@@ -109,6 +141,10 @@
 			
 			txt_display.selectable = false;
 			//cannot highlight text in the textfield
+			
+			txt_display.multiline = true;
+			txt_display.wordWrap = true;
+			//allow the text display in several lines
 			
 			txt_display.defaultTextFormat = TextController.newTextFormat(20);
 			//set the text format of the textbox to font size 10			
