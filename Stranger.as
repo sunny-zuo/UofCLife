@@ -2,6 +2,7 @@
 	import flash.display.MovieClip;
 	import flash.events.*;
 	import flash.text.TextField;
+	import flash.utils.Timer;
 
 	public class Stranger extends MovieClip {
 
