@@ -1,6 +1,7 @@
 ﻿package {
 	import flash.display.MovieClip;
 	import flash.events.*;
+	import flash.text.TextField;
 
 	public class Stranger extends MovieClip {
 
@@ -26,7 +27,7 @@
 			this.addEventListener(MouseEvent.CLICK, sayDialog); //Event Listener for a tap on Stranger
 
 			//Sets up his name info
-			var nameBox:TextField = new TextField; //creates a textbox to store his name
+			var nameBox:TextField = new TextField(); //creates a textbox to store his name
 			nameBox.x = this.x; //sets x to the x of the character
 			nameBox.y = this.y - 40; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
