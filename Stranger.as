@@ -46,35 +46,34 @@
 
 		private function sayRandomDialog(event: Event): void { //Function for random dialog)
 			var distance = 1000; //sets how often he will say something, in terms of frames. random so if value = 1000 than it is expected that he will say it every 1000 frames
-			var randomNum = Math.ceil(Math.random() * distance);
-			if (randomNum == 1 && !textBox) {
+			var randomNum = Math.ceil(Math.random() * distance); //generates a random number from 1 to 1000
+			if (randomNum == 1 && !textBox) { //if the random number is 1 and there isn't already a textbox, create a new one
 
 				var textChoice = (Math.floor(Math.random() * (randomDialog.length - 1))) //selects a random number between 0 and array length minus 1
 				textBox = new TextBox(randomDialog[textChoice], this); //Creates text box using the textChoice as a parameter and this)
 
-				textBox.x = x;
+				textBox.x = x - 150;
 				textBox.y = -height / 2 - 10;
 				//set textbox position so it appears above the person's head
 
 				addChild(textBox);
 
-				timerRand.addEventListener(TimerEvent.TIMER, closeTextbox);
-				timerRand.start();
+				timerRand.addEventListener(TimerEvent.TIMER, closeTextbox); //closes textbox after set amount of time set by the timer
+				timerRand.start(); //starts the timer
 			}
 		}
 
 		private function closeTextbox(event: TimerEvent) {
-			timerRand.removeEventListener(TimerEvent.TIMER, closeTextbox);
-			timerRand = null;
+			timerRand.removeEventListener(TimerEvent.TIMER, closeTextbox); //removes eventlistener for cleanup
 
-			if (textBox) {
+			if (textBox) { //removes the textbox after the timer passes
 				textBox.close();
 				textBox = null;
 			}
 		}
 
 		private function clickTalk(event: MouseEvent) { //function to trigger sayDialog after the character is clicked
-			dialogTemp = dialog;
+			dialogTemp = dialog; //sets array, dialogTemp to dialog array to preserve it as dialogTemp will be modified as he talks
 			sayDialog();
 		}
 
@@ -90,15 +89,13 @@
 				textBox = null;
 			}
 
-			if (dialogTemp.length < 1) {
-				return;
+			if (dialogTemp.length < 1) { //if no dialog exists, exit out of this function to prevent errors
+				return; //exits out of this function
 			}
 
 			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
 
-			trace(dialogTemp[0]);
-
-			textBox.x = x;
+			textBox.x = x - 150;
 			textBox.y = -height / 2 - 10;
 			//set textbox position so it appears above the person's head
 
