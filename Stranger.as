@@ -2,14 +2,17 @@
 	import flash.display.MovieClip;
 	import flash.events.*;
 	import flash.text.TextField;
+	import flash.utils.Timer;
 
 	public class Stranger extends MovieClip {
 
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
-		private var strangerName: String;
+		private var strangerName: String = "";
 		private var dialog: Array = new Array();
+		private var dialogTemp: Array = new Array();
 		private var textBox: TextBox;
+		private var timer = new Timer(2000);
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -24,7 +27,7 @@
 
 		private function init(): void {
 			this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
-			this.addEventListener(MouseEvent.CLICK, sayDialog); //Event Listener for a tap on Stranger
+			this.addEventListener(MouseEvent.CLICK, clickTalk); //Event Listener for a tap on Stranger
 
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
@@ -55,31 +58,44 @@
 			}
 		}
 
-		private function sayDialog(event: MouseEvent) {
+		private function clickTalk(event: MouseEvent) { //function to trigger sayDialog after the character is clicked
+			dialogTemp = dialog;
+			sayDialog();
+		}
 
-			if (timer) {
-				timer.removeEventListener(TimerEvent.TIMER, sayDialog);
-				timer = null;
-			}
+		private function continueSpeech(event: TimerEvent) { //function to trigger sayDialog after a timer is run
+			timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
+			sayDialog();
+		}
 
-			if (textBox) {
+		private function sayDialog(): void { //function to have him say his lines that were given
+						
+			if (textBox) { //if textbox exists, remove it using close function of textBox
 				textBox.close();
+				textBox = null;
 			}
 
-			textBox = new TextBox(dialog[0], this); //creates textBox using provided dialog array as text
+			if (dialogTemp.length < 1) {
+				return;
+			}
 
+			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
+			
+			trace(dialogTemp[0]);
+			
 			textBox.x = x;
 			textBox.y = -height / 2 - 10;
 			//set textbox position so it appears above the person's head
 
-			addChild(textBox);
-			dialog.splice(0, 1);
+			addChild(textBox); //adds to stage
 
-			if (dialog.length != 0) {
-				var timer: Timer = new Timer(3000);
-				timer.addEventListener(TimerEvent.TIMER, sayDialog);
-				timer.start();
+			dialogTemp.splice(0, 1); //removes the first value of the array since it has been said
+
+			if (dialogTemp.length >= 0) { //checks to see if more text is left in array
+				timer.addEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
+				timer.start(); //starts timer
 			}
+
 		}
 
 	}
