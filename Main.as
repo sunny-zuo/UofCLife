@@ -46,15 +46,18 @@
 		//makes the controls and player and adds them to the stage
 		private function makeControls(): void { 
 			//makes the moement buttons
-			buttonRight = new ButtonRight();
-			buttonLeft = new ButtonLeft();
+			buttonRight = new ButtonRight(100,50)
+			buttonLeft = new ButtonLeft(100,50);
 			stage.addChild(buttonLeft);
 			stage.addChild(buttonRight);
-			buttonRight.x = stage.stageWidth - 50
-			buttonLeft.x = 50
+			buttonRight.x = stage.stageWidth - (stage.stageWidth / 5)
+			buttonLeft.x = stage.stageWidth / 5
+			buttonLeft.y = stage.stageHeight / 2
+			buttonRight.y = stage.stageHeight / 2
 
+			
 			//makes the player
-			player = new Ball();
+			player = new Ball(30);
 			stage.addChild(player);
 			player.x = stage.stageWidth / 2
 			player.y = stage.stageWidth / 2
@@ -72,7 +75,6 @@
 
 		private function rightPress(event: MouseEvent): void {//checks for the right button to be pressed
 			right = true;
-			trace("press")
 		}
 
 		private function leftPress(event: MouseEvent): void {//checks for the left button to be pressed
@@ -81,7 +83,6 @@
 
 		private function rightRelease(event: MouseEvent): void {//checks for the right button to be released
 			right = false;
-			trace("release")
 		}
 
 		private function leftRelease(event: MouseEvent): void {//checks for the left button to be released
