@@ -48,6 +48,11 @@
 		
 		private function sayDialog (event:MouseEvent) {
 			textBox = new TextBox(dialog, this); //creates textBox using provided dialog array as text
+			
+			textBox.x = x;
+			textBox.y = -height/2 - 10;
+			//set textbox position so it appears above the person's head
+			
 			addChild(textBox);
 		}
 
