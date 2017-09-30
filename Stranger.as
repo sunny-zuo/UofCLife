@@ -15,23 +15,32 @@
 		private var timer = new Timer(4000);
 		private var timerRand = new Timer(4000);
 		private var canTalk: Boolean = true;
+		private var canTalkRand: Boolean = true;
+		private var randomDistance: int;
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
 		//dialog is an array of things for him to say in the order given after prompted
-		public function Stranger(dialog: Array, strangerName: String, canTalk: Boolean) {
+		//canTalk is a bool that states whether he can talk or not
+		//randomDistance is a int that reflects how often he'll say random things
+		//canTalkRand is a bool that states whether he will randomly talk or not
+		public function Stranger(dialog: Array, strangerName: String, canTalk: Boolean, canTalkRand: Boolean, randomDistance: int) {
 			// constructor code
 			this.dialog = dialog;
 			this.strangerName = strangerName; //sets parameters to local variables
 			this.canTalk = canTalk;
+			this.randomDistance = randomDistance;
+			this.canTalkRand = canTalkRand;
 
 			init();
 		}
 
 		private function init(): void {
 			if (canTalk) {
-				this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
 				this.addEventListener(MouseEvent.CLICK, clickTalk); //Event Listener for a tap on Stranger
+			}
+			if (canTalkRand) {
+				this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
 			}
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
@@ -45,8 +54,8 @@
 		}
 
 		private function sayRandomDialog(event: Event): void { //Function for random dialog)
-			var distance = 1000; //sets how often he will say something, in terms of frames. random so if value = 1000 than it is expected that he will say it every 1000 frames
-			var randomNum = Math.ceil(Math.random() * distance); //generates a random number from 1 to 1000
+
+			var randomNum = Math.ceil(Math.random() * randomDistance); //generates a random number from 1 to 1000
 			if (randomNum == 1 && !textBox) { //if the random number is 1 and there isn't already a textbox, create a new one
 
 				var textChoice = (Math.floor(Math.random() * (randomDialog.length - 1))) //selects a random number between 0 and array length minus 1
