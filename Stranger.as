@@ -16,7 +16,7 @@
 		public function Stranger(dialog:Array, strangerName:String) {
 			// constructor code
 			this.dialog = dialog;
-			this.strangerName = stangerName; //sets parameters to local variables
+			this.strangerName = strangerName; //sets parameters to local variables
 			
 			init();
 		}
