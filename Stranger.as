@@ -7,7 +7,7 @@
 
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
-		private var strangerName: String;
+		private var strangerName: String = "";
 		private var dialog: Array = new Array();
 		private var textBox: TextBox;
 
@@ -57,12 +57,12 @@
 
 		private function sayDialog(event: MouseEvent) {
 
-			if (timer) {
-				timer.removeEventListener(TimerEvent.TIMER, sayDialog);
-				timer = null;
+			if (timer) { //checks to see if timer exists
+				timer.removeEventListener(TimerEvent.TIMER, sayDialog); //if it does exist, remove it
+				timer = null; //remove the timer
 			}
 
-			if (textBox) {
+			if (textBox) { //if textbox exists, remove it using close function of textBox
 				textBox.close();
 			}
 
@@ -72,13 +72,14 @@
 			textBox.y = -height / 2 - 10;
 			//set textbox position so it appears above the person's head
 
-			addChild(textBox);
-			dialog.splice(0, 1);
+			addChild(textBox); //adds to stage
+			
+			dialog.splice(0, 1); //removes the first value of the array since it has been said
 
-			if (dialog.length != 0) {
-				var timer: Timer = new Timer(3000);
-				timer.addEventListener(TimerEvent.TIMER, sayDialog);
-				timer.start();
+			if (dialog.length != 0) { //checks to see if more text is left in array
+				var timer: Timer = new Timer(5000); //sets a timer of 5 seconds 
+				timer.addEventListener(TimerEvent.TIMER, sayDialog); //eventlistener that detects when the timer is over
+				timer.start(); //starts timer
 			}
 		}
 
