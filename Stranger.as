@@ -25,7 +25,7 @@
 
 		private function init(): void {
 			this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
-			this.addEventListener(MouseEvent.CLICK, sayDialog); //Event Listener for a tap on Stranger
+			this.addEventListener(MouseEvent.CLICK, clickTalk); //Event Listener for a tap on Stranger
 
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
@@ -55,11 +55,19 @@
 				addChild(textBox);
 			}
 		}
+		
+		private function clickTalk(event:MouseEvent) { //function to trigger sayDialog after the character is clicked
+			sayDialog();
+		}
+		
+		private function continueSpeech(event:TimerEvent) { //function to trigger sayDialog after a timer is run
+			sayDialog();
+		}
 
-		private function sayDialog(event: MouseEvent) {
+		private function sayDialog():void { //function to have him say his lines that were given
 
 			if (timer) { //checks to see if timer exists
-				timer.removeEventListener(TimerEvent.TIMER, sayDialog); //if it does exist, remove it
+				timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //if it does exist, remove it
 				timer = null; //remove the timer
 			}
 
@@ -78,8 +86,8 @@
 			dialog.splice(0, 1); //removes the first value of the array since it has been said
 
 			if (dialog.length != 0) { //checks to see if more text is left in array
-				var timer: Timer = new Timer(5000); //sets a timer of 5 seconds 
-				timer.addEventListener(TimerEvent.TIMER, sayDialog); //eventlistener that detects when the timer is over
+				var timer: Timer = new Timer(4000); //sets a timer of X seconds between next speech
+				timer.addEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
 				timer.start(); //starts timer
 			}
 		}
