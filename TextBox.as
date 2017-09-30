@@ -52,11 +52,7 @@
 			/*
 			DO:
 			Opens the textbox and displays the first text stream
-			*/
-			
-			x = textSource.x;
-			y = textSource.y;
-			//set position of textbox to the stranger			
+			*/		
 			
 			drawOutline();
 			drawTextField();
@@ -110,7 +106,7 @@
 			//create new sprite to hold the box
 			
 			spr_box.x = -BOXSIZE.x/2;
-			spr_box.y = -BOXSIZE.y/2;
+			spr_box.y = -BOXSIZE.y;
 			//offset the box to center the bottom on the person's registration point
 			
 			spr_box.graphics.lineStyle(3);
@@ -132,7 +128,7 @@
 			//create textfield
 			
 			txt_display.x = -BOXSIZE.x/2;
-			txt_display.y = -BOXSIZE.y/2;
+			txt_display.y = -BOXSIZE.y;
 			//offset the textfield to center the bottom on the person's registration point
 			
 			txt_display.width = BOXSIZE.x;

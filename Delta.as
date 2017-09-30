@@ -55,11 +55,9 @@
 				//set changing to new state
 				
 				if(changing){
-					trace("derp");
 					parentObj.addEventListener(Event.ENTER_FRAME, changeFrame);
 				}
 				else{
-					trace("wow");
 					parentObj.removeEventListener(Event.ENTER_FRAME, changeFrame);
 				}
 			}
@@ -113,9 +111,7 @@
 			DO:
 			Changes the variable. This event function is added when changing is set to true, and is removed when changing is set to false.
 			*/
-
-			//trace(parentObj[varNames[0]],parentObj[varNames[1]]);
-			trace("hi");
+			
 			if(deltaMode == "Logarithmic"){
 				for(var i:int = 0; i < varNames.length; i++){
 					parentObj[varNames[i]] += (valueTarget - parentObj[varNames[i]]) * changeFactor;

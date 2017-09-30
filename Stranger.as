@@ -44,8 +44,8 @@
 			}
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
-			nameBox.x = this.x + 35; //sets x to the x of the character
-			nameBox.y = this.y - 35; //sets y to the y of the charater minus 40
+			nameBox.x = 0; //sets x to the x of the character
+			nameBox.y = 35; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
 			addChild(nameBox); //adds the box
 
@@ -61,7 +61,6 @@
 				var textChoice = (Math.floor(Math.random() * (randomDialog.length))) //selects a random number between 0 and array length minus 1
 				textBox = new TextBox(randomDialog[textChoice], this); //Creates text box using the textChoice as a parameter and this)
 
-				textBox.x = x - 150;
 				textBox.y = -height / 2 - 10;
 				//set textbox position so it appears above the person's head
 
@@ -103,8 +102,7 @@
 			}
 
 			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
-
-			textBox.x = x - 150;
+			trace(textBox.x);
 			textBox.y = -height / 2 - 10;
 			//set textbox position so it appears above the person's head
 
