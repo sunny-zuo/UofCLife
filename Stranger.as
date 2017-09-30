@@ -9,7 +9,7 @@
 		private var dialog:Array = new Array();
 		private var textBox:TextBox;
 		
-		randomDialog[0] = ["Hi", "Hey", "Hello", "Bonjour", "Hello there"]
+		randomDialog = ["Hi", "Hey", "Hello", "Bonjour", "Hello there"]
 		
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -26,7 +26,12 @@
 		}
 		
 		private function randomDialog(event:Event) {
-			
+			static var distance = 10000; //sets how often he will say something, in terms of frames. random so if value = 1000 than it is expected that he will say it every 1000 frames
+			var randomNum = Math.ceil(Math.random()*distance);
+			if (randomNum == 1) {
+				var textChoice = (Math.floor(Math.random() * (randomDialog.length - 1))) //selects a random number between 0 and array length minus 1
+				textBox = new TextBox(randomDialog[textChoice]);
+			}
 		}
 
 	}
