@@ -58,7 +58,7 @@
 			var randomNum = Math.ceil(Math.random() * randomDistance); //generates a random number from 1 to 1000
 			if (randomNum == 1 && !textBox) { //if the random number is 1 and there isn't already a textbox, create a new one
 
-				var textChoice = (Math.floor(Math.random() * (randomDialog.length - 1))) //selects a random number between 0 and array length minus 1
+				var textChoice = (Math.floor(Math.random() * (randomDialog.length))) //selects a random number between 0 and array length minus 1
 				textBox = new TextBox(randomDialog[textChoice], this); //Creates text box using the textChoice as a parameter and this)
 
 				textBox.x = x - 150;
