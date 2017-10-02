@@ -12,8 +12,8 @@
 		private var dialog: Array = new Array();
 		private var dialogTemp: Array = new Array();
 		private var textBox: TextBox;
-		private var timer = new Timer(4000);
-		private var timerRand = new Timer(4000);
+		private var timer;
+		private var timerRand;
 		private var canTalk: Boolean = true;
 		private var canTalkRand: Boolean = true;
 		private var randomDistance: int;
@@ -25,15 +25,19 @@
 		//canTalk is a bool that states whether he can talk or not
 		//randomDistance is a int that reflects how often he'll say random things
 		//canTalkRand is a bool that states whether he will randomly talk or not
+		//dialogTimer is the time in seconds between each piece of dialog, default is 4 seconds
+		//dialogRandTimer is the time in seconds that will happen before the random dialog disappears, default is 4 seconds
 		
 		//Only required parameter is the dialog of the person
-		public function Stranger(dialog: Array, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000) {
+		public function Stranger(dialog: Array, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000, dialogTimer:Number = 4, dialogRandTimer:Number = 4) {
 			// constructor code
 			this.dialog = dialog;
 			this.strangerName = strangerName; //sets parameters to local variables
 			this.canTalk = canTalk;
 			this.randomDistance = randomDistance;
 			this.canTalkRand = canTalkRand;
+			this.timer = new Timer(dialogTimer*1000);
+			this.timerRand = new Timer(dialogRandTimer*1000);
 			
 			strHeight = height;
 			
