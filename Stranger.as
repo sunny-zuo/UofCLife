@@ -25,7 +25,9 @@
 		//canTalk is a bool that states whether he can talk or not
 		//randomDistance is a int that reflects how often he'll say random things
 		//canTalkRand is a bool that states whether he will randomly talk or not
-		public function Stranger(dialog: Array, strangerName: String, canTalk: Boolean, canTalkRand: Boolean, randomDistance: int) {
+		
+		//Only required parameter is the dialog of the person
+		public function Stranger(dialog: Array, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000) {
 			// constructor code
 			this.dialog = dialog;
 			this.strangerName = strangerName; //sets parameters to local variables
