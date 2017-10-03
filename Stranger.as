@@ -38,38 +38,39 @@
 			this.canTalk = canTalk;
 			this.randomDistance = randomDistance;
 			this.canTalkRand = canTalkRand;
-			this.timer = new Timer(dialogTimer * 1000);
-			this.timerRand = new Timer(dialogRandTimer * 1000);
+			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
+			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
 
-			if (randomDialog == null) {
-				randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"]
-			} else {
-				this.randomDialog = randomDialog;
+			if (randomDialog == null) { //if the array is null. array is set to null by default as you cannot declare an array as a default
+				this.randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"] //default random text
+			} else { //else, if there is a value
+				this.randomDialog = randomDialog; //sets random dialog array to equal the array given here
 			}
-			strHeight = height;
+			strHeight = height; //sets his height to a static value
 
 			init();
 		}
 
 		private function init(): void {
-			if (canTalk) {
+			if (canTalk) { //if he can talk, add the event listener
 				this.addEventListener(MouseEvent.CLICK, clickTalk); //Event Listener for a tap on Stranger
 			}
-			if (canTalkRand) {
+			if (canTalkRand) { //if he can talk randomly, add the event listener
 				this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
 			}
 
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
-			var nameBoxFormat:TextFormat = new TextFormat();
-			nameBoxFormat.align = "center";
-			nameBoxFormat.size = 20;
+			var nameBoxFormat:TextFormat = new TextFormat(); //creates textformat to modify namebox
+			
+			nameBoxFormat.align = "center"; //centers the name so it stays centered regardless of name size
+			nameBoxFormat.size = 20; //increases size of name
 			
 			nameBox.x = -50; //sets x to the x of the character
 			nameBox.y = 15; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
 			
-			nameBox.setTextFormat(nameBoxFormat);
+			nameBox.setTextFormat(nameBoxFormat); //sets the textformat to the textfield
 			
 			addChild(nameBox); //adds the box
 
@@ -109,8 +110,8 @@
 				}
 			}
 			else {
-				timer.reset();
-				timer.start();
+				timer.reset(); //resets the timer
+				timer.start(); //starts the timer again
 			}
 			sayDialog(); //runs function to have him talk
 		}
