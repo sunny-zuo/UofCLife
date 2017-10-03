@@ -3,6 +3,7 @@
 	import flash.events.*;
 	import flash.text.TextField;
 	import flash.utils.Timer;
+	import flash.text.TextFormat;
 
 	public class Stranger extends MovieClip {
 
@@ -60,9 +61,16 @@
 
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
-			nameBox.x = 0; //sets x to the x of the character
-			nameBox.y = 35; //sets y to the y of the charater minus 40
+			var nameBoxFormat:TextFormat = new TextFormat();
+			nameBoxFormat.align = "center";
+			nameBoxFormat.size = 20;
+			
+			nameBox.x = -50; //sets x to the x of the character
+			nameBox.y = 15; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
+			
+			nameBox.setTextFormat(nameBoxFormat);
+			
 			addChild(nameBox); //adds the box
 
 		}
