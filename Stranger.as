@@ -100,6 +100,10 @@
 					dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
 				}
 			}
+			else {
+				timer.reset();
+				timer.start();
+			}
 			sayDialog(); //runs function to have him talk
 		}
 
