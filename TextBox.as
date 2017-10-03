@@ -42,10 +42,15 @@
 			this.textSource = textSource;
 			//store parameters as local variables
 			
-			scaleAssist = new Delta(this, ["scaleX", "scaleY"]);
+			if (displayString != null) { //if there is text provided
+				scaleAssist = new Delta(this, ["scaleX", "scaleY"]);
 			
-			open();
-			//open the textbox
+				open();
+				//open the textbox
+			}
+			else { //if no text is provided
+				return; //stop trying to create a box
+			}
 		}
 		
 		private function open():void{
