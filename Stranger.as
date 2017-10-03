@@ -51,7 +51,6 @@
 			if (canTalkRand) {
 				this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
 			}
-			trace(height);
 			
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
@@ -60,7 +59,6 @@
 			nameBox.text = strangerName; //sets the text of the box to his name
 			addChild(nameBox); //adds the box
 			
-			trace(height);
 
 			//Sets the random dialog
 			randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"]
@@ -94,17 +92,19 @@
 		}
 
 		private function clickTalk(event: MouseEvent) { //function to trigger sayDialog after the character is clicked
-			dialogTemp = dialog; //sets array, dialogTemp to dialog array to preserve it as dialogTemp will be modified as he talks
-			sayDialog();
+			dialogTemp.length = 0; //clears dialogTemp in case data is left for whatever reason
+			for (var i:int = 0; i < dialog.length; i++) { //creates a for loop that loops the length of the dialog array times
+				dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
+			}
+			sayDialog(); //runs function to have him talk
 		}
 
 		private function continueSpeech(event: TimerEvent) { //function to trigger sayDialog after a timer is run
 			timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
-			sayDialog();
+			sayDialog(); //runs function to have him talk
 		}
 
 		private function sayDialog(): void { //function to have him say his lines that were given
-
 			if (textBox) { //if textbox exists, remove it using close function of textBox
 				textBox.close();
 				textBox = null;
