@@ -17,7 +17,7 @@
 		private var canTalk: Boolean = true;
 		private var canTalkRand: Boolean = true;
 		private var randomDistance: int;
-		private var strHeight:Number; //static height of the stranger when created (also where text boxes should spawn)
+		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -27,20 +27,26 @@
 		//canTalkRand is a bool that states whether he will randomly talk or not
 		//dialogTimer is the time in seconds between each piece of dialog, default is 4 seconds
 		//dialogRandTimer is the time in seconds that will happen before the random dialog disappears, default is 4 seconds
-		
+		//dialogRand is the random dialog that he will say
+
 		//Only required parameter is the dialog of the person
-		public function Stranger(dialog: Array, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000, dialogTimer:Number = 4, dialogRandTimer:Number = 4) {
+		public function Stranger(dialog: Array, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null) {
 			// constructor code
 			this.dialog = dialog;
 			this.strangerName = strangerName; //sets parameters to local variables
 			this.canTalk = canTalk;
 			this.randomDistance = randomDistance;
 			this.canTalkRand = canTalkRand;
-			this.timer = new Timer(dialogTimer*1000);
-			this.timerRand = new Timer(dialogRandTimer*1000);
-			
+			this.timer = new Timer(dialogTimer * 1000);
+			this.timerRand = new Timer(dialogRandTimer * 1000);
+
+			if (randomDialog == null) {
+				randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"]
+			} else {
+				this.randomDialog = randomDialog;
+			}
 			strHeight = height;
-			
+
 			init();
 		}
 
@@ -51,17 +57,14 @@
 			if (canTalkRand) {
 				this.addEventListener(Event.ENTER_FRAME, this.sayRandomDialog); //Creates function to randomly say dialog
 			}
-			
+
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
 			nameBox.x = 0; //sets x to the x of the character
 			nameBox.y = 35; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
 			addChild(nameBox); //adds the box
-			
 
-			//Sets the random dialog
-			randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"]
 		}
 
 		private function sayRandomDialog(event: Event): void { //Function for random dialog)
@@ -92,9 +95,10 @@
 		}
 
 		private function clickTalk(event: MouseEvent) { //function to trigger sayDialog after the character is clicked
-			dialogTemp.length = 0; //clears dialogTemp in case data is left for whatever reason
-			for (var i:int = 0; i < dialog.length; i++) { //creates a for loop that loops the length of the dialog array times
-				dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
+			if (dialogTemp.length == 0) { //if there is nothing left in dialogTemp
+				for (var i: int = 0; i < dialog.length; i++) { //creates a for loop that loops the length of the dialog array times
+					dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
+				}
 			}
 			sayDialog(); //runs function to have him talk
 		}
@@ -115,7 +119,7 @@
 			}
 
 			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
-			
+
 			textBox.y = -strHeight - 10;
 			//set textbox position so it appears above the person's head
 
