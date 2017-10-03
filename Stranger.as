@@ -108,6 +108,8 @@
 				for (var i: int = 0; i < dialog.length; i++) { //creates a for loop that loops the length of the dialog array times
 					dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
 				}
+				timer.reset(); //resets the timer
+				timer.start(); //starts the timer again
 			}
 			else {
 				timer.reset(); //resets the timer
