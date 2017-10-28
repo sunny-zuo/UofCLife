@@ -10,9 +10,14 @@
 		private var character: Character;
 		private var enterSymbol;
 		private static var side: int = 1;
+		public var xPos:Number;
+		public var yPos:Number;
+		public var parentRoom:MovieClip;
 
-		public function Door() {
+		public function Door(xPos:Number, yPos:Number) {
 			// constructor code
+			this.xPos = xPos;
+			this.yPos = yPos;
 			init()
 		}
 		private function init(): void {

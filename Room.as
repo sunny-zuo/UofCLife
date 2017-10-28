@@ -3,13 +3,24 @@
 	import flash.events.Event;
 
 	public class Room extends MovieClip {
-
-		public function Room() {
+		
+		private var doorArray:Array;
+		public function Room(doorArray:Array) {
 			// constructor code
-			init()
+			this.doorArray = doorArray;
+			init();
 		}
 		private function init(): void {
-
+			for (var i:int = 0; i > doorArray.length; i++) {
+				addDoorToRoom(doorArray[i]);
+			}
+		}
+		
+		private function addDoorToRoom(door:Door): void {
+			door.x = door.xPos;
+			door.y = door.yPos;
+			addChild(door);
+			door.parentRoom = this;
 		}
 	}
 }
