@@ -4,7 +4,7 @@
 	import flash.display.MovieClip;
 
 
-	public class DylanMain extends MovieClip {
+	public class Main extends MovieClip {
 
 
 		public var character: Character = new Character();
@@ -12,10 +12,9 @@
 		private var enterSymbol: MovieClip;
 		private var left: Boolean = false;
 		private var right: Boolean = false;
-		public static var instance: DylanMain;
+		public static var instance: Main;
 
-		public function DylanMain() {
-
+		public function Main() {
 			instance = this;
 			// constructor code
 			addEventListener(Event.ENTER_FRAME, onEnterFrame);
