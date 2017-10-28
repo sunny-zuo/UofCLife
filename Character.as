@@ -13,13 +13,16 @@
 
 		public function Character():void {
 			// constructor code
+			//draws a circle for the character
 			graphics.beginFill(0x00FF00);
 			graphics.drawCircle(x,y,25);
 			graphics.endFill();
+			//adds evnt lister for when itself is added to stage
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage)
 
 		}
 		
+		//adds the event listeners once it is added to stage
 		private function addedToStage(event: Event): void {
 			addEventListener(Event.ENTER_FRAME, eFrame);
 			stage.addEventListener(MouseEvent.MOUSE_UP, MouseRelease);
@@ -27,6 +30,7 @@
 			this.removeEventListener(Event.ADDED_TO_STAGE, addedToStage)
 		}
 
+		//moves the character left and right
 		private function eFrame(event: Event): void {
 			if (right == true) {
 				this.x += speed
@@ -36,17 +40,18 @@
 			}
 		}
 
-
+		//sets left and right to false when mouse is released
 		private function MouseRelease(event: MouseEvent): void { //checks for the right button to be pressed
 			right = false;
 			left = false;
 		}
 
+		//checks if the mouse if left or right of the character then sets the appropiate irection to true
 		private function MousePress(event: MouseEvent): void { //checks for the left button to be pressed
-			if (mouseX < 100) {
+			if (mouseX - this.x < 0) {
 				left = true
 			}
-			if (mouseX > 200) {
+			if (mouseX -this.x > 0) {
 				right = true
 			}
 		}
