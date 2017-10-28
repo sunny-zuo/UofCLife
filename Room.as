@@ -5,17 +5,19 @@
 	public class Room extends MovieClip {
 		private var backGround:MovieClip;
 		private var doorArray:Array;
+		private var strangerArray:Array;
 		
 		
-		public function Room(backGround:MovieClip, doorArray:Array, strangerArray:Array) {
+		public function Room(backGroundClass:Class, doorArray:Array, strangerArray:Array) {
 			// constructor code
 			this.backGround = backGround;
 			this.doorArray = doorArray;
 			this.strangerArray = strangerArray;
-			init();
+			init(backGroundClass);
 		}
-		private function init(): void {
+		private function init(backGroundClass:Class): void {
 			//BACKGROUND
+			backGround = new backGroundClass();
 			addChild(backGround);
 			//add the background to the room
 			
@@ -25,7 +27,7 @@
 			}
 			
 			//STRANGERS
-			for (var j:int = 0; j < stranger.length; j++){
+			for (var j:int = 0; j < strangerArray.length; j++){
 				addStrangerToRoom(strangerArray[j]);
 			}
 		}

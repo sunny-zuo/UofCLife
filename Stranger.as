@@ -19,8 +19,8 @@
 		private var canTalkRand: Boolean = true;
 		private var randomDistance: int;
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
-		private var xPos: Number; //where it's x will be
-		private var yPos: Number; //where it's y will be
+		public var xPos: Number; //where it's x will be
+		public var yPos: Number; //where it's y will be
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -36,7 +36,7 @@
 		public function Stranger(xPos:Number, yPos:Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null) {
 			// constructor code
 			
-			if (dialog = null) { //if there is no dialog given
+			if (dialog == null) { //if there is no dialog given
 				canTalk = false; //then he can't talk
 			}
 			else { //if there is dialog given
