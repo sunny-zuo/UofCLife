@@ -21,6 +21,9 @@
 		public var doorList:Array;
 		public var roomList:Array;
 		public var strangerList:Array;
+		
+		public var objectContainer:MovieClip;
+		//contains all game objects in the game (excluding following menus)
 
 		public function Main() {
 
@@ -32,7 +35,8 @@
 			instance = this;
 			stg = stage;
 
-			
+			objectContainer = new MovieClip();
+			stage.addChild(objectContainer);
 			
 			
 			//DOOR CONSTRUCTION
@@ -67,13 +71,15 @@
 			roomList.push(tempRoom);
 			
 			roomList[0].y = stg.stageHeight;
-			addChild(roomList[0]);
+			objectContainer.addChild(roomList[0]);
 			
 			//Adds the Character
 			character = new Character();
 			character.y = 400;
 			
-			addChild(character);
+			objectContainer.addChild(character);
+			
+			
 		}
 	}
 }
