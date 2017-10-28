@@ -13,7 +13,7 @@
 		public var parentRoom: MovieClip;
 		private var doorArt: MovieClip;
 		private var characterIsCloseToDoor:Boolean = false;
-		private var delta:DeltaAssist;
+		
 
 		public function Door(doorType: Class, xPos: Number, yPos: Number) {
 			// constructor code
@@ -29,7 +29,6 @@
 			addEventListener(MouseEvent.CLICK, onDoorClick);
 			addEventListener(Event.ENTER_FRAME, onDoorTouch);
 			
-			delta = new DeltaAssist(Main.instance.character, ["x"])
 		}
 
 		/*When character touches door, a new symbol is created if one does not exist
@@ -62,7 +61,10 @@
 		
 		private function onDoorClick(event:MouseEvent):void {
 			if(characterIsCloseToDoor) {
-				delta.setLinear(5, x);
+				Main.instance.character.allowCharMove = false;
+				Main.instance.character.moveCharTo(x);
+				
+				
 			}
 		}
 	}

@@ -10,18 +10,20 @@
 		private var mouseDown: Boolean = false; //left and right booleans
 		//private var right: Boolean = false;
 		private var speed: int = 10; //the player speed
+		private var xDelta: DeltaAssist;
+		public var allowCharMove:Boolean = true;
 
-		public function Character():void {
+		public function Character(): void {
 			// constructor code
 			//draws a circle for the character
 			graphics.beginFill(0xFFFF00);
-			graphics.drawCircle(0,0,25);
+			graphics.drawCircle(0, 0, 25);
 			graphics.endFill();
 			//adds evnt lister for when itself is added to stage
 			addEventListener(Event.ADDED_TO_STAGE, addedToStage)
 
 		}
-		
+
 		//adds the event listeners once it is added to stage
 		private function addedToStage(event: Event): void {
 			addEventListener(Event.ENTER_FRAME, eFrame);
@@ -32,15 +34,17 @@
 
 		//moves the character left and right
 		private function eFrame(event: Event): void {
-			if(mouseDown){
-				if (mouseX < 0) {
-					x -= speed;
-				}
-				if (mouseX > 0) {
-					x += speed;
+			if (allowCharMove) {
+				if (mouseDown) {
+					if (mouseX < 0) {
+						x -= speed;
+					}
+					if (mouseX > 0) {
+						x += speed;
+					}
 				}
 			}
-			
+
 		}
 
 		//sets left and right to false when mouse is released
@@ -53,7 +57,18 @@
 			mouseDown = true;
 		}
 
-
+		public function moveCharTo(xPos: Number) {
+			if (xDelta) {
+				xDelta.setActive(false);
+			}
+			xDelta = new DeltaAssist(this, ["x"]);
+			if (xPos >= x) {
+				xDelta.setLinear(5, xPos);
+			} else {
+				xDelta.setLinear(-5, xPos);
+			}
+			trace(xDelta.changing);
+		}
 
 	}
 
