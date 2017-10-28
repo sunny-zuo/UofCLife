@@ -49,6 +49,9 @@
 			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
 			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
 			
+			this.xPos = xPos;
+			this.yPos = yPos;
+			
 			if (randomDialog == null) { //if the array is null. array is set to null by default as you cannot declare an array as a default
 				this.randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"] //default random text
 			} else { //else, if there is a value

@@ -29,10 +29,7 @@
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onUp);
 
-			character = new Character();
-			character.y = 400;
 			
-			addChild(character);
 			
 			
 			//DOOR CONSTRUCTION
@@ -68,6 +65,13 @@
 			
 			roomList[0].y = stg.stageHeight;
 			addChild(roomList[0]);
+			
+			//Adds the Character
+			character = new Character();
+			character.y = 400;
+			
+			addChild(character);
+			
 		}
 
 		private function onEnterFrame(event: Event) {
