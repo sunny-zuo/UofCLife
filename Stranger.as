@@ -19,6 +19,8 @@
 		private var canTalkRand: Boolean = true;
 		private var randomDistance: int;
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
+		public var xPos: Number; //where it's x will be
+		public var yPos: Number; //where it's y will be
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -31,16 +33,25 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(dialog: Array, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null) {
+		public function Stranger(xPos:Number, yPos:Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null) {
 			// constructor code
-			this.dialog = dialog;
+			
+			if (dialog == null) { //if there is no dialog given
+				canTalk = false; //then he can't talk
+			}
+			else { //if there is dialog given
+				this.canTalk = canTalk; //his canTalk will be whatever is fed
+				this.dialog = dialog; //and his dialog will be the dialog given
+			}
 			this.strangerName = strangerName; //sets parameters to local variables
-			this.canTalk = canTalk;
 			this.randomDistance = randomDistance;
 			this.canTalkRand = canTalkRand;
 			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
 			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
-
+			
+			this.xPos = xPos;
+			this.yPos = yPos;
+			
 			if (randomDialog == null) { //if the array is null. array is set to null by default as you cannot declare an array as a default
 				this.randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"] //default random text
 			} else { //else, if there is a value

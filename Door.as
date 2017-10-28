@@ -4,27 +4,38 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
-
 	public class Door extends MovieClip {
 
 		private var character: Character;
 		private var enterSymbol;
 		private static var side: int = 1;
+		public var xPos:Number;
+		public var yPos:Number;
+		public var parentRoom:MovieClip;
+		private var doorArt:MovieClip;
 
-		public function Door() {
+		public function Door(doorType:Class, xPos:Number, yPos:Number) {
 			// constructor code
-			init()
+			this.xPos = xPos;
+			this.yPos = yPos;
+			//character = Main.instance.character;
+			init(doorType)
 		}
-		private function init(): void {
+		private function init(doorType:Class): void {
+			doorArt = new doorType();
+			addChild(doorArt);
+			
 			addEventListener(Event.ENTER_FRAME, onDoorTouch);
+			
+			
 		}
 
 		
 		/*When character touches door, a new symbol is created if one does not exist
 		If a symbol exists then it is added above the door*/
 		private function onDoorTouch(event: Event): void {
-			character = Main.instance.character;
-			if (this.hitTestObject(character)) {
+			
+			/*if (this.hitTestObject(character)) {
 				if (enterSymbol) {
 					this.addChild(enterSymbol);
 					enterSymbol.visible = true;
@@ -32,12 +43,12 @@
 					AddDoorSymbol();
 				}
 				stage.addEventListener(MouseEvent.CLICK, onDoorClick);
-			} else {
+			} /*else {
 				if (enterSymbol) {
 					enterSymbol.visible = false;
 				}
 				stage.removeEventListener(MouseEvent.CLICK, onDoorClick);
-			}
+			}*/
 		}
 
 		private function onDoorClick(event: MouseEvent): void {
