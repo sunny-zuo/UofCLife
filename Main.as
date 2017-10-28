@@ -4,6 +4,7 @@
 	import flash.events.KeyboardEvent;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.utils.*;
 
 
 	public class Main extends MovieClip {
@@ -57,6 +58,14 @@
 			tempDoor = new Door(GreenDoor, 550, 0);
 			doorList.push(tempDoor);
 			
+			for(var i:int = 0; i < doorList.length; i++){
+				if(i % 2 == 0){
+					doorList[i].linkDoor = doorList[i+1];
+				}else{
+					doorList[i].linkDoor = doorList[i-1];
+				}
+			}
+			
 			//STRANGER CONSTRUCTION
 			var tempStranger:Stranger;
 			strangerList = []
@@ -87,7 +96,8 @@
 		}
 		
 		private function vCam(event:Event):void{
-			trace(-character.x + stage.stageWidth/2, stage.stageWidth - currentRoom.roomWidth - 100);
+			//trace(getQualifiedClassName(currentRoom.backGround));
+			//trace(-character.x + stage.stageWidth/2, stage.stageWidth - currentRoom.roomWidth - 100);
 			if(-character.x + stage.stageWidth/2 > 100){
 				objectContainer.x += (100 - objectContainer.x)*0.25;
 			}

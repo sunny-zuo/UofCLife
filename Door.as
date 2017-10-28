@@ -7,10 +7,10 @@
 	public class Door extends MovieClip {
 
 		private var enterSymbol;
-		private static var side: int = 1;
 		public var xPos: Number;
 		public var yPos: Number;
-		public var parentRoom: MovieClip;
+		public var parentRoom: Room;
+		public var linkDoor:Door;
 		private var doorArt: MovieClip;
 		private var characterIsCloseToDoor:Boolean = false;
 		
@@ -62,7 +62,7 @@
 		private function onDoorClick(event:MouseEvent):void {
 			if(characterIsCloseToDoor) {
 				Main.instance.character.allowCharMove = false;
-				Main.instance.character.moveCharTo(x);
+				Main.instance.character.moveCharToDoor(this);
 				
 				
 			}

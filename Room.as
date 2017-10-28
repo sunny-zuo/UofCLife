@@ -4,7 +4,7 @@
 
 	public class Room extends MovieClip {
 		public var roomWidth:Number;
-		private var backGround:MovieClip;
+		public var backGround:MovieClip;
 		private var doorArray:Array;
 		private var strangerArray:Array;
 		

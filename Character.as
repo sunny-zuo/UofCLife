@@ -62,17 +62,34 @@
 			mouseDown = true;
 		}
 
-		public function moveCharTo(xPos: Number) {
+		public function moveCharToDoor(door: Door) {
 			if (xDelta) {
 				xDelta.setActive(false);
 			}
 			xDelta = new DeltaAssist(this, ["x"]);
-			if (xPos >= x) {
-				xDelta.setLinear(5, xPos);
+			if (door.x >= x) {
+				xDelta.setLinear(5, door.x, enterDoor, [door]);
 			} else {
-				xDelta.setLinear(-5, xPos);
+				xDelta.setLinear(-5, door.x, enterDoor, [door]);
 			}
-			trace(xDelta.changing);
+		}
+		
+		private function enterDoor(door:Door){
+			Main.instance.objectContainer.removeChild(Main.instance.currentRoom);
+			//remove room currently in
+			var exitDoor:Door = door.linkDoor;
+			//door where character will exit
+			
+			Main.instance.currentRoom = exitDoor.parentRoom;
+			//set the currentRoom to the new room
+			Main.instance.currentRoom.y = Main.stg.stageHeight;
+			Main.instance.objectContainer.addChildAt(Main.instance.currentRoom, 0);
+			//add the new room
+			
+			x = exitDoor.x;
+			
+			allowCharMove = true;
+			//allow the character to move again
 		}
 
 	}
