@@ -14,7 +14,7 @@
 		public function Character():void {
 			// constructor code
 			//draws a circle for the character
-			graphics.beginFill(0x00FF00);
+			graphics.beginFill(0xFFFF00);
 			graphics.drawCircle(x,y,25);
 			graphics.endFill();
 			//adds evnt lister for when itself is added to stage
