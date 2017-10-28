@@ -1,10 +1,5 @@
 ﻿package {
 
-	import flash.display.MovieClip;
-	
-	public class Main extends MovieClip {
-		private var player: Character; //makes a player from the ball class
-
 	import flash.events.*;
 	import flash.events.KeyboardEvent;
 	import flash.display.MovieClip;
@@ -34,21 +29,8 @@
 		}
 
 		private function start(): void {
-			//makes the player
-			player = new Character();
-			stage.addChild(player);
-			player.x = stage.stageWidth / 2
-			player.y = stage.stageWidth / 2
-		}
-
-
 			instance = this;
 			stg = stage;
-			
-			// LISTENERS
-			addEventListener(Event.ENTER_FRAME, onEnterFrame);
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onDown);
-			stage.addEventListener(KeyboardEvent.KEY_UP, onUp);
 
 			
 			
@@ -92,40 +74,6 @@
 			character.y = 400;
 			
 			addChild(character);
-			
 		}
-
-		private function onEnterFrame(event: Event) {
-			if (left) {
-				character.x -= 5;
-			}
-			if (right) {
-				character.x += 5;
-			}
-		}
-
-		private function onMouseClick(event: MouseEvent): void {
-			//stage.remove
-		}
-
-		private function onDown(event: KeyboardEvent) {
-			if (event.keyCode == 65) {
-				left = true;
-			}
-			if (event.keyCode == 68) {
-				right = true;
-			}
-
-		}
-		private function onUp(event: KeyboardEvent) {
-			if (event.keyCode == 65) {
-				left = false;
-			}
-			if (event.keyCode == 68) {
-				right = false;
-			}
-
-		}
-
 	}
 }
