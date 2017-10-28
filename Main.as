@@ -22,6 +22,8 @@
 		public var roomList:Array;
 		public var strangerList:Array;
 		
+		public var currentRoom:Room;
+		
 		public var objectContainer:MovieClip;
 		//contains all game objects in the game (excluding following menus)
 
@@ -66,14 +68,16 @@
 			var tempRoom:Room;
 			roomList = []
 			
-			tempRoom = new Room(Room0, [doorList[0], doorList[2]], [strangerList[0]]);
+			tempRoom = new Room(960, Room0, [doorList[0], doorList[2]], [strangerList[0]]);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(Room1, [doorList[1], doorList[3]], []);
+			tempRoom = new Room(700, Room1, [doorList[1], doorList[3]], []);
 			roomList.push(tempRoom);
 			
-			roomList[0].y = stg.stageHeight;
-			objectContainer.addChild(roomList[0]);
+			//LOAD CURRENT ROOM
+			currentRoom = roomList[0];
+			currentRoom.y = stg.stageHeight;
+			objectContainer.addChild(currentRoom);
 			
 			//Adds the Character
 			character = new Character();
@@ -83,7 +87,17 @@
 		}
 		
 		private function vCam(event:Event):void{
-			objectContainer.x += (-character.x + stage.stageWidth/2 - objectContainer.x)*0.25;
+			trace(-character.x + stage.stageWidth/2, stage.stageWidth - currentRoom.roomWidth - 100);
+			if(-character.x + stage.stageWidth/2 > 100){
+				objectContainer.x += (100 - objectContainer.x)*0.25;
+			}
+			else if(-character.x + stage.stageWidth/2 < stage.stageWidth - currentRoom.roomWidth - 100){
+				objectContainer.x += (stage.stageWidth - currentRoom.roomWidth - 100 - objectContainer.x)*0.25;
+			}
+			else{
+				objectContainer.x += (-character.x + stage.stageWidth/2 - objectContainer.x)*0.25;
+			}
+			
 		}
 	}
 }

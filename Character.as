@@ -44,7 +44,12 @@
 					}
 				}
 			}
-
+			if(x - width/2 < 0){
+				x = width/2;
+			}
+			else if(x + width/2 > Main.instance.currentRoom.roomWidth){
+				x = Main.instance.currentRoom.roomWidth - width/2;
+			}
 		}
 
 		//sets left and right to false when mouse is released
