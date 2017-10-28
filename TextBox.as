@@ -114,10 +114,15 @@
 			spr_box.y = -BOXSIZE.y;
 			//offset the box to center the bottom on the person's registration point
 			
+			
+			spr_box.graphics.beginFill(0xffffff, 1);
+			//fill the box with white
 			spr_box.graphics.lineStyle(3);
 			//set line to thickness of 3
 			spr_box.graphics.drawRect(0, 0, BOXSIZE.x, BOXSIZE.y);
 			//draw a box outline based on the BOXSIZE
+			spr_box.graphics.endFill();
+			//stop fill
 			
 			addChild(spr_box);
 			//add the box to this MovieClip
