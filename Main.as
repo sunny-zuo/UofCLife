@@ -38,6 +38,8 @@
 			objectContainer = new MovieClip();
 			stage.addChild(objectContainer);
 			
+			//VCAM
+			addEventListener(Event.ENTER_FRAME, vCam);
 			
 			//DOOR CONSTRUCTION
 			var tempDoor:Door;
@@ -78,8 +80,10 @@
 			character.y = 400;
 			
 			objectContainer.addChild(character);
-			
-			
+		}
+		
+		private function vCam(event:Event):void{
+			objectContainer.x += (-character.x + stage.stageWidth/2 - objectContainer.x)*0.25;
 		}
 	}
 }
