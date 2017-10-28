@@ -23,8 +23,8 @@
 
 			character.y = 400;
 
-			eduBld = new Room();
-			stage.addChild(eduBld);
+			//eduBld = new Room();
+			//stage.addChild(eduBld);
 			addChild(character);
 		}
 
