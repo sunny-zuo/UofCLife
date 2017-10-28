@@ -28,7 +28,7 @@ package  {
 		
 		//SCALING VARIABLES
 		
-		private var scaleAssist:Delta;
+		private var scaleAssist:DeltaAssist;
 		//controls scaling of the text box (used for popping up and out)
 		
 		public function TextBox(displayString:String, textSource:Stranger) {
@@ -44,7 +44,7 @@ package  {
 			//store parameters as local variables
 			
 			if (displayString != null) { //if there is text provided
-				scaleAssist = new Delta(this, ["scaleX", "scaleY"]);
+				scaleAssist = new DeltaAssist(this, ["scaleX", "scaleY"]);
 			
 				open();
 				//open the textbox
@@ -70,7 +70,6 @@ package  {
 			//completely collapse textbox as it spawns
 			
 			scaleAssist.setLogarithmic(1, 0.25);
-			scaleAssist.setActive(true);
 		}
 		
 		public function close():void{
@@ -82,7 +81,6 @@ package  {
 			*/
 			
 			scaleAssist.setAccelerate(0.1, -0.02);
-			scaleAssist.setActive(true);
 			//set a pop-out scaling mode for the textbox
 			
 			addEventListener(Event.ENTER_FRAME, checkFullCollapse);
