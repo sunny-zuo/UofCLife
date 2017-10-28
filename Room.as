@@ -3,16 +3,30 @@
 	import flash.events.Event;
 
 	public class Room extends MovieClip {
-		
+		private var backGround:MovieClip;
 		private var doorArray:Array;
-		public function Room(doorArray:Array) {
+		
+		
+		public function Room(backGround:MovieClip, doorArray:Array, strangerArray:Array) {
 			// constructor code
+			this.backGround = backGround;
 			this.doorArray = doorArray;
+			this.strangerArray = strangerArray;
 			init();
 		}
 		private function init(): void {
-			for (var i:int = 0; i > doorArray.length; i++) {
+			//BACKGROUND
+			addChild(backGround);
+			//add the background to the room
+			
+			//ROOM
+			for (var i:int = 0; i < doorArray.length; i++) {
 				addDoorToRoom(doorArray[i]);
+			}
+			
+			//STRANGERS
+			for (var j:int = 0; j < stranger.length; j++){
+				addStrangerToRoom(strangerArray[j]);
 			}
 		}
 		
@@ -21,6 +35,12 @@
 			door.y = door.yPos;
 			addChild(door);
 			door.parentRoom = this;
+		}
+		
+		private function addStrangerToRoom(stranger:Stranger):void{
+			stranger.x = stranger.xPos;
+			stranger.y = stranger.yPos;
+			addChild(stranger);
 		}
 	}
 }
