@@ -48,15 +48,25 @@
 			var tempDoor:Door;
 			doorList = [];
 			
-			tempDoor = new Door(GreenDoor, 500, 0);
-			doorList.push(tempDoor);
-			tempDoor = new Door(GreenDoor, 200, 0);
-			doorList.push(tempDoor);
+			//WASHROOM MALE
+			doorList[0] = new Door(GreenDoor, 350, 0);
+			doorList[1] = new Door(GreenDoor, 200, 0);
 			
-			tempDoor = new Door(GreenDoor, 700, 0);
-			doorList.push(tempDoor);
-			tempDoor = new Door(GreenDoor, 550, 0);
-			doorList.push(tempDoor);
+			//WASHROOM FEMALE
+			doorList[2] = new Door(GreenDoor, 500, 0);
+			doorList[3] = new Door(GreenDoor, 800, 0);
+			
+			//BENTO SUSHI
+			doorList[4] = new Door(GreenDoor, 2175, 0);
+			doorList[5] = new Door(GreenDoor, 200, 0);
+			
+			//CLASSROOM
+			doorList[6] = new Door(GreenDoor, 3000, 0);
+			doorList[7] = new Door(GreenDoor, 200, 0);
+			
+			//STAIRS
+			//doorList[8] = new Door(GreenDoor, 3750, 0);
+			//doorList[9] = new Door(GreenDoor, 0, 0);
 			
 			for(var i:int = 0; i < doorList.length; i++){
 				if(i % 2 == 0){
@@ -70,18 +80,30 @@
 			var tempStranger:Stranger;
 			strangerList = []
 			
-			tempStranger = new Stranger(300, 0, ["Bento Sushi is going down!!!"]);
+			tempStranger = new Stranger(2000, 0, ["Bento Sushi is going down!!!"]);
 			strangerList.push(tempStranger);
 			
 			//ROOM CONSTRUCTION
 			var tempRoom:Room;
 			roomList = []
 			
-			tempRoom = new Room(960, Room0, [doorList[0], doorList[2]], [strangerList[0]]);
+			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0]]);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(700, Room1, [doorList[1], doorList[3]], []);
+			tempRoom = new Room(1600, WashroomMale, [doorList[1]], []);
 			roomList.push(tempRoom);
+			
+			tempRoom = new Room(1000, WashroomFemale, [doorList[3]], []);
+			roomList.push(tempRoom);
+			
+			tempRoom = new Room(800, BentoSushi, [doorList[5]], []);
+			roomList.push(tempRoom);
+			
+			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], []);
+			roomList.push(tempRoom);
+			
+			//tempRoom = new Room(1200, Stairs, [doorList[9]], []);
+			//roomList.push(tempRoom);
 			
 			//LOAD CURRENT ROOM
 			currentRoom = roomList[0];
