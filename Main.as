@@ -50,7 +50,7 @@
 			
 			//WASHROOM MALE
 			doorList[0] = new Door(GreenDoor, 350, 0);
-			doorList[1] = new Door(GreenDoor, 200, 0);
+			doorList[1] = new Door(GreenDoor, 1600, 0);
 			
 			//WASHROOM FEMALE
 			doorList[2] = new Door(GreenDoor, 500, 0);
@@ -62,7 +62,7 @@
 			
 			//CLASSROOM
 			doorList[6] = new Door(GreenDoor, 3000, 0);
-			doorList[7] = new Door(GreenDoor, 200, 0);
+			doorList[7] = new Door(GreenDoor, 150, 0);
 			
 			//STAIRS
 			//doorList[8] = new Door(GreenDoor, 3750, 0);
@@ -83,6 +83,9 @@
 			tempStranger = new Stranger(2000, 0, ["Bento Sushi is going down!!!"]);
 			strangerList.push(tempStranger);
 			
+			tempStranger = new Stranger(1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!"]);
+			strangerList.push(tempStranger);
+			
 			//ROOM CONSTRUCTION
 			var tempRoom:Room;
 			roomList = []
@@ -90,7 +93,7 @@
 			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0]]);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(1600, WashroomMale, [doorList[1]], []);
+			tempRoom = new Room(1800, WashroomMale, [doorList[1]], []);
 			roomList.push(tempRoom);
 			
 			tempRoom = new Room(1000, WashroomFemale, [doorList[3]], []);
@@ -99,7 +102,7 @@
 			tempRoom = new Room(800, BentoSushi, [doorList[5]], []);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], []);
+			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], [strangerList[1]]);
 			roomList.push(tempRoom);
 			
 			//tempRoom = new Room(1200, Stairs, [doorList[9]], []);
