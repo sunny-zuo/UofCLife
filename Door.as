@@ -36,13 +36,14 @@
 		private function onDoorTouch(event: Event): void {
 			if (Main.instance.character)
 				if (this.x + 200 >= Main.instance.character.x && this.x - 200 <= Main.instance.character.x) {
-					if (enterSymbol) {
+				//if character is within 200 pixels of the door, show the symbol
+					if (enterSymbol) { //if the symbol exists, add it as a child, make it visible, and mark the character as close to the door
 						this.addChild(enterSymbol);
 						enterSymbol.visible = true;
 						characterIsCloseToDoor = true
 					} 
 					else {
-						addDoorSymbol();
+						addDoorSymbol(); //if the symbol doesn't exist, create it
 					}
 				}
 				else {
@@ -52,7 +53,7 @@
 					}
 				}
 		}
-		/* Recturns a door symbol*/
+		/* Returns a door symbol*/
 		private function addDoorSymbol(): void {
 			enterSymbol = new EnterSymbol()
 			enterSymbol.y -= 250;
@@ -61,8 +62,8 @@
 		
 		private function onDoorClick(event:MouseEvent):void {
 			if(characterIsCloseToDoor) {
-				Main.instance.character.allowCharMove = false;
-				Main.instance.character.moveCharToDoor(this);
+				Main.instance.character.allowCharMove = false; //prevents the player from moving
+				Main.instance.character.moveCharToDoor(this); //moves the player to the door automatically using delta
 				
 				
 			}
