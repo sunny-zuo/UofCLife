@@ -60,6 +60,7 @@
 			this.addChild(enterSymbol);
 		}
 		
+		//moves the character to the door if the character is close to the door and the player taps the door
 		private function onDoorClick(event:MouseEvent):void {
 			if(characterIsCloseToDoor) {
 				Main.instance.character.allowCharMove = false; //prevents the player from moving
