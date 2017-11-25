@@ -4,7 +4,10 @@
 	import flash.events.Event;
 
 	public class QuestionAPI {
-
+		
+		public var loadedData:Object;
+		public var loadDone:Boolean = false;
+		
 		public function QuestionAPI() {
 			// constructor code
 		}
@@ -33,9 +36,8 @@
 
 		private function loadComplete(event: Event): void {
 			var loader: URLLoader = URLLoader(event.target); //sets the URLLoader to the one generated above
-			trace(loader.data);
-			var loadedData: Object = JSON.parse(loader.data)
-			trace(loadedData.results[0].category);
+			loadDone = true;
+			loadedData = JSON.parse(loader.data)
 			/* Access data using loadedData.results[0].question where 0 is the question number, and "question" is the specific data you want.
 			more examples: loadedData.results[0].correct_answer gives the correct answer to the first question */
 			
