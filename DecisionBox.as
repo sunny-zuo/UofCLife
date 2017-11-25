@@ -47,8 +47,8 @@
 			scaleAssist = new DeltaAssist(this, ["scaleX", "scaleY"]);
 			alphaAssist = new DeltaAssist(this, ["alpha"]);
 			
-			scaleAssist.setLinear(0.01, 1);
-			alphaAssist.setLinear(0.05, 1, activateButtons);
+			scaleAssist.setLinear(0.02, 1);
+			alphaAssist.setLinear(0.2, 1, activateButtons);
 			//pop up animation
 		}
 		
@@ -96,8 +96,8 @@
 			btn_no.removeEventListener(MouseEvent.CLICK, noTrigger);
 			//removes the event listeners so that clicking on yes and no does nothing
 			
-			scaleAssist.setLinear(-0.01, 0.8);
-			alphaAssist.setLinear(-0.05, 0, cleanUp);
+			scaleAssist.setLinear(-0.02, 0.08);
+			alphaAssist.setLinear(-0.2, 0, cleanUp);
 			//pop out animation
 		}
 		
