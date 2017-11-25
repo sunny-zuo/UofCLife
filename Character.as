@@ -41,6 +41,9 @@
 
 		//moves the character left and right
 		private function eFrame(event: Event): void {
+
+
+
 			if (allowCharMove) {
 				if (mouseDown) {
 					if (mouseX < 0) {
@@ -50,12 +53,14 @@
 					}
 				} else {
 					if (mouseX < 0) {
+
 						gotoAndStop("idleLeft")
-						characterAccesoriesHolder[1].gotoAndStop("idleLeft")
+						//characterAccesoriesHolder[1].gotoAndStop("idleLeft")
 
 					} else {
+
 						gotoAndStop("idleRight")
-						characterAccesoriesHolder[1].gotoAndPlay("idleRight")
+						//characterAccesoriesHolder[1].gotoAndPlay("idleRight")
 					}
 				}
 
@@ -100,7 +105,7 @@
 		private function walkRight(moveCharacter: Boolean): void {
 
 			if (currentLabel != "walkRight") {
-				characterAccesoriesHolder[1].gotoAndPlay("walkRight")
+				//characterAccesoriesHolder[1].gotoAndPlay("walkRight")
 				gotoAndPlay("walkRight")
 			}
 			if (moveCharacter) {
@@ -108,10 +113,13 @@
 			}
 		}
 
-		private function walkLeft(moveCharacter:Boolean): void {
+		private function walkLeft(moveCharacter: Boolean): void {
+
+
 			if (currentLabel != "walkLeft") {
-				characterAccesoriesHolder[1].gotoAndPlay("walkLeft")
+				//characterAccesoriesHolder[1].gotoAndPlay("walkLeft")
 				gotoAndPlay("walkLeft")
+
 			}
 			if (moveCharacter) {
 				x -= speed;
@@ -147,13 +155,11 @@
 			characterAccesoriesHolder[0] = tempHolder
 			Main.instance.character.addChild(tempHolder)
 
-			if (PantType == 1) {
-				tempHolder = new Pant1
-			}
+			this.pant1.gotoAndStop(characterAccesories[1])
+			this.pant2.gotoAndStop(characterAccesories[1])
+			this.pant3.gotoAndStop(characterAccesories[1])
+			this.pant4.gotoAndStop(characterAccesories[1])
 
-			tempHolder.y = 0 //Main.instance.character.height*-1
-			characterAccesoriesHolder[1] = tempHolder
-			Main.instance.character.addChild(tempHolder)
 		}
 
 	}
