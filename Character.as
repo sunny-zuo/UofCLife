@@ -44,9 +44,9 @@
 			if (allowCharMove) {
 				if (mouseDown) {
 					if (mouseX < 0) {
-						walkLeft()
+						walkLeft(true)
 					} else {
-						walkRight()
+						walkRight(true)
 					}
 				} else {
 					if (mouseX < 0) {
@@ -64,7 +64,7 @@
 			} else if (uncontrolledMove == "right") {
 				walkRight(false)
 			}
-			
+
 			//boundries
 			if (x - width / 2 < 0) {
 				x = width / 2;
@@ -97,20 +97,25 @@
 			}
 		}
 
-		private function walkRight(): void {
+		private function walkRight(moveCharacter: Boolean): void {
+
 			if (currentLabel != "walkRight") {
 				characterAccesoriesHolder[1].gotoAndPlay("walkRight")
 				gotoAndPlay("walkRight")
 			}
-			x += speed;
+			if (moveCharacter) {
+				x += speed;
+			}
 		}
 
-		private function walkLeft(): void {
+		private function walkLeft(moveCharacter:Boolean): void {
 			if (currentLabel != "walkLeft") {
 				characterAccesoriesHolder[1].gotoAndPlay("walkLeft")
 				gotoAndPlay("walkLeft")
 			}
-			x -= speed;
+			if (moveCharacter) {
+				x -= speed;
+			}
 		}
 
 		private function enterDoor(door: Door) {
