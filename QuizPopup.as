@@ -24,8 +24,6 @@
 
 		private var questionAPI: QuestionAPI = new QuestionAPI(); //links with QuestionAPI
 
-		private var timer: Timer = new Timer(1000); //timer so that it waits a second before filling in question/answer text boxes
-
 		public function QuizPopup(questionCount: int, subject: String, difficulty: String, qType: String = "multiple") {
 			// constructor code
 			this.questionCount = questionCount; //converts the parameters given into local variables
@@ -43,26 +41,22 @@
 			questionBoxList[2] = answer2.answerText;
 			questionBoxList[3] = answer3.answerText;
 
-			timer.addEventListener(TimerEvent.TIMER, timerGenerate); //adds a event listener to trigger a function after a second is over
-			timer.start(); //starts timer
-
-			answer0.addEventListener(MouseEvent.CLICK, answer0picked) //event listener for a click on each answer box, and runs a specific function
-			answer1.addEventListener(MouseEvent.CLICK, answer1picked)
-			answer2.addEventListener(MouseEvent.CLICK, answer2picked)
-			answer3.addEventListener(MouseEvent.CLICK, answer3picked)
+			answer0.addEventListener(MouseEvent.CLICK, answer0picked); //event listener for a click on each answer box, and runs a specific function
+			answer1.addEventListener(MouseEvent.CLICK, answer1picked);
+			answer2.addEventListener(MouseEvent.CLICK, answer2picked);
+			answer3.addEventListener(MouseEvent.CLICK, answer3picked);
+			
+			addEventListener(Event.ENTER_FRAME, waitForLoad);
 		}
-		private function timerGenerate(event: Event) {
-			if (timer != null) { //if the timer is there, remove it
-				timer.removeEventListener(TimerEvent.TIMER, generateQuestions);
-				timer.stop();
-				timer = null;
+		
+		private function waitForLoad(event:Event):void {
+			if (questionAPI.loadDone) {
+				loadedData = questionAPI.loadedData;
+				generateQuestions();
+				removeEventListener(Event.ENTER_FRAME, waitForLoad);
 			}
-			if (loadedData == null) { //if data is already saved locally, don't
-				loadedData = questionAPI.loadedData; //else, save it locally
-			}
-			generateQuestions();
 		}
-
+		
 		private function generateQuestions() {
 			questionText.text = loadedData.results[currentQuestion].question; //sets the question textbox to the current question
 			correctAnswer = Math.floor(Math.random() * 4); //picks a number between 0 and 3 to be the correct answer
