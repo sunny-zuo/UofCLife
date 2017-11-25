@@ -25,6 +25,8 @@
 		
 		public var currentRoom:Room;
 		
+		public var menuContainer:MovieClip;
+		
 		public var objectContainer:MovieClip;
 		//contains all game objects in the game (excluding following menus)
 
@@ -40,6 +42,9 @@
 
 			objectContainer = new MovieClip();
 			stage.addChild(objectContainer);
+			
+			menuContainer = new MovieClip();
+			stage.addChild(menuContainer);
 			
 			//VCAM
 			addEventListener(Event.ENTER_FRAME, vCam);
@@ -79,6 +84,9 @@
 			//STRANGER CONSTRUCTION
 			var tempStranger:Stranger;
 			strangerList = []
+			
+			tempStranger = new Stranger(500, 0, ["Accept it!", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [4], tempStranger], "Great!", ["fcn_skipToSayDialog", -1], "Why do you not want..."]);
+			strangerList.push(tempStranger);
 			
 			tempStranger = new Stranger(2000, 0, ["Bento Sushi is going down!!!"]);
 			strangerList.push(tempStranger);
