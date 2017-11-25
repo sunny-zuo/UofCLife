@@ -119,13 +119,8 @@
 				for (var i: int = 0; i < dialog.length; i++) { //creates a for loop that loops the length of the dialog array times
 					dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
 				}
-				timer.reset(); //resets the timer
-				timer.start(); //starts the timer again
 			}
-			else {
-				timer.reset(); //resets the timer
-				timer.start(); //starts the timer again
-			}
+			
 			sayDialog(); //runs function to have him talk
 		}
 
@@ -143,21 +138,80 @@
 			if (dialogTemp.length < 1) { //if no dialog exists, exit out of this function to prevent errors
 				return; //exits out of this function
 			}
+			
+			timer.reset(); //resets the timer
+			
+			if(dialogTemp[0] is String){
+				//if the next object in line is a String, then talk
+				
+				textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
+				
+				textBox.y = -strHeight - 10;
+				//set textbox position so it appears above the person's head
 
-			textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
+				addChild(textBox); //adds to stage
 
-			textBox.y = -strHeight - 10;
-			//set textbox position so it appears above the person's head
+				dialogTemp.splice(0, 1); //removes the first value of the array since it has been said
 
-			addChild(textBox); //adds to stage
-
-			dialogTemp.splice(0, 1); //removes the first value of the array since it has been said
-
+				continueDialog();
+			}
+			else if(dialogTemp[0] is Array){ //function array
+				var functionArray:Array = dialogTemp[0];
+				//takes the entire function array
+				
+				var callFunction:Function;
+				if(functionArray[0] is String && functionArray[0].substring(0, 4) == "fcn_"){
+					//if it is in String form because the function is private
+					callFunction = this[functionArray[0].substring(4)];
+					//"this" type casts the String into a function call
+				}else{
+					//no need for conversion
+					callFunction = functionArray[0];
+				}
+				
+				for(var i:int = 1; i < functionArray.length; i++){
+					if(functionArray[i] is String && functionArray[i].substring(0, 4) == "fcn_"){
+						functionArray[i] = this[functionArray[i].substring(4)];
+						//convert all Strings (that start with fcn) inside the array to functions
+					}
+				}
+				callFunction.apply(this, functionArray.slice(1));
+				//call the function using the rest of the functionArray (after slicing)
+				dialogTemp.splice(0, 1); //removes the first value of the array since it has been executed
+			}
+			
+		}
+		
+		private function continueDialog():void{		//public so that I can put it in function handle as parameter
+			/*
+			DO:
+			Allows the character to continue saying things.
+			*/
 			if (dialogTemp.length >= 0) { //checks to see if more text is left in array
 				timer.addEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
 				timer.start(); //starts timer
 			}
-
+		}
+		
+		private function skipToSayDialog(index:int):void{		//public so that I can put it in function handle as parameter
+			/*
+			PARAMETERS:
+			index = index where the character starts talking at again
+			DO:
+			Changes dialogTemp to continue from index onwards.
+			*/
+			if(index >= 0 && index < dialog.length){
+				//index exists
+				
+				dialogTemp = dialog.slice(index);
+				//jump to index
+				
+			}else{
+				dialogTemp = [];
+				//stop speech
+			}
+			
+			sayDialog(); //runs function to have him talk
 		}
 
 	}
