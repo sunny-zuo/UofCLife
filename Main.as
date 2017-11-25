@@ -86,19 +86,19 @@
 			strangerList = []
 			
 			tempStranger = new Stranger(500, 0, ["Accept it!", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [4], tempStranger], "Great!", ["fcn_skipToSayDialog", -1], "Why do you not want..."]);
-			strangerList.push(tempStranger);
+			strangerList[0] = tempStranger;
 			
-			tempStranger = new Stranger(2000, 0, ["Bento Sushi is going down!!!"]);
-			strangerList.push(tempStranger);
+			tempStranger = new Stranger(2000, 0, ["I wonder what this sushi place is called", "If only they would kindly pay us", "Then we can put a sign on the store", "Don't you agree?", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [8], tempStranger], "You're a sensible young man", "Now if only #$&@% Sushi staff are as sensible as you...", ["fcn_skipToSayDialog", -1], "WHAT?!?!?!", "Its a reasonable price for advertisement..."]);
+			strangerList[1] = tempStranger;
 			
 			tempStranger = new Stranger(1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!"]);
-			strangerList.push(tempStranger);
+			strangerList[2] = tempStranger;
 	
 			//ROOM CONSTRUCTION
 			var tempRoom:Room;
 			roomList = []
 			
-			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0]]);
+			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0], strangerList[1]]);
 			roomList.push(tempRoom);
 			
 			tempRoom = new Room(1800, WashroomMale, [doorList[1]], []);
@@ -111,7 +111,7 @@
 			tempRoom = new Room(800, BentoSushi, [doorList[5]], []);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], [strangerList[1]]);
+			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], [strangerList[2]]);
 			roomList.push(tempRoom);
 			
 			//tempRoom = new Room(1200, Stairs, [doorList[9]], []);
