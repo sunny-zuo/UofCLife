@@ -15,7 +15,7 @@
 		
 		//the animations for the accesories are frames 1 = idle right, 2 = idle left, 3-5 = walk left, 6-8 = walk right
 		
-		private var characterAccesories:Array = [2,1] // an array for accesories 1=hat 2=shirt 3=pants
+		private var characterAccesories:Array = [1,1] // an array for accesories 1=hat 2=shirt 3=pants
 		private var characterAccesoriesHolder:Array = []
 		private var characterBody:Array = [] 
 		
