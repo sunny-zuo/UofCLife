@@ -20,7 +20,7 @@
 				subjectID = 0; //if given something incorrect, change to general category
 			}
 			//Generates the URL to pull from, as it will need to change based on what we want
-			var apiURL: String = "https://opentdb.com/api.php?amount=" + 1 + "&category=" + subjectID + "&difficulty=" + difficulty + "&type=" + qType
+			var apiURL: String = "https://opentdb.com/api.php?amount=" + questionCount + "&category=" + subjectID + "&difficulty=" + difficulty + "&type=" + qType
 
 			//URL Loader
 			var urlRequest: URLRequest = new URLRequest(apiURL); //creates a URLRequest with the url generated above
