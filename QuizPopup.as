@@ -14,7 +14,10 @@
 		
 		private var currentQuestion:int = 0;
 		private var correctAnswer:int;
-
+		
+		private var correctCount:int = 0;
+		private var incorrectCount:int = 0;
+		
 		private var loadedData: Object;
 
 		private var questionBoxList: Array;
@@ -66,6 +69,58 @@
 					questionBoxList[i].text = loadedData.results[currentQuestion].incorrect_answers[answerPlaced];
 					answerPlaced++
 				}
+			}
+		}
+		
+		private function answer0picked(event:MouseEvent) {
+			if (correctAnswer == 0) {
+				correctCount++;
+				currentQuestion++;
+				generateQuestions();
+			}
+			if (correctAnswer != 0) {
+				incorrectCount++;
+				currentQuestion++;
+				generateQuestions();
+			}
+		}
+		
+		private function answer1picked(event:MouseEvent) {
+			if (correctAnswer == 1) {
+				correctCount++;
+				currentQuestion++;
+				generateQuestions();
+			}
+			if (correctAnswer != 1) {
+				incorrectCount++;
+				currentQuestion++;
+				generateQuestions();
+			}
+		}
+		
+		private function answer2picked(event:MouseEvent) {
+			if (correctAnswer == 2) {
+				correctCount++;
+				currentQuestion++;
+				generateQuestions();
+			}
+			if (correctAnswer != 2) {
+				incorrectCount++;
+				currentQuestion++;
+				generateQuestions();
+			}
+		}
+		
+		private function answer3picked(event:MouseEvent) {
+			if (correctAnswer == 3) {
+				correctCount++;
+				currentQuestion++;
+				generateQuestions();
+			}
+			if (correctAnswer != 3) {
+				incorrectCount++;
+				currentQuestion++;
+				generateQuestions();
 			}
 		}
 
