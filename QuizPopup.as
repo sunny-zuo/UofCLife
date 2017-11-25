@@ -54,6 +54,7 @@
 		private function timerGenerate(event: Event) {
 			if (timer != null) { //if the timer is there, remove it
 				timer.removeEventListener(TimerEvent.TIMER, generateQuestions);
+				timer.stop();
 				timer = null;
 			}
 			if (loadedData == null) { //if data is already saved locally, don't
@@ -82,7 +83,7 @@
 				currentQuestion++;
 				generateQuestions();
 			}
-			if (correctAnswer != 0) {
+			else if (correctAnswer != 0) {
 				incorrectCount++;
 				currentQuestion++;
 				generateQuestions();
@@ -95,7 +96,7 @@
 				currentQuestion++;
 				generateQuestions();
 			}
-			if (correctAnswer != 1) {
+			else if (correctAnswer != 1) {
 				incorrectCount++;
 				currentQuestion++;
 				generateQuestions();
@@ -108,7 +109,7 @@
 				currentQuestion++;
 				generateQuestions();
 			}
-			if (correctAnswer != 2) {
+			else if (correctAnswer != 2) {
 				incorrectCount++;
 				currentQuestion++;
 				generateQuestions();
@@ -121,7 +122,7 @@
 				currentQuestion++;
 				generateQuestions();
 			}
-			if (correctAnswer != 3) {
+			else if (correctAnswer != 3) {
 				incorrectCount++;
 				currentQuestion++;
 				generateQuestions();
