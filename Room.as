@@ -35,7 +35,7 @@
 		}
 		
 		private function addDoorToRoom(door:Door): void {
-			trace(Main.instance.doorList.indexOf(door));
+			//trace(Main.instance.doorList.indexOf(door));
 			door.x = door.xPos;
 			door.y = door.yPos;
 			addChild(door);

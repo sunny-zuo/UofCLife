@@ -11,25 +11,31 @@
 		//private var right: Boolean = false;
 		private var speed: int = 10; //the player speed
 		private var xDelta: DeltaAssist;
+		private var tempHolder;
+		
+		//the animations for the accesories are frames 1 = idle right, 2 = idle left, 3-5 = walk left, 6-8 = walk right
+		
+		private var characterAccesories:Array = [2,1] // an array for accesories 1=hat 2=shirt 3=pants
+		private var characterAccesoriesHolder:Array = []
+		private var characterBody:Array = [] 
+		
 		public var allowCharMove:Boolean = true;
 
 		public function Character(): void {
 			// constructor code
-			//draws a circle for the character
-			graphics.beginFill(0xFFFF00);
-			graphics.drawCircle(0, 0, 25);
-			graphics.endFill();
-			//adds evnt lister for when itself is added to stage
+		//adds evnt lister for when itself is added to stage
 			addEventListener(Event.ADDED_TO_STAGE, addedToStage)
 
 		}
 
 		//adds the event listeners once it is added to stage
 		private function addedToStage(event: Event): void {
+			drawAccesories(characterAccesories[0],characterAccesories[1])
 			addEventListener(Event.ENTER_FRAME, eFrame);
 			stage.addEventListener(MouseEvent.MOUSE_UP, MouseRelease);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, MousePress);
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStage)
+			
 		}
 
 		//moves the character left and right
@@ -37,10 +43,19 @@
 			if (allowCharMove) {
 				if (mouseDown) {
 					if (mouseX < 0) {
-						x -= speed;
+						walkLeft()
 					}
-					if (mouseX > 0) {
-						x += speed;
+					else {
+						walkRight()
+					}
+				} else {
+					if (mouseX < 0) {
+						gotoAndStop("idleLeft")
+						characterAccesoriesHolder[1].gotoAndStop("idleLeft")
+						
+					} else {
+						gotoAndStop("idleRight")
+						characterAccesoriesHolder[1].gotoAndPlay("idleRight")
 					}
 				}
 			}
@@ -74,6 +89,22 @@
 			}
 		}
 		
+		private function walkRight():void {
+			if(currentLabel != "walkRight") {
+				characterAccesoriesHolder[1].gotoAndPlay("walkRight")
+				gotoAndPlay("walkRight")
+			}
+			x += speed;
+		}
+		
+		private function walkLeft():void {
+			if(currentLabel != "walkLeft") {
+				characterAccesoriesHolder[1].gotoAndPlay("walkLeft")
+				gotoAndPlay("walkLeft")
+			}
+			x -= speed;
+		}
+		
 		private function enterDoor(door:Door){
 			Main.instance.objectContainer.removeChild(Main.instance.currentRoom);
 			//remove room currently in
@@ -90,6 +121,25 @@
 			
 			allowCharMove = true;
 			//allow the character to move again
+		}
+		
+		private function drawAccesories(HatType:Number, PantType:Number):void {
+			if (HatType == 1) {
+				tempHolder = new Hat1
+			} else if(HatType == 2) {
+				tempHolder = new Hat2
+			}
+			tempHolder.y = Main.instance.character.height*-1
+			characterAccesoriesHolder[0] = tempHolder
+			Main.instance.character.addChild(tempHolder)
+			
+			if(PantType == 1) {
+				tempHolder = new Pant1
+			}
+			
+			tempHolder.y = 0//Main.instance.character.height*-1
+			characterAccesoriesHolder[1] = tempHolder
+			Main.instance.character.addChild(tempHolder)
 		}
 
 	}

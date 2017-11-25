@@ -85,7 +85,7 @@
 			
 			tempStranger = new Stranger(1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!"]);
 			strangerList.push(tempStranger);
-			
+	
 			//ROOM CONSTRUCTION
 			var tempRoom:Room;
 			roomList = []
@@ -95,6 +95,7 @@
 			
 			tempRoom = new Room(1800, WashroomMale, [doorList[1]], []);
 			roomList.push(tempRoom);
+		
 			
 			tempRoom = new Room(1000, WashroomFemale, [doorList[3]], []);
 			roomList.push(tempRoom);
@@ -115,7 +116,7 @@
 			
 			//Adds the Character
 			character = new Character();
-			character.y = 400;
+			character.y = 545
 			
 			objectContainer.addChild(character);
 		}
