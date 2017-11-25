@@ -6,7 +6,7 @@
 	import flash.text.TextFormat;
 
 	public class Stranger extends MovieClip {
-
+		
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
 		private var strangerName: String = "";
@@ -21,6 +21,19 @@
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
 		public var xPos: Number; //where it's x will be
 		public var yPos: Number; //where it's y will be
+		
+		
+		
+		private const TALK_DISTANCE:Number = 250;
+		//how far you can be to talk to a character
+		
+		private var talkSymbol:MovieClip;
+		//talk symbol (exclamation mark)
+		private var talkAssist:DeltaAssist;
+		//delta assist for the talk symbol fading in and out
+		
+		private var symbolExist:Boolean;
+		//whether the talk symbol is currently being shown
 
 		//For below parameters:
 		//stangerName is a string to name the stranger (optional, leave as blank if needed)
@@ -33,7 +46,7 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(xPos:Number, yPos:Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = true, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null) {
+		public function Stranger(xPos:Number, yPos:Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null) {
 			// constructor code
 			
 			if (dialog == null) { //if there is no dialog given
@@ -58,7 +71,7 @@
 				this.randomDialog = randomDialog; //sets random dialog array to equal the array given here
 			}
 			strHeight = height; //sets his height to a static value
-
+			
 			init();
 		}
 
@@ -84,11 +97,46 @@
 			nameBox.setTextFormat(nameBoxFormat); //sets the textformat to the textfield
 			
 			addChild(nameBox); //adds the box
-
+			
+			//TALK SYMBOL (appears above head when you can talk to him when you are close enough)
+			talkSymbol = new TalkSymbol();
+			talkSymbol.y = -225;
+			talkSymbol.alpha = 0;
+			addChild(talkSymbol);
+			
+			talkAssist = new DeltaAssist(talkSymbol, ["alpha"]);
+			
+			addEventListener(Event.ENTER_FRAME, talkSymbolFrame);
+		}
+		
+		private function talkSymbolFrame(event:Event):void{
+			if(Math.abs(x - Main.instance.character.x) < TALK_DISTANCE){
+				var talking:Boolean = Boolean(textBox);
+				if(!talking && !symbolExist){
+					//if not talking and symbol does not exist
+					
+					talkAssist.setLinear(0.2, 1);
+					//turn on symbol
+					symbolExist = true;
+					//mark as existent
+				}else if(talking && symbolExist){
+					//if talking and symbol exists
+					talkAssist.setLinear(-0.2, 0);
+					//turn off symbol
+					symbolExist = false;
+					//mark it as nonexistent
+				}
+			}else{ //if too far away
+				if(symbolExist){
+					talkAssist.setLinear(-0.2, 0);
+					//turn off symbol
+					symbolExist = false;
+					//mark it as nonexistent
+				}
+			}
 		}
 
 		private function sayRandomDialog(event: Event): void { //Function for random dialog)
-
 			var randomNum = Math.ceil(Math.random() * randomDistance); //generates a random number from 1 to 1000
 			if (randomNum == 1 && !textBox) { //if the random number is 1 and there isn't already a textbox, create a new one
 
@@ -133,6 +181,11 @@
 			if (textBox) { //if textbox exists, remove it using close function of textBox
 				textBox.close();
 				textBox = null;
+			}
+			
+			if(Math.abs(x - Main.instance.character.x) > TALK_DISTANCE){
+				dialogTemp = [];
+				//stop talking
 			}
 
 			if (dialogTemp.length < 1) { //if no dialog exists, exit out of this function to prevent errors

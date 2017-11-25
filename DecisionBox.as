@@ -50,6 +50,9 @@
 			scaleAssist.setLinear(0.02, 1);
 			alphaAssist.setLinear(0.2, 1, activateButtons);
 			//pop up animation
+			
+			Main.instance.character.allowCharMove = false;
+			//don't let character move while this menu is on
 		}
 		
 		private function activateButtons():void{
@@ -99,6 +102,9 @@
 			scaleAssist.setLinear(-0.02, 0.08);
 			alphaAssist.setLinear(-0.2, 0, cleanUp);
 			//pop out animation
+			
+			Main.instance.character.allowCharMove = true;
+			//let character move when menu disappears
 		}
 		
 		private function cleanUp():void{
