@@ -31,6 +31,9 @@ package  {
 		private var scaleAssist:DeltaAssist;
 		//controls scaling of the text box (used for popping up and out)
 		
+		private var textAlphaAssist:DeltaAssist;
+		//controls scaling of the text box (used for popping up and out)
+		
 		public function TextBox(displayString:String, textSource:Stranger) {
 			/*CONSTRUCTOR
 			PARAMETERS:
@@ -45,7 +48,7 @@ package  {
 			
 			if (displayString != null) { //if there is text provided
 				scaleAssist = new DeltaAssist(this, ["scaleX", "scaleY"]);
-			
+				
 				open();
 				//open the textbox
 			}
@@ -70,6 +73,10 @@ package  {
 			//completely collapse textbox as it spawns
 			
 			scaleAssist.setLogarithmic(1, 0.25);
+			
+			txt_display.alpha = -20;
+			textAlphaAssist = new DeltaAssist(txt_display, ["alpha"]);
+			textAlphaAssist.setLogarithmic(1, 0.2);
 		}
 		
 		public function close():void{
@@ -82,6 +89,9 @@ package  {
 			
 			scaleAssist.setAccelerate(0.1, -0.02);
 			//set a pop-out scaling mode for the textbox
+			
+			textAlphaAssist.setLogarithmic(-1, 0.2);
+			//make text disappear fast
 			
 			addEventListener(Event.ENTER_FRAME, checkFullCollapse);
 			//begin collapse of the text box
@@ -152,7 +162,7 @@ package  {
 			//allow the text display in several lines
 			
 			txt_display.defaultTextFormat = TextController.newTextFormat(20);
-			//set the text format of the textbox to font size 10			
+			//set the text format of the textbox to font size 20
 			
 			addChild(txt_display);
 			//add the textfield to this MovieClip

@@ -4,7 +4,9 @@
 		//function that executes when delta has finished changing
 		
 		private var funcParam:Array;
-		//function that executes when delta has finished changing				public function DeltaAssist(parentObj:DisplayObject, varNames:Array) {			this.parentObj = parentObj;			this.varNames = varNames;			//set local variables						changing = false;			//inactive when first created		}				public function setActive(changing:Boolean = true){			if(this.changing != changing){				//parameter state is different from what state it is currently in								this.changing = changing;				//set changing to new state								if(changing){					parentObj.addEventListener(Event.ENTER_FRAME, changeFrame);				}				else{					parentObj.removeEventListener(Event.ENTER_FRAME, changeFrame);				}			}		}				public function setLogarithmic(valueTarget:Number, changeFactor:Number, finishFunc:Function = null, funcParam:Array = null):void{			/*			PARAMETERS:			valueTarget = new value of valueTarget			changeFactor = new value of changeFactor			DO:			Sets this to change the variable logarithmically when provided with valid parameters.			*/						if(changeFactor < 0 || changeFactor > 1){				trace("ERROR: Unable to change to logarithmic mode. Enter a value between 0 and 1 for changeFactor");				return;			}						deltaMode = "Logarithmic";			this.valueTarget = valueTarget;			this.changeFactor = changeFactor;
+		//function that executes when delta has finished changing				public function DeltaAssist(parentObj:DisplayObject, varNames:Array) {			this.parentObj = parentObj;			this.varNames = varNames;			//set local variables						changing = false;			//inactive when first created		}				public function setActive(changing:Boolean = true){			if(this.changing != changing){				//parameter state is different from what state it is currently in								this.changing = changing;				//set changing to new state								if(changing){
+					trace(parentObj);					parentObj.addEventListener(Event.ENTER_FRAME, changeFrame);
+					trace(parentObj);				}				else{					parentObj.removeEventListener(Event.ENTER_FRAME, changeFrame);				}			}		}				public function setLogarithmic(valueTarget:Number, changeFactor:Number, finishFunc:Function = null, funcParam:Array = null):void{			/*			PARAMETERS:			valueTarget = new value of valueTarget			changeFactor = new value of changeFactor			DO:			Sets this to change the variable logarithmically when provided with valid parameters.			*/						if(changeFactor < 0 || changeFactor > 1){				trace("ERROR: Unable to change to logarithmic mode. Enter a value between 0 and 1 for changeFactor");				return;			}						deltaMode = "Logarithmic";			this.valueTarget = valueTarget;			this.changeFactor = changeFactor;
 			this.finishFunc = finishFunc;			this.funcParam = funcParam;
 						setActive();		}				public function setLinear(changeSpeed:Number, valueTarget = null, finishFunc:Function = null, funcParam:Array = null):void{			/*			PARAMETERS:			changeSpeed = new value of changeSpeed			valueTarget = value to stop changing once the value is at this number			DO:			Sets this to change the variable linearly.			*/			deltaMode = "Linear";			this.changeSpeed = changeSpeed;
 			this.finishFunc = finishFunc;
@@ -12,19 +14,55 @@
 						if(valueTarget is Number){				useTarget = true;				//use the value target to compute changes				this.valueTarget = valueTarget;			}						setActive();		}				public function setAccelerate(changeSpeed:Number, changeAccel:Number, valueTarget = null, finishFunc:Function = null, funcParam:Array = null):void{			/*			PARAMETERS:			changeSpeed = new value of changeSpeed			changeAccel = new value of changeAccel			DO:			Sets this to change the variable acceleratively.			*/			deltaMode = "Accelerate";			this.changeSpeed = changeSpeed;			this.changeAccel = changeAccel;
 			this.finishFunc = finishFunc;
 			this.funcParam = funcParam;
-						if(valueTarget is Number){				useTarget = true;				//use the value target to compute changes				this.valueTarget = valueTarget;			}						setActive();		}				private function changeFrame(event:Event):void{			/*			DO:			Changes the variable. This event function is added when changing is set to true, and is removed when changing is set to false.			*/						if(deltaMode == "Logarithmic"){				for(var i:int = 0; i < varNames.length; i++){					parentObj[varNames[i]] += (valueTarget - parentObj[varNames[i]]) * changeFactor;					//logarithmic growth					//trace(parentObj[varNames[i]] - valueTarget);					if(Math.abs(parentObj[varNames[i]] - valueTarget) < 0.01){						//if it is very close to its valueTarget, then stop the logarithmic growth						setActive(false);						//disable growth
+						if(valueTarget is Number){				useTarget = true;				//use the value target to compute changes				this.valueTarget = valueTarget;			}						setActive();		}				private function changeFrame(event:Event):void{			/*			DO:			Changes the variable. This event function is added when changing is set to true, and is removed when changing is set to false.			*/						if(deltaMode == "Logarithmic"){
+				parentObj[varNames[0]] += (valueTarget - parentObj[varNames[0]]) * changeFactor;
+				//logarithmic growth
+				
+				if(Math.abs(parentObj[varNames[0]] - valueTarget) < 0.01){
+					//if it is very close to its valueTarget, then stop the logarithmic growth
+					setActive(false);
+					//disable growth
+					if(finishFunc != null){
+						//if finishFunc is not null
+						finishFunc.apply(parentObj, funcParam);
+						//run the function when it reaches the goal
+					}
+				}
+								for(var i:int = 1; i < varNames.length; i++){					parentObj[varNames[i]] = parentObj[varNames[0]];
+					//copy it to all the other variables				}			}			else if(deltaMode == "Linear"){
+				parentObj[varNames[0]] += changeSpeed;
+				//linear growth
+				if(useTarget){
+					if(Math.abs(valueTarget - parentObj[varNames[0]]) <= Math.abs(changeSpeed)){
+						//value is very close to target value
+						parentObj[varNames[0]] = valueTarget;
+						//set it to the target value
+						setActive(false);
+						//disable change
 						if(finishFunc != null){
-							//if finishFunc is not null
+						//if finishFunc is not null
 							finishFunc.apply(parentObj, funcParam);
 							//run the function when it reaches the goal
-						}					}				}			}			else if(deltaMode == "Linear"){				for(var j:int = 0; j < varNames.length; j++){					parentObj[varNames[j]] += changeSpeed;					//linear growth					if(useTarget){						if(Math.abs(valueTarget - parentObj[varNames[j]]) <= Math.abs(changeSpeed)){							//value is very close to target value							parentObj[varNames[j]] = valueTarget;							//set it to the target value							setActive(false);							//disable change
-							if(finishFunc != null){
-							//if finishFunc is not null
-								finishFunc.apply(parentObj, funcParam);
-								//run the function when it reaches the goal
-							}						}					}				}			}			else if(deltaMode == "Accelerate"){				for(var k:int = 0; k < varNames.length; k++){					changeSpeed += changeAccel;					parentObj[varNames[k]] += changeSpeed;					//acceleration growth					if(useTarget){						if(Math.abs(valueTarget - parentObj[varNames[j]]) <= Math.abs(valueTarget - (parentObj[varNames[j]] + changeSpeed))){							//value is very close to target value							parentObj[varNames[j]] = valueTarget;							//set it to the target value							setActive(false);							//disable change
-							if(finishFunc != null){
-							//if finishFunc is not null
-								finishFunc.apply(parentObj, funcParam);
-								//run the function when it reaches the goal
-							}						}					}				}			}			else{				trace("ERROR: Mode not found!");			}		}	}	}
+						}
+					}
+				}				for(var j:int = 1; j < varNames.length; j++){					parentObj[varNames[j]] = parentObj[varNames[0]];
+					//copy it to all the other variables				}			}			else if(deltaMode == "Accelerate"){
+				changeSpeed += changeAccel;
+				parentObj[varNames[0]] += changeSpeed;
+				//acceleration growth
+				if(useTarget){
+					if(Math.abs(valueTarget - parentObj[varNames[0]]) <= Math.abs(valueTarget - (parentObj[varNames[0]] + changeSpeed))){
+						//value is very close to target value
+						parentObj[varNames[0]] = valueTarget;
+						//set it to the target value
+						setActive(false);
+						//disable change
+						if(finishFunc != null){
+						//if finishFunc is not null
+							finishFunc.apply(parentObj, funcParam);
+							//run the function when it reaches the goal
+						}
+					}
+				}
+								for(var k:int = 0; k < varNames.length; k++){					parentObj[varNames[k]] = parentObj[varNames[0]];
+					//copy it to all the other variables				}			}			else{				trace("ERROR: Mode not found!");			}		}	}	}
