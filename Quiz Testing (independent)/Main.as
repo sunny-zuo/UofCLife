@@ -3,7 +3,7 @@
 
 	public class Main extends MovieClip{
 		public function Main() {
-			var quizPopup:QuizPopup = new QuizPopup(50, "VideoGames", "easy");
+			var quizPopup:QuizPopup = new QuizPopup(2, "Geography", "easy");
 			addChild(quizPopup);
 			quizPopup.x += 360;
 			quizPopup.y += 240;

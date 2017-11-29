@@ -25,6 +25,7 @@
 		private var questionAPI: QuestionAPI = new QuestionAPI(); //links with QuestionAPI
 		private var correctSymbol: CorrectSymbol = new CorrectSymbol();
 		private var incorrectSymbol: IncorrectSymbol = new IncorrectSymbol();
+		private var quizEnding:QuizEnding;
 
 		public function QuizPopup(questionCount: int, subject: String, difficulty: String, qType: String = "multiple") {
 			// constructor code
@@ -60,43 +61,44 @@
 		}
 
 		private function generateQuestions() {
-			questionText.text = loadedData.results[currentQuestion].question; //sets the question textbox to the current question
-			questionText.text = questionText.text.replace(/&#039;/g, "\'")
-			questionText.text = questionText.text.replace(/&#034;/g, "\"")
-			questionText.text = questionText.text.replace(/&quot;/g, "\"")
-			questionText.text = questionText.text.replace(/&uuml;/g, "ü")
-			questionText.text = questionText.text.replace(/&ouml;/g, "ö")
+			questionText.text = removeASCII(loadedData.results[currentQuestion].question); //sets the question textbox to the current question
 
 			correctAnswer = Math.floor(Math.random() * 4); //picks a number between 0 and 3 to be the correct answer
 
-			questionBoxList[correctAnswer].text = loadedData.results[currentQuestion].correct_answer; //fills the answer box that was picked with the answer
-			questionBoxList[correctAnswer].text = questionBoxList[correctAnswer].text.replace(/&#039;/g, "\'")
-			questionBoxList[correctAnswer].text = questionBoxList[correctAnswer].text.replace(/&#034;/g, "\"")
-			questionBoxList[correctAnswer].text = questionBoxList[correctAnswer].text.replace(/&quot;/g, "\"")
-			questionBoxList[correctAnswer].text = questionBoxList[correctAnswer].text.replace(/&uuml;/g, "ü")
-			questionBoxList[correctAnswer].text = questionBoxList[correctAnswer].text.replace(/&ouml;/g, "ö")
+			questionBoxList[correctAnswer].text = removeASCII(loadedData.results[currentQuestion].correct_answer); //fills the answer box that was picked with the answer
 
 			var answerPlaced: int = 0; //next incorrect answer to fill
 			for (var i: int = 0; i < 4; i++) {
 				if (questionBoxList[i].text != loadedData.results[currentQuestion].correct_answer) { //if answer is not the correct answer, then fill it (box is empty/filled with old info)
-					questionBoxList[i].text = loadedData.results[currentQuestion].incorrect_answers[answerPlaced]; //places the answer
-
-					questionBoxList[i].text = questionBoxList[i].text.replace(/&#039;/g, "\'")
-					questionBoxList[i].text = questionBoxList[i].text.replace(/&#034;/g, "\"")
-					questionBoxList[i].text = questionBoxList[i].text.replace(/&quot;/g, "\"")
-					questionBoxList[i].text = questionBoxList[i].text.replace(/&uuml;/g, "ü")
-					questionBoxList[i].text = questionBoxList[i].text.replace(/&ouml;/g, "ö")
-
+					questionBoxList[i].text = removeASCII(loadedData.results[currentQuestion].incorrect_answers[answerPlaced]); //places the answer
 					answerPlaced++
 				}
 			}
+		}
+		
+		private function removeASCII(input:String) {
+			input = input.replace(/&#039;/g, "\'");
+			input = input.replace(/&#034;/g, "\"");
+			input = input.replace(/&quot;/g, "\"");
+			input = input.replace(/&uuml;/g, "ü");
+			input = input.replace(/&eacute;/g, "é");
+			input = input.replace(/&ouml;/g, "ö");
+			input = input.replace(/&Uuml;/g, "Ü");
+			return(input);
 		}
 
 		private function answerCorrect() {
 			correctCount++;
 			addChild(correctSymbol);
 			currentQuestion++;
-			generateQuestions();
+			if (currentQuestion >= questionCount) {
+				quizEnding = new QuizEnding(correctCount, incorrectCount, 80);
+				addChild(quizEnding);
+				addEventListener(Event.ENTER_FRAME, waitToClose);
+			}
+			else {
+				generateQuestions();
+			}
 		}
 
 		private function answerIncorrect() {
@@ -104,7 +106,23 @@
 			incorrectSymbol.correctAnswerText.text = "The correct answer is " + questionBoxList[correctAnswer].text + ".";
 			addChild(incorrectSymbol);
 			currentQuestion++;
-			generateQuestions();
+			if (currentQuestion >= questionCount) {
+				quizEnding = new QuizEnding(correctCount, incorrectCount, 80);
+				addChild(quizEnding);
+				addEventListener(Event.ENTER_FRAME, waitToClose);
+			}
+			else {
+				generateQuestions();
+			}
+		}
+		
+		private function waitToClose(event:Event) {
+			if (quizEnding != null) {
+				if (quizEnding.readyToClose) {
+					this.parent.removeChild(this);
+					removeEventListener(Event.ENTER_FRAME, waitToClose);
+				}
+			}
 		}
 		private function answer0picked(event: MouseEvent) {
 			if (correctAnswer == 0) {
