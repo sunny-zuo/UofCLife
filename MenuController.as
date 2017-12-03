@@ -26,21 +26,21 @@
 			Main.instance.menuContainer.addChild(tempDecisionBox);
 		}
 		
-		/*public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, qType:String):void{
+		public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, qType:String):void{
 			/*
 			PARAMETERS:
 			?????? Refer to the class
 			DO:
 			Creates a quiz pop up inside the menuContainer.
-			
-			var tempQuizPopUp:DecisionBox = new DecisionBox(questionCount, topic, difficulty, qType);
+			*/
+			var tempQuizPopUp:QuizPopup = new QuizPopup(questionCount, topic, difficulty, qType);
 			
 			tempQuizPopUp.x = Main.stg.stageWidth/2;
 			tempQuizPopUp.y = Main.stg.stageHeight/2;
-			//centers the decision box
+			//centers the quiz box
 			
 			Main.instance.menuContainer.addChild(tempQuizPopUp);
-		}*/
+		}
 
 	}
 	
