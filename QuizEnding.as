@@ -11,7 +11,7 @@
 		
 		public var readyToClose:Boolean = false;
 
-		public function QuizEnding(questionsCorrect:int, questionsIncorrect:int, passingPercentage:int) {
+		public function QuizEnding(questionsCorrect:int, questionsIncorrect:int, passingPercentage:Number) {
 			// constructor code
 			this.questionsCorrect = questionsCorrect;
 			this.questionsIncorrect = questionsIncorrect;

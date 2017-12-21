@@ -26,13 +26,15 @@
 		private var correctSymbol: CorrectSymbol = new CorrectSymbol();
 		private var incorrectSymbol: IncorrectSymbol = new IncorrectSymbol();
 		private var quizEnding:QuizEnding;
+		private var passingPercentage:Number;
 
-		public function QuizPopup(questionCount: int, subject: String, difficulty: String, qType: String = "multiple") {
+		public function QuizPopup(questionCount: int, subject: String, difficulty: String, qType: String = "multiple", passingPercentage:Number = 80) {
 			// constructor code
 			this.questionCount = questionCount; //converts the parameters given into local variables
 			this.topic = subject;
 			this.difficulty = difficulty;
 			this.qType = qType;
+			this.passingPercentage = passingPercentage;
 			init();
 		}
 
@@ -92,7 +94,7 @@
 			addChild(correctSymbol);
 			currentQuestion++;
 			if (currentQuestion >= questionCount) {
-				quizEnding = new QuizEnding(correctCount, incorrectCount, 80);
+				quizEnding = new QuizEnding(correctCount, incorrectCount, passingPercentage);
 				addChild(quizEnding);
 				addEventListener(Event.ENTER_FRAME, waitToClose);
 			}
@@ -107,7 +109,7 @@
 			addChild(incorrectSymbol);
 			currentQuestion++;
 			if (currentQuestion >= questionCount) {
-				quizEnding = new QuizEnding(correctCount, incorrectCount, 80);
+				quizEnding = new QuizEnding(correctCount, incorrectCount, passingPercentage);
 				addChild(quizEnding);
 				addEventListener(Event.ENTER_FRAME, waitToClose);
 			}

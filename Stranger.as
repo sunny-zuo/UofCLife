@@ -266,6 +266,10 @@
 			
 			sayDialog(); //runs function to have him talk
 		}
+		
+		private function generateQuiz(questionCount:int, topic:String, difficulty:String, qType:String = "multiple", passingGrade:Number = 80) {
+			MenuController.generateQuizPopUp(questionCount, topic, difficulty, qType, passingGrade);
+		}
 
 	}
 
