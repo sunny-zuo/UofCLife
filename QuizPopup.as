@@ -27,14 +27,26 @@
 		private var incorrectSymbol: IncorrectSymbol = new IncorrectSymbol();
 		private var quizEnding:QuizEnding;
 		private var passingPercentage:Number;
+		
+		private var pass:Function;
+		private var passParams:Array;
+		private var fail:Function;
+		private var failParams:Array;
+		private var applyTarget:Object;
 
-		public function QuizPopup(questionCount: int, subject: String, difficulty: String, qType: String = "multiple", passingPercentage:Number = 80) {
+		public function QuizPopup(questionCount: int, subject: String, difficulty: String, qType: String = "multiple", passingPercentage:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
 			// constructor code
 			this.questionCount = questionCount; //converts the parameters given into local variables
 			this.topic = subject;
 			this.difficulty = difficulty;
 			this.qType = qType;
 			this.passingPercentage = passingPercentage;
+			
+			this.pass = pass;
+			this.passParams = passParams;
+			this.fail = fail;
+			this.failParams = failParams;
+			this.applyTarget = applyTarget;
 			init();
 		}
 
