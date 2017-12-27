@@ -91,7 +91,7 @@
 			tempStranger = new Stranger(2000, 0, ["I wonder what this sushi place is called", "If only they would kindly pay us", "Then we can put a sign on the store", "Don't you agree?", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [8], tempStranger], "You're a sensible young man", "Now if only #$&@% Sushi staff are as sensible as you...", ["fcn_skipToSayDialog", -1], "WHAT?!?!?!", "Its a reasonable price for advertisement...", ["fcn_skipToSayDialog", -1]]);
 			strangerList[1] = tempStranger;
 			
-			tempStranger = new Stranger(1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [5, "Geography", "easy", "multiple", 20], "fcn_skipToSayDialog", [3], tempStranger], "Fight me scrub", ["fcn_skipToSayDialog", -1]]);
+			tempStranger = new Stranger(1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [10, "VideoGames", "hard", 15, "multiple", 70], "fcn_skipToSayDialog", [3], tempStranger], "Fight me scrub", ["fcn_skipToSayDialog", -1]]);
 			strangerList[2] = tempStranger;
 			
 	

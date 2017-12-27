@@ -26,14 +26,14 @@
 			Main.instance.menuContainer.addChild(tempDecisionBox);
 		}
 		
-		public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, qType:String = "multiple", passingGrade:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null):void{
+		public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, thinkTime:int = 15, qType:String = "multiple", passingGrade:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null):void{
 			/*
 			PARAMETERS:
 			?????? Refer to the class
 			DO:
 			Creates a quiz pop up inside the menuContainer.
 			*/
-			var tempQuizPopUp:QuizPopup = new QuizPopup(questionCount, topic, difficulty, qType, passingGrade, pass, passParams, fail, failParams, applyTarget);
+			var tempQuizPopUp:QuizPopup = new QuizPopup(questionCount, topic, difficulty, thinkTime, qType, passingGrade, pass, passParams, fail, failParams, applyTarget);
 			
 			tempQuizPopUp.x = Main.stg.stageWidth/2;
 			tempQuizPopUp.y = Main.stg.stageHeight/2;

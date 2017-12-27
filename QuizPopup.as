@@ -27,6 +27,10 @@
 		private var incorrectSymbol: IncorrectSymbol = new IncorrectSymbol();
 		private var quizEnding:QuizEnding;
 		private var passingPercentage:Number;
+		private var thinkTime:int;
+		private var tempThinkTime:int;
+		
+		private var questionTimer:Timer;
 		
 		private var pass:Function;
 		private var passParams:Array;
@@ -34,19 +38,20 @@
 		private var failParams:Array;
 		private var applyTarget:Object;
 
-		public function QuizPopup(questionCount: int, subject: String, difficulty: String, qType: String = "multiple", passingPercentage:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
+		public function QuizPopup(questionCount: int, subject: String, difficulty: String, thinkTime:int = 15, qType: String = "multiple", passingPercentage:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
 			// constructor code
 			this.questionCount = questionCount; //converts the parameters given into local variables
 			this.topic = subject;
 			this.difficulty = difficulty;
 			this.qType = qType;
 			this.passingPercentage = passingPercentage;
-			
+			this.thinkTime = thinkTime;
 			this.pass = pass;
 			this.passParams = passParams;
 			this.fail = fail;
 			this.failParams = failParams;
 			this.applyTarget = applyTarget;
+			this.tempThinkTime = thinkTime;
 			init();
 		}
 
@@ -62,6 +67,7 @@
 			answer1.addEventListener(MouseEvent.CLICK, answer1picked);
 			answer2.addEventListener(MouseEvent.CLICK, answer2picked);
 			answer3.addEventListener(MouseEvent.CLICK, answer3picked);
+			
 
 			addEventListener(Event.ENTER_FRAME, waitForLoad);
 		}
@@ -88,6 +94,23 @@
 					answerPlaced++
 				}
 			}
+			
+			questionTimer = new Timer(1000, tempThinkTime);
+			trace(thinkTime);
+			trace(tempThinkTime);
+			
+			this.timerBacking.timeLeft.text = tempThinkTime;
+			
+			questionTimer.addEventListener(TimerEvent.TIMER, timerChange);
+			questionTimer.start();
+		}
+		
+		private function timerChange(event:TimerEvent) {
+			tempThinkTime -= 1;
+			timerBacking.timeLeft.text = tempThinkTime;
+			if (tempThinkTime <= 0) {
+				answerIncorrect();
+			}
 		}
 		
 		private function removeASCII(input:String) {
@@ -98,6 +121,8 @@
 			input = input.replace(/&eacute;/g, "é");
 			input = input.replace(/&ouml;/g, "ö");
 			input = input.replace(/&Uuml;/g, "Ü");
+			input = input.replace(/&rsquo;/g, "'");
+			input = input.replace(/&sup2;/g, "²");
 			return(input);
 		}
 
@@ -105,12 +130,17 @@
 			correctCount++;
 			addChild(correctSymbol);
 			currentQuestion++;
+			
+			if (questionTimer) {
+				questionTimer.stop();
+				questionTimer = null;
+			}
+			
 			if (currentQuestion >= questionCount) {
-				quizEnding = new QuizEnding(correctCount, incorrectCount, passingPercentage);
-				addChild(quizEnding);
-				addEventListener(Event.ENTER_FRAME, waitToClose);
+				createResultPage(1000);
 			}
 			else {
+				tempThinkTime = thinkTime + 1;
 				generateQuestions();
 			}
 		}
@@ -120,14 +150,31 @@
 			incorrectSymbol.correctAnswerText.text = "The correct answer is " + questionBoxList[correctAnswer].text + ".";
 			addChild(incorrectSymbol);
 			currentQuestion++;
+
+			if (questionTimer) {
+				questionTimer.stop();
+				questionTimer = null;
+			}
+			
 			if (currentQuestion >= questionCount) {
-				quizEnding = new QuizEnding(correctCount, incorrectCount, passingPercentage);
-				addChild(quizEnding);
-				addEventListener(Event.ENTER_FRAME, waitToClose);
+				createResultPage(2000);
 			}
 			else {
+				tempThinkTime = thinkTime + 2;
 				generateQuestions();
 			}
+		}
+		
+		private function createResultPage(mills:int) {
+			var timer:Timer = new Timer(mills, 1);
+			timer.start();
+			timer.addEventListener(TimerEvent.TIMER_COMPLETE, showResultPage);
+		}
+		
+		private function showResultPage(e:TimerEvent) {
+			quizEnding = new QuizEnding(correctCount, incorrectCount, passingPercentage);
+			addChild(quizEnding);
+			addEventListener(Event.ENTER_FRAME, waitToClose);
 		}
 		
 		private function waitToClose(event:Event) {

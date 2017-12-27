@@ -267,8 +267,8 @@
 			sayDialog(); //runs function to have him talk
 		}
 		
-		private function generateQuiz(questionCount:int, topic:String, difficulty:String, qType:String = "multiple", passingGrade:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
-			MenuController.generateQuizPopUp(questionCount, topic, difficulty, qType, passingGrade, pass, passParams, fail, failParams, applyTarget);
+		private function generateQuiz(questionCount:int, topic:String, difficulty:String, thinkTime:int = 15, qType:String = "multiple", passingGrade:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
+			MenuController.generateQuizPopUp(questionCount, topic, difficulty, thinkTime, qType, passingGrade, pass, passParams, fail, failParams, applyTarget);
 		}
 
 	}
