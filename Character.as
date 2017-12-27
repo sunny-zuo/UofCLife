@@ -8,7 +8,7 @@
 
 	public class Character extends MovieClip {
 		private var mouseDown: Boolean = false; //left and right booleans
-		//private var right: Boolean = false;
+		private var characterMovementDirection = "IDLE"
 		private var speed: int = 10; //the player speed
 		private var xDelta: DeltaAssist;
 		private var tempHolder;
@@ -20,7 +20,8 @@
 		private var characterBody: Array = []
 		private var uncontrolledMove: String = ""
 
-		public var allowCharMove: Boolean = true;
+		public var allowCharMove: Boolean = true; //this is a variable that will prevent the character from moving under ANY circumstances
+		public var allowPlayerControl: Boolean = true; //variable that determines weather the PLAYER can control the characters movements. Allows for non player movement
 
 		public function Character(): void {
 			// constructor code
@@ -41,34 +42,56 @@
 
 		//moves the character left and right
 		private function eFrame(event: Event): void {
-
-
-
+	
+			
 			if (allowCharMove) {
-				if (mouseDown) {
-					if (mouseX < 0) {
-						walkLeft(true)
-					} else {
-						walkRight(true)
-					}
-				} else {
-					if (mouseX < 0) {
-
-						gotoAndStop("idleLeft")
-						//characterAccesoriesHolder[1].gotoAndStop("idleLeft")
-
-					} else {
-
-						gotoAndStop("idleRight")
-						//characterAccesoriesHolder[1].gotoAndPlay("idleRight")
+				if (allowPlayerControl) {
+					if (mouseDown) { //updates the characters move state
+						if (mouseX < 0) {
+							characterMovementDirection = "LEFT"
+						} else {
+							characterMovementDirection = "RIGHT"
+						}
+					} else { //if the mouse is up, idle
+						characterMovementDirection = "IDLE"
 					}
 				}
 
-			} else if (uncontrolledMove == "left") {
-				walkLeft(false)
-			} else if (uncontrolledMove == "right") {
-				walkRight(false)
+				//moves the charactrer according to the characterMovementDirection
+				if (characterMovementDirection == "RIGHT") {
+					walkRight(true)
+				} else if (characterMovementDirection == "LEFT") {
+					walkLeft(true)
+				} else {
+					if (mouseX < 0) {
+						gotoAndStop("idleLeft")
+					} else {
+						gotoAndStop("idleRight")
+					}
+				}
+
+				//if the character is moving in a "cutscene"
+				if (uncontrolledMove == "left") {
+					walkLeft(false)
+				} else if (uncontrolledMove == "right") {
+					walkRight(false)
+				}
+			} else {
+				
+				//Idles the character in a way that it won't turn to face the mouse
+				if (currentLabel != "idleLeft") {
+					if (currentLabel != "idleRight") {
+						if (mouseX < 0) {
+							gotoAndStop("idleLeft")
+						} else {
+							gotoAndStop("idleRight")
+						}
+
+					}
+				}
 			}
+
+
 
 			//boundries
 			if (x - width / 2 < 0) {
@@ -88,7 +111,9 @@
 			mouseDown = true;
 		}
 
+		//moves the character to the door
 		public function moveCharToDoor(door: Door) {
+			
 			if (xDelta) {
 				xDelta.setActive(false);
 			}
@@ -105,7 +130,6 @@
 		private function walkRight(moveCharacter: Boolean): void {
 
 			if (currentLabel != "walkRight") {
-				//characterAccesoriesHolder[1].gotoAndPlay("walkRight")
 				gotoAndPlay("walkRight")
 			}
 			if (moveCharacter) {
@@ -117,7 +141,6 @@
 
 
 			if (currentLabel != "walkLeft") {
-				//characterAccesoriesHolder[1].gotoAndPlay("walkLeft")
 				gotoAndPlay("walkLeft")
 
 			}
@@ -140,25 +163,25 @@
 
 			x = exitDoor.x;
 
-			allowCharMove = true;
+			allowPlayerControl = true;
 			//allow the character to move again
 			uncontrolledMove = ""
 		}
 
 		private function drawAccesories(HatType: Number, PantType: Number): void {
-			if (HatType == 1) {
+			/*			if (HatType == 1) {
 				tempHolder = new Hat1
 			} else if (HatType == 2) {
 				tempHolder = new Hat2
 			}
 			tempHolder.y = Main.instance.character.height * -1
 			characterAccesoriesHolder[0] = tempHolder
-			Main.instance.character.addChild(tempHolder)
+			Main.instance.character.addChild(tempHolder)*/
 
-			this.pant1.gotoAndStop(characterAccesories[1])
-			this.pant2.gotoAndStop(characterAccesories[1])
+			this.pant1.gotoAndStop(1)
+			/*			this.pant2.gotoAndStop(characterAccesories[1])
 			this.pant3.gotoAndStop(characterAccesories[1])
-			this.pant4.gotoAndStop(characterAccesories[1])
+			this.pant4.gotoAndStop(characterAccesories[1])*/
 
 		}
 

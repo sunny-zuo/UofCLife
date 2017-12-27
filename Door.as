@@ -63,7 +63,7 @@
 		//moves the character to the door if the character is close to the door and the player taps the door
 		private function onDoorClick(event:MouseEvent):void {
 			if(characterIsCloseToDoor) {
-				Main.instance.character.allowCharMove = false; //prevents the player from moving
+				Main.instance.character.allowPlayerControl = false; //prevents the player from moving
 				Main.instance.character.moveCharToDoor(this); //moves the player to the door automatically using delta
 				
 				
