@@ -96,8 +96,6 @@
 			}
 			
 			questionTimer = new Timer(1000, tempThinkTime);
-			trace(thinkTime);
-			trace(tempThinkTime);
 			
 			this.timerBacking.timeLeft.text = tempThinkTime;
 			
@@ -123,6 +121,7 @@
 			input = input.replace(/&Uuml;/g, "Ü");
 			input = input.replace(/&rsquo;/g, "'");
 			input = input.replace(/&sup2;/g, "²");
+			input = input.replace(/&amp;/g, "&");
 			return(input);
 		}
 
