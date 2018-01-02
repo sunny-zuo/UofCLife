@@ -29,12 +29,11 @@
 			this.failParams = failParams;
 			this.applyTarget = applyTarget;
 
-			obtainedPercentage = (questionsCorrect / (questionsCorrect + questionsIncorrect)) * 100;
+			obtainedPercentage = (questionsCorrect / (questionsCorrect + questionsIncorrect)) * 100; //calculates the percentage the player gets
 			init();
 		}
 
 		private function init(): void {
-			trace(obtainedPercentage)
 			this.quizPercentage.text = "You scored " + obtainedPercentage + "%";
 			if (obtainedPercentage >= passingPercentage) {
 				this.quizResult.text = "Congrats, you passed the quiz!";

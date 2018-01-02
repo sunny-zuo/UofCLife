@@ -14,10 +14,12 @@
 
 		public function fetchQuestions(questionCount: int, subject: String, difficulty: String, qType: String = "multiple") {
 			var subjectID: int; //int for storing the subject ID. converted from string to actual ID here for better readability
-			if (int(subject) != 0) {
+			/*if (int(subject) != 0) {
 				subjectID = int(subject);
-			}
-			else if (subject == "Geography") { //if the subject is geography, give it it's subjectID
+				trace(subject);
+			}*/
+			//Above doesn't work for some reason so commented out for now
+			if (subject == "Geography") { //if the subject is geography, give it it's subjectID
 				subjectID = 22;
 			} 
 			else if (subject == "VideoGames") {

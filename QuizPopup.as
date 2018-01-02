@@ -26,17 +26,17 @@
 		private var correctSymbol: CorrectSymbol = new CorrectSymbol();
 		private var incorrectSymbol: IncorrectSymbol = new IncorrectSymbol();
 		private var quizEnding:QuizEnding;
-		private var passingPercentage:Number;
-		private var thinkTime:int;
-		private var tempThinkTime:int;
+		private var passingPercentage:Number; //percentage, 0-100 that indicates what percentage the player needs to get to pass
+		private var thinkTime:int; //time the player is given to "think" for each quesiton
+		private var tempThinkTime:int; //temp version of thinkTime that is used to be modified, while keeping the original intact
 		
-		private var questionTimer:Timer;
+		private var questionTimer:Timer; //timer
 		
-		private var pass:Function;
-		private var passParams:Array;
-		private var fail:Function;
-		private var failParams:Array;
-		private var applyTarget:Object;
+		private var pass:Function; // function that is run should the player pass
+		private var passParams:Array; // params that are used for the function should the player pass
+		private var fail:Function; // function is the run should the player fail
+		private var failParams:Array; // params that are used for the function should the player pass
+		private var applyTarget:Object; //target for the function to be applied
 
 		public function QuizPopup(questionCount: int, subject: String, difficulty: String, thinkTime:int = 15, qType: String = "multiple", passingPercentage:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
 			// constructor code
@@ -73,10 +73,10 @@
 		}
 
 		private function waitForLoad(event: Event): void {
-			if (questionAPI.loadDone) {
-				loadedData = questionAPI.loadedData;
-				generateQuestions();
-				removeEventListener(Event.ENTER_FRAME, waitForLoad);
+			if (questionAPI.loadDone) { //waits for the data to be grabbed
+				loadedData = questionAPI.loadedData; //grabs loaded data from questionAPI
+				generateQuestions(); //generates the first question
+				removeEventListener(Event.ENTER_FRAME, waitForLoad); //removes the event listener as this function is no longer needed
 			}
 		}
 
@@ -91,32 +91,35 @@
 			for (var i: int = 0; i < 4; i++) {
 				if (questionBoxList[i].text != loadedData.results[currentQuestion].correct_answer) { //if answer is not the correct answer, then fill it (box is empty/filled with old info)
 					questionBoxList[i].text = removeASCII(loadedData.results[currentQuestion].incorrect_answers[answerPlaced]); //places the answer
-					answerPlaced++
+					answerPlaced++ 
 				}
 			}
 			
-			questionTimer = new Timer(1000, tempThinkTime);
+			questionTimer = new Timer(1000, tempThinkTime); // creates a timer of 1 second for tempThinkTime iterations
 			
-			this.timerBacking.timeLeft.text = tempThinkTime;
+			this.timerBacking.timeLeft.text = tempThinkTime; //sets the timer text to the count of tempThinkTime
 			
 			questionTimer.addEventListener(TimerEvent.TIMER, timerChange);
-			questionTimer.start();
+			questionTimer.start(); //starts the timer
 		}
 		
 		private function timerChange(event:TimerEvent) {
-			tempThinkTime -= 1;
-			timerBacking.timeLeft.text = tempThinkTime;
-			if (tempThinkTime <= 0) {
+			//after 1 second:
+			tempThinkTime -= 1; //reduce the time left by 1
+			timerBacking.timeLeft.text = tempThinkTime; //update the time left that is displayed
+			if (tempThinkTime <= 0) { //if there is no more time, the answer is incorrect
 				answerIncorrect();
 			}
 		}
 		
 		private function removeASCII(input:String) {
+			//Function to remove the ASCII that makes the question/answer hard to read. Add more when needed.
 			input = input.replace(/&#039;/g, "\'");
 			input = input.replace(/&#034;/g, "\"");
 			input = input.replace(/&quot;/g, "\"");
 			input = input.replace(/&uuml;/g, "ü");
 			input = input.replace(/&eacute;/g, "é");
+			input = input.replace(/&aacute;/g, "á");
 			input = input.replace(/&ouml;/g, "ö");
 			input = input.replace(/&Uuml;/g, "Ü");
 			input = input.replace(/&rsquo;/g, "'");
@@ -130,16 +133,16 @@
 			addChild(correctSymbol);
 			currentQuestion++;
 			
-			if (questionTimer) {
+			if (questionTimer) { //if the timer exists, destroy it
 				questionTimer.stop();
 				questionTimer = null;
 			}
 			
 			if (currentQuestion >= questionCount) {
-				createResultPage(1000);
+				createResultPage(1000); //creates the result page with a delay so the result of the final answer can be displayed
 			}
 			else {
-				tempThinkTime = thinkTime + 1;
+				tempThinkTime = thinkTime + 1; //sets the tempThinkTime to one more than the given thinkTime. This is because the timer runs while the screen that shows if the answer is correct/incorrect is up
 				generateQuestions();
 			}
 		}
