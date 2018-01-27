@@ -89,7 +89,7 @@
 			//close the pop up decision box
 		}
 		
-		private function closePopUp():void{
+		public function closePopUp():void{
 			/*
 			DO:
 			Closes the pop up decision box.

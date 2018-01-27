@@ -11,14 +11,14 @@
 		public static var instance: Main;
 		public static var stg: Stage;
 
+		private var achievementFront:AchievementFront = new AchievementFront();
 
+		
 		public var character: Character;
 		private var eduBld: Room;
 		private var enterSymbol: MovieClip;
 		private var left: Boolean = false;
 		private var right: Boolean = false;
-		
-		private var achievementFront:AchievementFront = new AchievementFront();
 		
 		
 		public var doorList:Array;
@@ -82,6 +82,9 @@
 					doorList[i].linkDoor = doorList[i-1];
 				}
 			}
+			//The Confession Board
+			var confessionBoard:ConfessionBoard = new ConfessionBoard(3000, -200);
+			
 			
 			//STRANGER CONSTRUCTION
 			var tempStranger:Stranger;
@@ -101,7 +104,7 @@
 			var tempRoom:Room;
 			roomList = []
 			
-			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0], strangerList[1]]);
+			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0], strangerList[1]], [confessionBoard]);
 			roomList.push(tempRoom);
 			
 			tempRoom = new Room(1800, WashroomMale, [doorList[1]], []);

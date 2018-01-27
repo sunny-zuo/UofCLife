@@ -1,4 +1,7 @@
 ﻿package  {
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
+	import flash.events.Event;
 	
 	public class ConfessionAPI {
 		public var loadedData:Object;
@@ -16,12 +19,18 @@
 			var urlRequest: URLRequest = new URLRequest(apiURL); //creates a URLRequest with the url generated above
 			var urlLoader: URLLoader = new URLLoader(); //creates a URLLoader
 			urlLoader.addEventListener(Event.COMPLETE, loadComplete) //adds an event listener to trigger when it's loaded
+			
+			try {
+				urlLoader.load(urlRequest); //tries to load from the URL
+			} catch (error: Error) {
+				trace("load error " + error); //if there's an error, will trace it
+			}
 		}
 		
 		private function loadComplete(event:Event):void{
 			var loader: URLLoader = URLLoader(event.target); //sets the URLLoader to the one generated above
 			loadDone = true;
-			trace(loader.data, JSON.parse(loader.data));
+			//trace(loader.data, JSON.parse(loader.data));
 			loadedData = JSON.parse(loader.data) //makes the data a public variable so it can accessed by other classes
 			/* Access data using loadedData.results[0].question where 0 is the question number, and "question" is the specific data you want.
 			more examples: loadedData.results[0].correct_answer gives the correct answer to the first question */

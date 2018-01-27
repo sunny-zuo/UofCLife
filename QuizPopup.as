@@ -4,6 +4,7 @@
 	import flash.events.TimerEvent;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import Controllers.TextController;
 
 	public class QuizPopup extends MovieClip {
 
@@ -79,16 +80,16 @@
 		}
 
 		private function generateQuestions() {
-			questionText.text = removeASCII(loadedData.results[currentQuestion].question); //sets the question textbox to the current question
+			questionText.text = TextController.removeASCII(loadedData.results[currentQuestion].question); //sets the question textbox to the current question
 
 			correctAnswer = Math.floor(Math.random() * 4); //picks a number between 0 and 3 to be the correct answer
 
-			questionBoxList[correctAnswer].text = removeASCII(loadedData.results[currentQuestion].correct_answer); //fills the answer box that was picked with the answer
+			questionBoxList[correctAnswer].text = TextController.removeASCII(loadedData.results[currentQuestion].correct_answer); //fills the answer box that was picked with the answer
 
 			var answerPlaced: int = 0; //next incorrect answer to fill
 			for (var i: int = 0; i < 4; i++) {
 				if (questionBoxList[i].text != loadedData.results[currentQuestion].correct_answer) { //if answer is not the correct answer, then fill it (box is empty/filled with old info)
-					questionBoxList[i].text = removeASCII(loadedData.results[currentQuestion].incorrect_answers[answerPlaced]); //places the answer
+					questionBoxList[i].text = TextController.removeASCII(loadedData.results[currentQuestion].incorrect_answers[answerPlaced]); //places the answer
 					answerPlaced++ 
 				}
 			}
@@ -108,22 +109,6 @@
 			if (tempThinkTime <= 0) { //if there is no more time, the answer is incorrect
 				answerIncorrect();
 			}
-		}
-		
-		private function removeASCII(input:String) {
-			//Function to remove the ASCII that makes the question/answer hard to read. Add more when needed.
-			input = input.replace(/&#039;/g, "\'");
-			input = input.replace(/&#034;/g, "\"");
-			input = input.replace(/&quot;/g, "\"");
-			input = input.replace(/&uuml;/g, "ü");
-			input = input.replace(/&eacute;/g, "é");
-			input = input.replace(/&aacute;/g, "á");
-			input = input.replace(/&ouml;/g, "ö");
-			input = input.replace(/&Uuml;/g, "Ü");
-			input = input.replace(/&rsquo;/g, "'");
-			input = input.replace(/&sup2;/g, "²");
-			input = input.replace(/&amp;/g, "&");
-			return(input);
 		}
 
 		private function answerCorrect() {
