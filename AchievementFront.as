@@ -5,7 +5,7 @@
 		
 		private var progressBarWidth:Number;
 		
-		private var achievementHandler:AchievementHandler;
+		private var achievementHandler:AchievementHandler = new AchievementHandler();
 		
 		public function AchievementFront() {
 			// constructor code
@@ -14,6 +14,10 @@
 		
 		private function init() {
 			progressBarWidth = this.progressBar.width; 
+		}
+		
+		public function grantAchievement(building:String, achievementName:String) {
+			achievementHandler.completeAchievement(building, achievementName);
 		}
 		
 	}

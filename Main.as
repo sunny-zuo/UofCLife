@@ -18,6 +18,8 @@
 		private var left: Boolean = false;
 		private var right: Boolean = false;
 		
+		private var achievementFront:AchievementFront = new AchievementFront();
+		
 		
 		public var doorList:Array;
 		public var roomList:Array;
