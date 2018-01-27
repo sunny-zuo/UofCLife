@@ -6,7 +6,7 @@
 	import flash.text.TextFormat;
 
 	public class Stranger extends MovieClip {
-		
+
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
 		private var strangerName: String = "";
@@ -21,18 +21,21 @@
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
 		public var xPos: Number; //where it's x will be
 		public var yPos: Number; //where it's y will be
-		
-		
-		
-		private const TALK_DISTANCE:Number = 250;
+
+		//movement variables
+		private var movementDirection: String = ""
+		var wanderTimer: Timer = new Timer(2000);
+
+
+		private const TALK_DISTANCE: Number = 250;
 		//how far you can be to talk to a character
-		
-		private var talkSymbol:MovieClip;
+
+		private var talkSymbol: MovieClip;
 		//talk symbol (exclamation mark)
-		private var talkAssist:DeltaAssist;
+		private var talkAssist: DeltaAssist;
 		//delta assist for the talk symbol fading in and out
-		
-		private var symbolExist:Boolean;
+
+		private var symbolExist: Boolean;
 		//whether the talk symbol is currently being shown
 
 		//For below parameters:
@@ -46,13 +49,12 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(xPos:Number, yPos:Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null) {
+		public function Stranger(xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, allowWander: Boolean = false, wanderDistance = -1) {
 			// constructor code
-			
+
 			if (dialog == null) { //if there is no dialog given
 				canTalk = false; //then he can't talk
-			}
-			else { //if there is dialog given
+			} else { //if there is dialog given
 				this.canTalk = canTalk; //his canTalk will be whatever is fed
 				this.dialog = dialog; //and his dialog will be the dialog given
 			}
@@ -61,17 +63,17 @@
 			this.canTalkRand = canTalkRand;
 			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
 			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
-			
+
 			this.xPos = xPos;
 			this.yPos = yPos;
-			
+
 			if (randomDialog == null) { //if the array is null. array is set to null by default as you cannot declare an array as a default
 				this.randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"] //default random text
 			} else { //else, if there is a value
 				this.randomDialog = randomDialog; //sets random dialog array to equal the array given here
 			}
 			strHeight = height; //sets his height to a static value
-			
+
 			init();
 		}
 
@@ -85,49 +87,82 @@
 
 			//Sets up his name info
 			var nameBox: TextField = new TextField(); //creates a textbox to store his name
-			var nameBoxFormat:TextFormat = new TextFormat(); //creates textformat to modify namebox
-			
+			var nameBoxFormat: TextFormat = new TextFormat(); //creates textformat to modify namebox
+
 			nameBoxFormat.align = "center"; //centers the name so it stays centered regardless of name size
 			nameBoxFormat.size = 20; //increases size of name
-			
+
 			nameBox.x = -50; //sets x to the x of the character
 			nameBox.y = 15; //sets y to the y of the charater minus 40
 			nameBox.text = strangerName; //sets the text of the box to his name
-			
+
 			nameBox.setTextFormat(nameBoxFormat); //sets the textformat to the textfield
-			
+
 			addChild(nameBox); //adds the box
-			
+
 			//TALK SYMBOL (appears above head when you can talk to him when you are close enough)
 			talkSymbol = new TalkSymbol();
 			talkSymbol.y = -225;
 			talkSymbol.alpha = 0;
 			addChild(talkSymbol);
-			
+
 			talkAssist = new DeltaAssist(talkSymbol, ["alpha"]);
-			
+
 			addEventListener(Event.ENTER_FRAME, talkSymbolFrame);
+			addEventListener(Event.ENTER_FRAME, move)
+			wanderTimer.addEventListener(TimerEvent.TIMER, wander);
+			wanderTimer.start()
+
 		}
-		
-		private function talkSymbolFrame(event:Event):void{
-			if(Math.abs(x - Main.instance.character.x) < TALK_DISTANCE){
-				var talking:Boolean = Boolean(textBox);
-				if(!talking && !symbolExist){
+
+		private function wander(event: TimerEvent): void {
+			//if(allowWander) {
+			//	removeEventListener(Event.ENTER_FRAME, wander)
+			//}
+
+			if (movementDirection == "") {
+				if (Math.ceil(Math.random() * 5) == 5) {
+					if (Math.round(Math.random()) == 1) {
+						movementDirection = "LEFT"
+					} else {
+						movementDirection = "RIGHT"
+					}
+				}
+			} else {
+				if (Math.ceil(Math.random() * 3) == 3) {
+					movementDirection = ""
+				}
+			}
+
+		}
+
+		private function move(event: Event): void {
+			if (movementDirection == "LEFT") {
+				this.x += 5
+			} else if (movementDirection == "RIGHT") {
+				this.x -= 5
+			}
+		}
+
+		private function talkSymbolFrame(event: Event): void {
+			if (Math.abs(x - Main.instance.character.x) < TALK_DISTANCE) {
+				var talking: Boolean = Boolean(textBox);
+				if (!talking && !symbolExist) {
 					//if not talking and symbol does not exist
-					
+
 					talkAssist.setLinear(0.2, 1);
 					//turn on symbol
 					symbolExist = true;
 					//mark as existent
-				}else if(talking && symbolExist){
+				} else if (talking && symbolExist) {
 					//if talking and symbol exists
 					talkAssist.setLinear(-0.2, 0);
 					//turn off symbol
 					symbolExist = false;
 					//mark it as nonexistent
 				}
-			}else{ //if too far away
-				if(symbolExist){
+			} else { //if too far away
+				if (symbolExist) {
 					talkAssist.setLinear(-0.2, 0);
 					//turn off symbol
 					symbolExist = false;
@@ -168,7 +203,7 @@
 					dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
 				}
 			}
-			
+
 			sayDialog(); //runs function to have him talk
 		}
 
@@ -182,8 +217,8 @@
 				textBox.close();
 				textBox = null;
 			}
-			
-			if(Math.abs(x - Main.instance.character.x) > TALK_DISTANCE){
+
+			if (Math.abs(x - Main.instance.character.x) > TALK_DISTANCE) {
 				dialogTemp = [];
 				//stop talking
 			}
@@ -191,14 +226,14 @@
 			if (dialogTemp.length < 1) { //if no dialog exists, exit out of this function to prevent errors
 				return; //exits out of this function
 			}
-			
+
 			timer.reset(); //resets the timer
-			
-			if(dialogTemp[0] is String){
+
+			if (dialogTemp[0] is String) {
 				//if the next object in line is a String, then talk
-				
+
 				textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
-				
+
 				textBox.y = -strHeight - 10;
 				//set textbox position so it appears above the person's head
 
@@ -207,23 +242,22 @@
 				dialogTemp.splice(0, 1); //removes the first value of the array since it has been said
 
 				continueDialog();
-			}
-			else if(dialogTemp[0] is Array){ //function array
-				var functionArray:Array = dialogTemp[0];
+			} else if (dialogTemp[0] is Array) { //function array
+				var functionArray: Array = dialogTemp[0];
 				//takes the entire function array
-				
-				var callFunction:Function;
-				if(functionArray[0] is String && functionArray[0].substring(0, 4) == "fcn_"){
+
+				var callFunction: Function;
+				if (functionArray[0] is String && functionArray[0].substring(0, 4) == "fcn_") {
 					//if it is in String form because the function is private
 					callFunction = this[functionArray[0].substring(4)];
 					//"this" type casts the String into a function call
-				}else{
+				} else {
 					//no need for conversion
 					callFunction = functionArray[0];
 				}
-				
-				for(var i:int = 1; i < functionArray.length; i++){
-					if(functionArray[i] is String && functionArray[i].substring(0, 4) == "fcn_"){
+
+				for (var i: int = 1; i < functionArray.length; i++) {
+					if (functionArray[i] is String && functionArray[i].substring(0, 4) == "fcn_") {
 						functionArray[i] = this[functionArray[i].substring(4)];
 						//convert all Strings (that start with fcn) inside the array to functions
 					}
@@ -232,10 +266,10 @@
 				//call the function using the rest of the functionArray (after slicing)
 				dialogTemp.splice(0, 1); //removes the first value of the array since it has been executed
 			}
-			
+
 		}
-		
-		private function continueDialog():void{		//public so that I can put it in function handle as parameter
+
+		private function continueDialog(): void { //public so that I can put it in function handle as parameter
 			/*
 			DO:
 			Allows the character to continue saying things.
@@ -245,33 +279,33 @@
 				timer.start(); //starts timer
 			}
 		}
-		
-		private function skipToSayDialog(index:int):void{		//public so that I can put it in function handle as parameter
+
+		private function skipToSayDialog(index: int): void { //public so that I can put it in function handle as parameter
 			/*
 			PARAMETERS:
 			index = index where the character starts talking at again
 			DO:
 			Changes dialogTemp to continue from index onwards.
 			*/
-			if(index >= 0 && index < dialog.length){
+			if (index >= 0 && index < dialog.length) {
 				//index exists
-				
+
 				dialogTemp = dialog.slice(index);
 				//jump to index
-				
-			}else{
+
+			} else {
 				dialogTemp = [];
 				//stop speech
 			}
-			
+
 			sayDialog(); //runs function to have him talk
 		}
-		
-		private function generateQuiz(questionCount:int, topic:String, difficulty:String, thinkTime:int = 15, qType:String = "multiple", passingGrade:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
+
+		private function generateQuiz(questionCount: int, topic: String, difficulty: String, thinkTime: int = 15, qType: String = "multiple", passingGrade: Number = 80, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
 			MenuController.generateQuizPopUp(questionCount, topic, difficulty, thinkTime, qType, passingGrade, pass, passParams, fail, failParams, applyTarget);
 		}
-		
-		private function clearDialog():void {
+
+		private function clearDialog(): void {
 			dialogTemp = [];
 		}
 
