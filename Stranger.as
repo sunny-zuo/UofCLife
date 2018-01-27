@@ -21,10 +21,12 @@
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
 		public var xPos: Number; //where it's x will be
 		public var yPos: Number; //where it's y will be
+		private var wanderDist:Number = 100
+		
 
 		//movement variables
 		private var movementDirection: String = ""
-		var wanderTimer: Timer = new Timer(2000);
+		var wanderTimer: Timer = new Timer(500);
 
 		private var talkingToCharacter: Boolean = false
 
@@ -51,7 +53,7 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, allowWander: Boolean = false, wanderDistance = 100) {
+		public function Stranger(xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = 400) {
 			// constructor code
 
 			if (dialog == null) { //if there is no dialog given
@@ -68,6 +70,7 @@
 
 			this.xPos = xPos;
 			this.yPos = yPos;
+			this.wanderDist = wanderDistance
 
 			if (randomDialog == null) { //if the array is null. array is set to null by default as you cannot declare an array as a default
 				this.randomDialog = ["Man, subway is so understaffed", "Carl's Jr is overpriced :/", "hello there"] //default random text
@@ -118,26 +121,33 @@
 		}
 
 		private function wander(event: TimerEvent): void {
-			//if(allowWander) {
-			//	removeEventListener(Event.ENTER_FRAME, wander)
-			//}
-
+			if(wanderDist <= 0) {
+				removeEventListener(Event.ENTER_FRAME, wander)
+			}
 			if (movementDirection == "") {
 				if (Math.ceil(Math.random() * 5) == 5) {
-					if (Math.round(Math.random()) == 1) {//move directions
-						//if()
-						movementDirection = "LEFT"
-					} else { 
-						movementDirection = "RIGHT"
+					if (Math.round(Math.random()) == 1) { //move directions
+						if (this.x > xPos - wanderDist) {
+							movementDirection = "LEFT"
+						} else {
+							//movementDirection == "RIGHT"
+						}
+					} else {
+						if (this.x < xPos + wanderDist) {
+							movementDirection = "RIGHT"
+						} else {
+							//movementDirection = "LEFT"
+						}
 					}
 				}
 			} else {
 				if (Math.ceil(Math.random() * 3) == 3) {
-						movementDirection = ""
+					movementDirection = ""
 				}
 			}
 
 		}
+
 
 		private function move(event: Event): void {
 			if (!talkingToCharacter) {
