@@ -26,6 +26,8 @@
 		private var movementDirection: String = ""
 		var wanderTimer: Timer = new Timer(2000);
 
+		private var talkingToCharacter: Boolean = false
+
 
 		private const TALK_DISTANCE: Number = 250;
 		//how far you can be to talk to a character
@@ -49,7 +51,7 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, allowWander: Boolean = false, wanderDistance = -1) {
+		public function Stranger(xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, allowWander: Boolean = false, wanderDistance = 100) {
 			// constructor code
 
 			if (dialog == null) { //if there is no dialog given
@@ -122,25 +124,28 @@
 
 			if (movementDirection == "") {
 				if (Math.ceil(Math.random() * 5) == 5) {
-					if (Math.round(Math.random()) == 1) {
+					if (Math.round(Math.random()) == 1) {//move directions
+						//if()
 						movementDirection = "LEFT"
-					} else {
+					} else { 
 						movementDirection = "RIGHT"
 					}
 				}
 			} else {
 				if (Math.ceil(Math.random() * 3) == 3) {
-					movementDirection = ""
+						movementDirection = ""
 				}
 			}
 
 		}
 
 		private function move(event: Event): void {
-			if (movementDirection == "LEFT") {
-				this.x += 5
-			} else if (movementDirection == "RIGHT") {
-				this.x -= 5
+			if (!talkingToCharacter) {
+				if (movementDirection == "LEFT" && x - width / 2 > 0) {
+					this.x -= 5
+				} else if (movementDirection == "RIGHT" && x - width / 2 < Main.instance.currentRoom.roomWidth) {
+					this.x += 5
+				}
 			}
 		}
 
@@ -199,6 +204,7 @@
 
 		private function clickTalk(event: MouseEvent) { //function to trigger sayDialog after the character is clicked
 			if (dialogTemp.length == 0) { //if there is nothing left in dialogTemp
+				talkingToCharacter = true
 				for (var i: int = 0; i < dialog.length; i++) { //creates a for loop that loops the length of the dialog array times
 					dialogTemp.push(dialog[i]); //pushes the data from dialog to dialogTemp as dialogTemp will be modified but storing the text is still needed
 				}
@@ -224,6 +230,7 @@
 			}
 
 			if (dialogTemp.length < 1) { //if no dialog exists, exit out of this function to prevent errors
+				talkingToCharacter = false
 				return; //exits out of this function
 			}
 

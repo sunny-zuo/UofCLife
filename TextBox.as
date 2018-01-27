@@ -87,7 +87,7 @@ package  {
 			Returns whether the box was closed before all text has been displayed.
 			*/
 			
-			scaleAssist.setAccelerate(0.1, -0.02);
+			scaleAssist.setAccelerate(true ,0.1, -0.02);
 			//set a pop-out scaling mode for the textbox
 			
 			textAlphaAssist.setLogarithmic(-1, 0.2);
