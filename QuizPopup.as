@@ -36,9 +36,8 @@
 		private var passParams:Array; // params that are used for the function should the player pass
 		private var fail:Function; // function is the run should the player fail
 		private var failParams:Array; // params that are used for the function should the player pass
-		private var applyTarget:Object; //target for the function to be applied
 
-		public function QuizPopup(questionCount: int, subject: String, difficulty: String, thinkTime:int = 15, qType: String = "multiple", passingPercentage:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null) {
+		public function QuizPopup(questionCount: int, subject: String, difficulty: String, thinkTime:int = 15, qType: String = "multiple", passingPercentage:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null) {
 			// constructor code
 			this.questionCount = questionCount; //converts the parameters given into local variables
 			this.topic = subject;
@@ -50,7 +49,6 @@
 			this.passParams = passParams;
 			this.fail = fail;
 			this.failParams = failParams;
-			this.applyTarget = applyTarget;
 			this.tempThinkTime = thinkTime;
 			init();
 		}
