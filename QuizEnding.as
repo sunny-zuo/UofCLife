@@ -16,6 +16,8 @@
 		private var applyTarget: Object;
 
 		public var readyToClose: Boolean = false;
+		
+		private var achievementHandler:AchievementHandler = new AchievementHandler();
 
 		public function QuizEnding(questionsCorrect: int, questionsIncorrect: int, passingPercentage: Number, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
 			// constructor code
@@ -38,6 +40,8 @@
 			if (obtainedPercentage >= passingPercentage) {
 				this.quizResult.text = "Congrats, you passed the quiz!";
 				result = true;
+				
+				achievementHandler.completeAchievement("edc", "Quiz Novice");
 			} else {
 				this.quizResult.text = "You failed!";
 				result = false;
