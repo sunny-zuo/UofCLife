@@ -45,7 +45,7 @@
 		private function loadComplete(event: Event): void {
 			var loader: URLLoader = URLLoader(event.target); //sets the URLLoader to the one generated above
 			loadDone = true;
-			trace(loader.data, JSON.parse(loader.data));
+			//trace(loader.data, JSON.parse(loader.data));
 			loadedData = JSON.parse(loader.data) //makes the data a public variable so it can accessed by other classes
 			/* Access data using loadedData.results[0].question where 0 is the question number, and "question" is the specific data you want.
 			more examples: loadedData.results[0].correct_answer gives the correct answer to the first question */

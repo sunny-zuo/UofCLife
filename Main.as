@@ -83,7 +83,7 @@
 				}
 			}
 			//The Confession Board
-			var confessionBoard:ConfessionBoard = new ConfessionBoard(3000, -200);
+			var confessionBoard:ConfessionBoard = new ConfessionBoard(2600, -200);
 			
 			
 			//STRANGER CONSTRUCTION
