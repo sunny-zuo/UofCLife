@@ -3,7 +3,7 @@
 
 	public class AchievementHandler {
 
-		public var achievementData: SharedObject = SharedObject.getLocal("ls92ud31");
+		public var achievementData: SharedObject = SharedObject.getLocal("ls92ud31"); //random string for a poor attempt at hiding the data
 		/* Properties of the sharedObject:
 		  numComplete: number of achievements that have been complete
 		  numAchievements: number of achievements total
@@ -45,8 +45,8 @@
 			edc = null;
 			edc = new Array();
 
-			if (achievementData.data.etc != undefined) {
-				edc = achievementData.data.etc;
+			if (achievementData.data.edc != undefined) {
+				edc = achievementData.data.edc;
 				for (var i = 0; i < edcAchievementCount; i++) {
 					var target: Array = this["edcAchievement" + (i + 1)] as Array;
 					if (achievementData.data.edc[i].indexOf(target[0]) < 0) {
@@ -64,7 +64,6 @@
 				}
 			}
 			achievementData.data.edc = edc;
-			trace(achievementData.data.edc);
 			achievementData.flush(); //"commits" the data to disk
 
 		}
