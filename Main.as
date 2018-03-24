@@ -55,12 +55,12 @@
 			var tempDoor:Door;
 			doorList = [];
 			
-			//WASHROOM MALE
-			doorList[0] = new Door(GreenDoor, 350, 0);
+			//WASHROOM FEMALE
+			doorList[0] = new Door(FemaleWashroom, 350, 0);
 			doorList[1] = new Door(GreenDoor, 1600, 0);
 			
-			//WASHROOM FEMALE
-			doorList[2] = new Door(GreenDoor, 500, 0);
+			//WASHROOM MALE
+			doorList[2] = new Door(MaleWashroom, 500, 0);
 			doorList[3] = new Door(GreenDoor, 800, 0);
 			
 			//BENTO SUSHI
