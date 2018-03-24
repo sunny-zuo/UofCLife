@@ -6,17 +6,15 @@
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
 	import Controllers.TextController;
+	import flash.display.Sprite;
+	import flash.display.DisplayObject;
 	import flash.net.URLRequest;
-	import flash.events.Event;
-	import flash.display.BitmapData;
-	import flash.display.Bitmap;
 	
 	public class InventoryGUI extends MovieClip
 	{
 		private var itemHolder:Array=new Array();
-		private var loader:Loader = new Loader();
+		
 		private var itemText:TextField
-		private var bitmap:Bitmap;
 		public function InventoryGUI() 
 		{
 			// constructor code
@@ -39,7 +37,7 @@
 			for(var j:int=0; j<Main.instance.inventory.inventory.length; j++)
 			{
 				itemText=new TextField();
-				itemText.defaultTextFormat=TextController.newTextFormat(10,0,"Arial","left");
+				itemText.defaultTextFormat=TextController.newTextFormat(10,0x0000ff,"Arial","left");
 				itemText.x=(10)+(j*50+j*10);
 				itemText.y=10;
 				itemText.text='';
@@ -61,28 +59,35 @@
 			{
 				if(Main.instance.inventory.inventory[i]!=null)
 				{
-					var spriteSRC:String=ItemList[Main.instance.inventory.inventory[i][0]][2]
+					var loader:Loader = new Loader();
+					var spriteSRC=ItemList[Main.instance.inventory.inventory[i][0]][2]
 					loader.load(new URLRequest(spriteSRC));
-					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
-					//trace(loader.content.filters);
-					itemHolder[i].getChildAt(itemText).text=Main.instance.inventory.inventory[i][1]
+					var sprite:DisplayObject=addChild(loader);
+					sprite.x=(10)+(i*50+i*10);
+					sprite.y=10;
+					itemHolder[i].addChild(sprite);
 					
-					var sprite=bitmap;
-					//trace(sprite)
-					
-					sprite.x=(20)+(i*50+i*20);
-					sprite.y=20;
-					this.addChild(sprite);
+					itemHolder[i].getChildAt(itemText).text=Main.instance.inventory.inventory[i][1];
+					itemHolder[i].setChildIndex(itemHolder[i].getChildAt(itemText), itemHolder[i].numChildren-1);
 				}
 			}
 		}
-		private function onComplete(event:Event)
+		public function closeGUI()
 		{
-			bitmap = event.target.content;
-			if(bitmap != null){
-				bitmap.smoothing = true;
+			for(var i:int=0; i<Main.instance.inventory.inventory.length; i++)
+			{
+				if(Main.instance.inventory.inventory[i]!=null)
+				{
+					for(var j:int=0; j<itemHolder[i].numChildren; j++)
+					{
+						if(itemHolder[i].getChildAt(j)!=itemText)
+						{
+							itemHolder[i].removeChild(itemHolder[i].getChildAt(j));
+						}
+					}
+				}
 			}
-		}		
+		}
 
 	}
 	

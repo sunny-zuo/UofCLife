@@ -146,7 +146,8 @@
 			menuContainer.addChild(inventory);
 			objectContainer.addChild(character);
 		
-			inventory.inventory[0]=[ItemList._01[0], 15]
+			inventory.inventory[0]=[ItemList._01[0], 15];
+			inventory.inventory[1]=[ItemList._02[0], 1];
 			//trace(inventory.inventory[1])
 		}
 		

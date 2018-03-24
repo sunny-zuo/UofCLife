@@ -41,6 +41,7 @@
 		{
 			//trace('close*2');
 			Main.instance.menuContainer.removeChild(inventoryGUI);
+			inventoryGUI.closeGUI();
 		}
 	}
 
