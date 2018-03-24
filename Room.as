@@ -8,8 +8,9 @@
 		private var doorArray:Array;
 		private var strangerArray:Array;
 		private var otherArray:Array;
+		private var ID:int;
 		
-		public function Room(roomWidth:Number, backGroundClass:Class, doorArray:Array, strangerArray:Array, otherArray:Array = null) {
+		public function Room(roomWidth:Number, backGroundClass:Class, doorArray:Array, strangerArray:Array, otherArray:Array = null, ID:int) {
 			// constructor code
 			this.roomWidth = roomWidth;
 			this.backGround = backGround;
