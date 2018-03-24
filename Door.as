@@ -34,14 +34,14 @@
 		/*When character touches door, a new symbol is created if one does not exist
 		If a symbol exists then it is added above the door*/
 		private function onDoorTouch(event: Event): void {
-			if (Main.instance.character)
+			if (Main.instance.character){
 				if (this.x + 200 >= Main.instance.character.x && this.x - 200 <= Main.instance.character.x) {
 				//if character is within 200 pixels of the door, show the symbol
 					if (enterSymbol) { //if the symbol exists, add it as a child, make it visible, and mark the character as close to the door
 						this.addChild(enterSymbol);
 						enterSymbol.visible = true;
 						characterIsCloseToDoor = true
-					} 
+					}
 					else {
 						addDoorSymbol(); //if the symbol doesn't exist, create it
 					}
@@ -52,6 +52,7 @@
 						characterIsCloseToDoor = false
 					}
 				}
+			}
 		}
 		/* Returns a door symbol*/
 		private function addDoorSymbol(): void {
