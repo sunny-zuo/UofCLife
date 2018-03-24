@@ -35,6 +35,7 @@
 		public function openInventory()
 		{
 			Main.instance.menuContainer.addChild(inventoryGUI);
+			inventoryGUI.updateGUI();
 		}
 		public function closeInventory()
 		{

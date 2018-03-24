@@ -10,10 +10,11 @@
 	public class Main extends MovieClip {
 		public static var instance: Main;
 		public static var stg: Stage;
-
+		public static var itemList: ItemList;
+		
 		private var achievementFront:AchievementFront = new AchievementFront();
 
-		public static var itemList: ItemList=new ItemList();
+		
 		public var character: Character;
 		public var inventory:Inventory;
 		private var eduBld: Room;
@@ -29,6 +30,7 @@
 		public var currentRoom:Room;
 		
 		public var menuContainer:MovieClip;
+		
 		
 		public var objectContainer:MovieClip;
 		//contains all game objects in the game (excluding following menus)
@@ -142,8 +144,8 @@
 			menuContainer.addChild(inventory);
 			objectContainer.addChild(character);
 		
-			inventory.inventory[0]=[itemList._01[0], 15]
-			//trace(inventory.inventory[0])
+			inventory.inventory[0]=[ItemList._01[0], 15]
+			trace(inventory.inventory[1])
 		}
 		
 		private function vCam(event:Event):void{
