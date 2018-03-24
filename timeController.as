@@ -4,13 +4,12 @@
 	import flash.utils.Timer;
 	import flash.display.MovieClip;
 	
-	public class timeController extends MovieClip
+	public class TimeController extends MovieClip
 	{
-
 		private var my_timer:Timer = new Timer(10);
-		private var time:Array = new Array[1,1,8,1,1];//month(12), day(30), hour(24), minute(60), second(60)
+		private var time:Array = [1,1,8,1,1];//month(12), day(30), hour(24), minute(60), second(60)
 		
-		public function timeController() 
+		public function TimeController() 
 		{
 			
 			my_timer.addEventListener(TimerEvent.TIMER, onTimer);
@@ -20,7 +19,6 @@
 
 		private function onTimer(event: TimerEvent):void //function that updates the time
 		{
-			
 			
 			
 		//trace("seconds: " + time[4] + " minutes: " + time[3] + " hours: " + time[2] + " days: " + time[1]+ " months: " + time[0]);
@@ -57,9 +55,9 @@
 			
 		}	
 	
-		public function getTime(): Array//returns the time array
+		public function getTime(pos: int): int//returns the time array
 		{
-			return(time.concat());
+			return(time[pos]);
 		}
 		
 		public function changeTime(posistion: int = 0, newTime:int = 1):void

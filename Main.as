@@ -11,8 +11,9 @@
 		public static var instance: Main;
 		public static var stg: Stage;
 
-		private var achievementFront:AchievementFront = new AchievementFront();
+		//private var achievementFront:AchievementFront;// = new AchievementFront();
 
+		public var time:TimeController = new TimeController();
 		
 		public var character: Character;
 		private var eduBld: Room;
@@ -33,7 +34,6 @@
 		//contains all game objects in the game (excluding following menus)
 
 		public function Main() {
-
 			// constructor code
 			start()
 		}
@@ -148,6 +148,8 @@
 			else{
 				objectContainer.x += (-character.x + stage.stageWidth/2 - objectContainer.x)*0.25;
 			}
+			
+				clock.text = " seconds: " + time.getTime(4) + " minutes: " + time.getTime(3) + " hours: " + time.getTime(2) + " days: " + time.getTime(1);
 			
 		}
 	}
