@@ -3,7 +3,7 @@
 	public class ItemList 
 	{
 
-		public static var 01:Array=['money', 0.01];
+		public var _01:Array=['_01', 'money', 'coin.png'];
 		public function ItemList() 
 		{
 			// constructor code

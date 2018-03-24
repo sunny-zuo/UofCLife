@@ -13,7 +13,7 @@
 
 		private var achievementFront:AchievementFront = new AchievementFront();
 
-		
+		public static var itemList: ItemList=new ItemList();
 		public var character: Character;
 		public var inventory:Inventory;
 		private var eduBld: Room;
@@ -136,9 +136,14 @@
 			character = new Character();
 			character.x = 2200
 			character.y = 545
-			inventory=new Inventory();
+			inventory = new Inventory();
+			inventory.startGUI();
+			
 			menuContainer.addChild(inventory);
 			objectContainer.addChild(character);
+		
+			inventory.inventory[0]=[itemList._01[0], 15]
+			//trace(inventory.inventory[0])
 		}
 		
 		private function vCam(event:Event):void{

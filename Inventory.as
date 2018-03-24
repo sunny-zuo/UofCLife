@@ -10,6 +10,7 @@
 		private var inventoryButton:MenuButton;
 		private var inventoryGUI:InventoryGUI;
 		
+		
 		public function Inventory()
 		{
 			init()
@@ -21,10 +22,14 @@
 			inventoryButton=new MenuButton();
 			inventoryButton.x=10;
 			inventoryButton.y=10;
-			inventoryGUI=new InventoryGUI();
+			trace(Main.instance, Main.instance.inventory);
 			this.x=0;
 			this.y=0;
 			Main.instance.menuContainer.addChild(inventoryButton);
+		}
+		public function startGUI()
+		{
+			inventoryGUI=new InventoryGUI();
 		}
 		
 		public function openInventory()
