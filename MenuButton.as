@@ -12,11 +12,20 @@
 			// constructor code
 			this.addEventListener(MouseEvent.CLICK, onClick)
 		}
-		private function onClick(event:MouseEvent):void {
-			var itemSelect:itemSelection
-			itemSelect = new itemSelection
-			itemSelect.x = itemSelect.width / 2
-			stage.addChild(itemSelect)
+		private function onClick(event:MouseEvent):void 
+		{
+			if (Main.instance.inventory.inventoryOpen==false)
+			{
+				trace('open');
+				Main.instance.inventory.inventoryOpen=true;
+				Main.instance.inventory.openInventory();
+			}
+			else if (Main.instance.inventory.inventoryOpen==true)
+			{
+				trace('close');
+				Main.instance.inventory.inventoryOpen=false;
+				Main.instance.inventory.closeInventory();
+			}
 		}
 	}
 	

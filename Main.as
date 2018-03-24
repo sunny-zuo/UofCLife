@@ -11,11 +11,14 @@
 		public static var instance: Main;
 		public static var stg: Stage;
 
-		//private var achievementFront:AchievementFront;// = new AchievementFront();
+		public static var itemList: ItemList;
+		
+		private var achievementFront:AchievementFront = new AchievementFront();
 
 		public var time:TimeController = new TimeController();
 		
 		public var character: Character;
+		public var inventory:Inventory;
 		private var eduBld: Room;
 		private var enterSymbol: MovieClip;
 		private var left: Boolean = false;
@@ -30,12 +33,15 @@
 		
 		public var menuContainer:MovieClip;
 		
+		
 		public var objectContainer:MovieClip;
 		//contains all game objects in the game (excluding following menus)
 
 		public function Main() {
 			// constructor code
+			trace('start');
 			start()
+			
 		}
 
 		private function start(): void {
@@ -130,11 +136,18 @@
 			objectContainer.addChild(currentRoom);
 			
 			//Adds the Character
+			trace('addCharacter');
 			character = new Character();
 			character.x = 2200
 			character.y = 545
+			inventory = new Inventory();
+			inventory.startGUI();
 			
+			menuContainer.addChild(inventory);
 			objectContainer.addChild(character);
+		
+			inventory.inventory[0]=[ItemList._01[0], 15]
+			trace(inventory.inventory[1])
 		}
 		
 		private function vCam(event:Event):void{
