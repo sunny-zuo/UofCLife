@@ -41,9 +41,13 @@
 		}
 
 		//moves the character left and right
+<<<<<<< HEAD
+		private function eFrame(event: Event): void {			
+=======
 		private function eFrame(event: Event): void {
 			trace(uncontrolledMove, characterMovementDirection);
 			
+>>>>>>> 4c6971f7461efc0aa707ba8eb1cc658d34c8e51d
 			if (allowCharMove) {
 				if (allowPlayerControl) {
 					if (mouseDown) { //updates the characters move state
