@@ -3,7 +3,7 @@
 
 	public class AchievementHandler {
 
-		public var achievementData: SharedObject = SharedObject.getLocal("ls92ud31"); //random string for a poor attempt at hiding the data
+		public var achievementData: SharedObject = SharedObject.getLocal("ls929agh-kuda931"); //random string for a poor attempt at hiding the data
 		/* Properties of the sharedObject:
 		  numComplete: number of achievements that have been complete
 		  numAchievements: number of achievements total
@@ -17,7 +17,7 @@
 		private var totalAchievementCount: int = 4; //number of achievements total, please update as more are added.
 
 		//EDC ACHIEVEMENTS
-		private var edcAchievementCount: int = 3; //number of achievements in the edc building. please update as more are added.
+		private var edcAchievementCount: int = 4; //number of achievements in the edc building. please update as more are added.
 		private var edcAchievement1: Array = ["Quiz Novice", "Beat the geography quiz once", null, false];
 		private var edcAchievement2: Array = ["Quiz Pro", "Beat the geography quiz twice", null, false];
 		private var edcAchievement3: Array = ["Quiz Expert", "Beat the geography quiz thrice", null, false];
@@ -30,9 +30,7 @@
 			init();
 		}
 		private function init() {
-
 			achievementData.data.numAchievements = totalAchievementCount;
-			achievementData.data.numComplete = 1;
 			if (achievementData.data.numComplete == null) {
 				achievementData.data.numComplete = 0; //sets the number complete to zero if it doesn't exist yet
 			}
@@ -46,13 +44,13 @@
 		private function addEdcAchievements(): void {
 			edc = null;
 			edc = new Array();
-
-			if (achievementData.data.edc != undefined) {
+			if (achievementData.data.hasOwnProperty("edc")) {
 				for (var j:int = 0; j < edcAchievementCount; j++) {
 					var target2: Array = this["edcAchievement" + (j + 1)] as Array;
-					//if (achievementData.data.edc[j+1][3]) { //if the achievement was completed, mark it as such
-					//	target2[3] = true;
-					//}
+					var tempArray:Array = achievementData.data.edc
+					if (tempArray[j][3]) { //if the achievement was completed, mark it as such
+						target2[3] = true;
+					}
 					edc.push(target2);
 				}
 				
