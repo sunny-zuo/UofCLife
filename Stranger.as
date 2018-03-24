@@ -6,7 +6,7 @@
 	import flash.text.TextFormat;
 
 	public class Stranger extends MovieClip {
-
+	
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
 		private var strangerName: String = "";
@@ -22,6 +22,7 @@
 		public var xPos: Number; //where it's x will be
 		public var yPos: Number; //where it's y will be
 		private var wanderDist:Number = 100
+		private var ID:int;//this is the ID the stranger uses to identify itself(must be unique!)
 		
 
 		//movement variables
@@ -53,7 +54,7 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = 400) {
+		public function Stranger(ID:int, xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = 400) {
 			// constructor code
 
 			if (dialog == null) { //if there is no dialog given
