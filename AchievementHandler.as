@@ -50,8 +50,6 @@
 				for (var i = 0; i < edcAchievementCount; i++) {
 					var target: Array = this["edcAchievement" + (i + 1)] as Array;
 					if (achievementData.data.edc[i].indexOf(target[0]) < 0) {
-						trace(achievementData.data.edc[i][0]);
-						trace(target[0]);
 						edc.push(target);
 					}
 				}
