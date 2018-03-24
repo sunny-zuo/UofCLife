@@ -41,9 +41,7 @@
 		}
 
 		//moves the character left and right
-		private function eFrame(event: Event): void {
-	
-			
+		private function eFrame(event: Event): void {			
 			if (allowCharMove) {
 				if (allowPlayerControl) {
 					if (mouseDown) { //updates the characters move state
@@ -118,19 +116,22 @@
 				xDelta.setActive(false);
 			}
 			xDelta = new DeltaAssist(this, ["x"]);
+			
+			characterMovementDirection = "IDLE";
+			//stop character motion when travelling through door
+			
 			if (door.x >= x) {
 				xDelta.setLinear(5, door.x, enterDoor, [door]);
-				uncontrolledMove = "right"
+				uncontrolledMove = "right";
 			} else {
 				xDelta.setLinear(-5, door.x, enterDoor, [door]);
-				uncontrolledMove = "left"
+				uncontrolledMove = "left";
 			}
 		}
 
 		private function walkRight(moveCharacter: Boolean): void {
-
 			if (currentLabel != "walkRight") {
-				gotoAndPlay("walkRight")
+				gotoAndPlay("walkRight");
 			}
 			if (moveCharacter) {
 				x += speed;
@@ -141,7 +142,7 @@
 
 
 			if (currentLabel != "walkLeft") {
-				gotoAndPlay("walkLeft")
+				gotoAndPlay("walkLeft");
 
 			}
 			if (moveCharacter) {
@@ -165,7 +166,7 @@
 
 			allowPlayerControl = true;
 			//allow the character to move again
-			uncontrolledMove = ""
+			uncontrolledMove = "";
 		}
 
 		private function drawAccesories(HatType: Number, PantType: Number): void {
