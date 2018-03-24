@@ -27,7 +27,7 @@
 
 			if(currentPopup){
 				//if a popup exists currently
-				currentPopup.closePopup();
+				currentPopup.closePopUp();
 				//close existing popup
 			}
 			
@@ -50,9 +50,10 @@
 			tempQuizPopUp.y = Main.stg.stageHeight/2;
 			//centers the quiz box
 		
-			if(currentPopup){
+			if(currentPopup && currentPopup is DecisionBox){
 				//if a popup exists currently
-				currentPopup.closePopup();
+				
+				currentPopup.closePopUp();
 				//close existing popup
 			}
 			
@@ -77,7 +78,7 @@
 			//centers the quiz box
 			
 			
-			if(currentPopup){
+			if(currentPopup && currentPopup is DecisionBox){
 				//if a popup exists currently
 				currentPopup.closePopup();
 				//close existing popup
