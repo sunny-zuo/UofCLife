@@ -111,20 +111,20 @@
 			var tempRoom:Room;
 			roomList = []
 			
-			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0], strangerList[1]], [confessionBoard], 1);
+			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0], strangerList[1]], [confessionBoard]);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(1800, WashroomMale, [doorList[1]], [], 2);
+			tempRoom = new Room(1800, WashroomMale, [doorList[1]], []);
 			roomList.push(tempRoom);
 		
 			
-			tempRoom = new Room(1000, WashroomFemale, [doorList[3]], [], 3);
+			tempRoom = new Room(1000, WashroomFemale, [doorList[3]], []);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(800, BentoSushi, [doorList[5]], [], 4);
+			tempRoom = new Room(800, BentoSushi, [doorList[5]], []);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], [strangerList[2]], 5);
+			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], [strangerList[2]]);
 			roomList.push(tempRoom);
 			
 			//tempRoom = new Room(1200, Stairs, [doorList[9]], []);
