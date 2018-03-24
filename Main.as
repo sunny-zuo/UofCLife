@@ -15,6 +15,7 @@
 
 		
 		public var character: Character;
+		public var inventory:Inventory;
 		private var eduBld: Room;
 		private var enterSymbol: MovieClip;
 		private var left: Boolean = false;
@@ -35,7 +36,9 @@
 		public function Main() {
 
 			// constructor code
+			trace('start');
 			start()
+			
 		}
 
 		private function start(): void {
@@ -129,9 +132,11 @@
 			objectContainer.addChild(currentRoom);
 			
 			//Adds the Character
+			trace('addCharacter');
 			character = new Character();
 			character.x = 2200
 			character.y = 545
+			inventory=new Inventory();
 			
 			objectContainer.addChild(character);
 		}

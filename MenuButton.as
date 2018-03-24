@@ -13,10 +13,7 @@
 			this.addEventListener(MouseEvent.CLICK, onClick)
 		}
 		private function onClick(event:MouseEvent):void {
-			var itemSelect:itemSelection
-			itemSelect = new itemSelection
-			itemSelect.x = itemSelect.width / 2
-			stage.addChild(itemSelect)
+			
 		}
 	}
 	
