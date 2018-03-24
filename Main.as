@@ -137,7 +137,7 @@
 			character.x = 2200
 			character.y = 545
 			inventory=new Inventory();
-			
+			menuContainer.addChild(inventory);
 			objectContainer.addChild(character);
 		}
 		
