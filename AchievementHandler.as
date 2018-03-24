@@ -46,14 +46,13 @@
 		private function addEdcAchievements(): void {
 			edc = null;
 			edc = new Array();
-			trace(achievementData.data.edc);
 			trace("hi");
 			if (achievementData.data.edc != undefined) {
 				for (var j:int = 0; j < edcAchievementCount; j++) {
 					var target2: Array = this["edcAchievement" + (j + 1)] as Array;
-					if (achievementData.data.edc[j+1][3]) { //if the achievement was completed, mark it as such
-						target2[3] = true;
-					}
+					//if (achievementData.data.edc[j+1][3]) { //if the achievement was completed, mark it as such
+					//	target2[3] = true;
+					//}
 					edc.push(target2);
 				}
 				
