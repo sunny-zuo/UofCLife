@@ -150,21 +150,10 @@
 
 
 		private function move(event: Event): void {
-			if(strangerName == "teacher")
-			{
-			trace("teacher");
-			trace(this.x);
-			
-			}
 			if (!talkingToCharacter) {
 				if (movementDirection == "LEFT" && x - (width / 2) > 0) {
 					this.x -= 5
 				} else if (movementDirection == "RIGHT" && x + (width / 2) < Main.instance.currentRoom.roomWidth) {
-					if(strangerName == "teacher")
-					{
-					trace("room width");
-					trace(Main.instance.currentRoom.roomWidth);
-					}
 					this.x += 5
 				}
 			}
