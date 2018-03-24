@@ -44,9 +44,7 @@
 		}
 
 		private function addEdcAchievements(): void {
-			edc = null;
 			edc = new Array();
-			trace("hi");
 			if (achievementData.data.edc != undefined) {
 				for (var j:int = 0; j < edcAchievementCount; j++) {
 					var target2: Array = this["edcAchievement" + (j + 1)] as Array;

@@ -14,7 +14,7 @@
 			//THIS SHOULD BE SECRET
 			//https://graph.facebook.com/oauth/access_token?client_id=147480742557060&client_secret=7df2b675aa1d9f11298e122bb8abd93d&grant_type=client_credentials
 			//															^App ID						^App Secret
-			var apiURL:String = "https://graph.facebook.com/431651536911675/posts?access_token=147480742557060|7df2b675aa1d9f11298e122bb8abd93d";
+			var apiURL:String = "https://graph.facebook.com/431651536911675/posts?access_token=2093241067576871|d79944d2ed7466b7ebb349b1bff45193";
 			//URL Loader
 			var urlRequest: URLRequest = new URLRequest(apiURL); //creates a URLRequest with the url generated above
 			var urlLoader: URLLoader = new URLLoader(); //creates a URLLoader
