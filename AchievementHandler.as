@@ -3,7 +3,7 @@
 
 	public class AchievementHandler {
 
-		public var achievementData: SharedObject = SharedObject.getLocal("ls929agh-kuda931"); //random string for a poor attempt at hiding the data
+		public var achievementData: SharedObject = SharedObject.getLocal("ls929a6gh-k3uda931"); //random string for a poor attempt at hiding the data
 		/* Properties of the sharedObject:
 		  numComplete: number of achievements that have been complete
 		  numAchievements: number of achievements total
@@ -81,6 +81,10 @@
 					return;
 				}
 			}
+			var achievementComplete:AchievementComplete = new AchievementComplete(achievementName);
+			achievementComplete.x = 0;
+			achievementComplete.y = 0;
+			Main.instance.menuContainer.addChild(achievementComplete);
 		}
 
 	}
