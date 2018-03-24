@@ -25,7 +25,7 @@
 			tempDecisionBox.y = Main.stg.stageHeight/2;
 			//centers the decision box
 
-			if(currentPopup){
+			if(currentPopup && currentPopup is DecisionBox){
 				//if a popup exists currently
 				currentPopup.closePopUp();
 				//close existing popup
