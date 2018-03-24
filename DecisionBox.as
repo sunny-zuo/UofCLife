@@ -73,7 +73,10 @@
 				//calls the yes function upon click
 			}
 			
-			closePopUp();
+			MenuController.currentPopup = null;
+			//stops tracking this as the current menu as it is about to close
+			
+			closePopup();
 			//close the pop up decision box
 		}
 		
@@ -85,11 +88,14 @@
 				//calls the no function upon click	
 			}
 			
-			closePopUp();
+			MenuController.currentPopup = null;
+			//stops tracking this as the current menu as it is about to close
+			
+			closePopup();
 			//close the pop up decision box
 		}
 		
-		public function closePopUp():void{
+		public function closePopup():void{
 			/*
 			DO:
 			Closes the pop up decision box.
@@ -107,7 +113,7 @@
 			//let character move when menu disappears
 		}
 		
-		private function cleanUp():void{
+		private function cleanUp():void{			
 			parent.removeChild(this);
 			//destroys this pop up completely
 		}

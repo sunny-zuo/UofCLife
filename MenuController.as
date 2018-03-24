@@ -24,12 +24,8 @@
 			tempDecisionBox.x = Main.stg.stageWidth/2;
 			tempDecisionBox.y = Main.stg.stageHeight/2;
 			//centers the decision box
-
-			if(currentPopup && currentPopup is DecisionBox){
-				//if a popup exists currently
-				currentPopup.closePopUp();
-				//close existing popup
-			}
+			
+			destroyPopup();
 			
 			currentPopup = tempDecisionBox;
 			//set new popup to this new one
@@ -50,12 +46,7 @@
 			tempQuizPopUp.y = Main.stg.stageHeight/2;
 			//centers the quiz box
 		
-			if(currentPopup && currentPopup is DecisionBox){
-				//if a popup exists currently
-				
-				currentPopup.closePopUp();
-				//close existing popup
-			}
+			destroyPopup();
 			
 			currentPopup = tempQuizPopUp;
 			//set new popup to this new one
@@ -77,17 +68,23 @@
 			tempConfessionsPopup.y = Main.stg.stageHeight/2;
 			//centers the quiz box
 			
-			
-			if(currentPopup && currentPopup is DecisionBox){
-				//if a popup exists currently
-				currentPopup.closePopup();
-				//close existing popup
-			}
+			destroyPopup();
 			
 			currentPopup = tempConfessionsPopup;
 			//set new popup to this new one
 			
 			Main.instance.menuContainer.addChild(tempConfessionsPopup);
+		}
+		
+		private static function destroyPopup():void{
+			if(currentPopup && currentPopup is DecisionBox){
+				//if a popup exists currently
+				//currentPopup.closePopup();
+				//close existing popup
+				
+				currentPopup = null;
+				//set popup to no more, so it does not exist anymore
+			}
 		}
 	}
 	
