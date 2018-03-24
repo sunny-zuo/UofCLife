@@ -1,37 +1,18 @@
-﻿package {
-	import flash.net.URLLoader;
-	import flash.net.URLRequest;
-	import flash.events.Event;
-
-	public class QuestionAPI {
+﻿package  {
+	
+	public class TestAPI {
 		
 		public var loadedData:Object;
 		public var loadDone:Boolean = false;
 		
-		public function QuestionAPI() {
+		public function TestAPI() {
 			// constructor code
 		}
-
 		public function fetchQuestions(questionCount: int, subject: String, difficulty: String, qType: String = "multiple") {
 			var subjectID: int; //int for storing the subject ID. converted from string to actual ID here for better readability
-			/*if (int(subject) != 0) {
-				subjectID = int(subject);
-				trace(subject);
-			}*/
-			//Above doesn't work for some reason so commented out for now
-			if (subject == "Geography") { //if the subject is geography, give it it's subjectID
-				subjectID = 22;
-			} 
-			else if(subject == "General Knowledge"){
-				subjectID = 9;
-			}
-			else if (subject == "VideoGames") {
-				subjectID = 15;
-			} else {
-				subjectID = 0; //if given something incorrect, change to general category
-			}
+			
 			//Generates the URL to pull from, as it will need to change based on what we want
-			var apiURL: String = "https://opentdb.com/api.php?amount=" + questionCount + "&category=" + subjectID + "&difficulty=" + difficulty + "&type=" + qType
+			var apiURL: String = "https://opentdb.com/api.php?amount=" + questionCount + "&category=" + 9/*subjectID*/ + "&difficulty=" + difficulty + "&type=" + qType
 
 			//URL Loader
 			var urlRequest: URLRequest = new URLRequest(apiURL); //creates a URLRequest with the url generated above
@@ -55,5 +36,5 @@
 			
 		}
 	}
-
+	
 }

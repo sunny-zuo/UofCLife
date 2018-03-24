@@ -5,6 +5,7 @@
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.utils.*;
+	import minigame_cheat.*;
 
 
 	public class Main extends MovieClip {
@@ -34,13 +35,18 @@
 		//contains all game objects in the game (excluding following menus)
 
 		public function Main() {
+			instance = this;
+			stg = stage;
+			var test:CheatMinigame = new CheatMinigame();
+			addChild(test);
+			
+			return;
+			
 			// constructor code
 			start()
 		}
 
 		private function start(): void {
-			instance = this;
-			stg = stage;
 
 			objectContainer = new MovieClip();
 			stage.addChild(objectContainer);
