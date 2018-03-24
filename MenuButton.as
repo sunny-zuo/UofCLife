@@ -16,13 +16,13 @@
 		{
 			if (Main.instance.inventory.inventoryOpen==false)
 			{
-				trace('open');
+				//trace('open');
 				Main.instance.inventory.inventoryOpen=true;
 				Main.instance.inventory.openInventory();
 			}
 			else if (Main.instance.inventory.inventoryOpen==true)
 			{
-				trace('close');
+				//trace('close');
 				Main.instance.inventory.inventoryOpen=false;
 				Main.instance.inventory.closeInventory();
 			}

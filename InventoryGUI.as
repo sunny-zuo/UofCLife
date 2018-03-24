@@ -25,7 +25,7 @@
 		
 		private function init()
 		{
-			trace(Main.instance.inventory);
+			//trace(Main.instance.inventory);
 			for(var i:int=0; i<12; i++)
 			{
 				Main.instance.inventory.inventory[i]=null;
@@ -61,12 +61,14 @@
 			{
 				if(Main.instance.inventory.inventory[i]!=null)
 				{
-					itemHolder[i].getChildAt(itemText).text=Main.instance.inventory.inventory[i][1]
 					var spriteSRC:String=ItemList[Main.instance.inventory.inventory[i][0]][2]
 					loader.load(new URLRequest(spriteSRC));
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
+					//trace(loader.content.filters);
+					itemHolder[i].getChildAt(itemText).text=Main.instance.inventory.inventory[i][1]
+					
 					var sprite=bitmap;
-					trace(sprite)
+					//trace(sprite)
 					
 					sprite.x=(20)+(i*50+i*20);
 					sprite.y=20;

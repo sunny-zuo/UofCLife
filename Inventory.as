@@ -22,7 +22,7 @@
 			inventoryButton=new MenuButton();
 			inventoryButton.x=10;
 			inventoryButton.y=10;
-			trace(Main.instance, Main.instance.inventory);
+			//trace(Main.instance, Main.instance.inventory);
 			this.x=0;
 			this.y=0;
 			Main.instance.menuContainer.addChild(inventoryButton);
@@ -39,7 +39,7 @@
 		}
 		public function closeInventory()
 		{
-			trace('close*2');
+			//trace('close*2');
 			Main.instance.menuContainer.removeChild(inventoryGUI);
 		}
 	}

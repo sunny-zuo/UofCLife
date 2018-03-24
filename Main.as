@@ -147,7 +147,7 @@
 			objectContainer.addChild(character);
 		
 			inventory.inventory[0]=[ItemList._01[0], 15]
-			trace(inventory.inventory[1])
+			//trace(inventory.inventory[1])
 		}
 		
 		private function vCam(event:Event):void{
