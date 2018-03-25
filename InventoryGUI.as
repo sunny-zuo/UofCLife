@@ -34,6 +34,8 @@
 			this.graphics.endFill();
 			this.x=0.1*Main.stg.stageWidth;
 			this.y=0.1*Main.stg.stageHeight;
+
+			//Creates the inventory GUI array which holds all the item pictures for the GUI
 			for(var j:int=0; j<Main.instance.inventory.inventory.length; j++)
 			{
 				itemText=new TextField();
@@ -53,6 +55,8 @@
 				itemHolder.push(tempItem);
 			}
 		}
+
+		//Updates the inventory GUI upon opening the inventory
 		public function updateGUI()
 		{
 			for(var i:int=0; i<Main.instance.inventory.inventory.length; i++)
@@ -72,6 +76,8 @@
 				}
 			}
 		}
+
+		//closes the GUI upon closing the inventory
 		public function closeGUI()
 		{
 			for(var i:int=0; i<Main.instance.inventory.inventory.length; i++)
