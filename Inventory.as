@@ -43,6 +43,10 @@
 			Main.instance.menuContainer.removeChild(inventoryGUI);
 			inventoryGUI.closeGUI();
 		}
+		public function addItem(item:int, amount:int)
+		{
+			
+		}
 	}
 
 }
