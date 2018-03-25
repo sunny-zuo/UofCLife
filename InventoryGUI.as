@@ -23,12 +23,6 @@
 		
 		private function init()
 		{
-			//trace(Main.instance.inventory);
-			for(var i:int=0; i<12; i++)
-			{
-				Main.instance.inventory.inventory[i]=null;
-			}
-			
 			this.graphics.beginFill(0xaaaaaa);
 			this.graphics.drawRect(0, 0, 0.8*Main.stg.stageWidth, 0.8*Main.stg.stageHeight);
 			this.graphics.endFill();
@@ -40,6 +34,7 @@
 			{
 				itemText=new TextField();
 				itemText.defaultTextFormat=TextController.newTextFormat(10,0x0000ff,"Arial","left");
+				itemText.setTextFormat.bold=true;
 				itemText.x=(10)+(j*50+j*10);
 				itemText.y=10;
 				itemText.text='';
@@ -64,7 +59,7 @@
 				if(Main.instance.inventory.inventory[i]!=null)
 				{
 					var loader:Loader = new Loader();
-					var spriteSRC=ItemList[Main.instance.inventory.inventory[i][0]][2]
+					var spriteSRC=ItemList[Main.instance.inventory.inventory[i][0]][2];
 					loader.load(new URLRequest(spriteSRC));
 					var sprite:DisplayObject=addChild(loader);
 					sprite.x=(10)+(i*50+i*10);
