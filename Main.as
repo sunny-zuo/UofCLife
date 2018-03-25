@@ -96,7 +96,7 @@
 			var tempStranger:Stranger;
 			strangerList = []
 			
-			tempStranger = new Stranger(1, 1000, 0, ["Accept this gift!", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [4], tempStranger], "Have this garbage! Haha loser...", ["fcn_skipToSayDialog", -1], "Why do you not want...", ["fcn_skipToSayDialog", -1]]);
+			tempStranger = new Stranger(1, 1000, 0, ["Accept this gift!", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [4], tempStranger], "Have this garbage! Haha loser...", [inventory.addItem, "_2", 1] ["fcn_skipToSayDialog", -1], "Why do you not want...", ["fcn_skipToSayDialog", -1]]);
 			strangerList[0] = tempStranger;
 			
 			tempStranger = new Stranger(2, 2000, 0, ["I wonder what this sushi place is called", "If only they would kindly pay us", "Then we can put a sign on the store", "Don't you agree?", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [8], tempStranger], "You're a sensible young man", "Now if only #$&@% Sushi staff are as sensible as you...", ["fcn_skipToSayDialog", -1], "WHAT?!?!?!", "Its a reasonable price for advertisement...", ["fcn_skipToSayDialog", -1]]);
@@ -104,6 +104,12 @@
 			
 			tempStranger = new Stranger(3, 1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [1, "Geography", "easy", 10, "multiple", 100], "fcn_skipToSayDialog", [4], tempStranger], ["fcn_clearDialog"] ,"Fight me scrub", ["fcn_skipToSayDialog", -1]]);
 			strangerList[2] = tempStranger;
+
+			tempStranger = new Stranger(4, 2000, 0, ["Hi I am the neighborhood bully.", "Give me $5", [inventory.removeItem, "_1", 5], "Thank you very much."]);
+			strangerList[3] = tempStranger;
+
+			tempStranger = new Stranger(5, 800, 0, ["Hello I am the owner of this sushi place", "When everything is finished you will be able to buy sushi from me."])
+			strangerList[4] = tempStranger;
 			
 			
 	
@@ -147,7 +153,6 @@
 			objectContainer.addChild(character);
 		
 			inventory.inventory[0]=[ItemList._1[0], 15];
-			inventory.inventory[1]=[ItemList._2[0], 1];
 			//trace(inventory.inventory[1])
 		}
 		
