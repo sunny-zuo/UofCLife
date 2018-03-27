@@ -3,7 +3,7 @@
 
 	public class AchievementHandler {
 
-		public var achievementData: SharedObject = SharedObject.getLocal("ls929a6gh-k3uda931"); //random string for a poor attempt at hiding the data
+		public var achievementData: SharedObject = SharedObject.getLocal("xks3a28s9q-dskjag894"); //random string that's the name of the shared object file. Change if you need to reset achievement data.
 		/* Properties of the sharedObject:
 		  numComplete: number of achievements that have been complete
 		  numAchievements: number of achievements total
@@ -22,8 +22,8 @@
 		private var edcAchievement1: Array = ["Quiz Novice", "Beat the geography quiz once", null, false];
 		private var edcAchievement2: Array = ["Quiz Pro", "Beat the geography quiz twice", null, false];
 		private var edcAchievement3: Array = ["Quiz Expert", "Beat the geography quiz thrice", null, false];
-		private var edcAchievement4: Array = ["Quiz Master", "Beat the geography quiz for the foruth time", null, false];
-		
+		private var edcAchievement4: Array = ["Quiz Master", "Beat the geography quiz for the fourth time", null, false];
+
 		//END EDC ACHIEVEMENTS
 
 		public function AchievementHandler() {
@@ -46,23 +46,22 @@
 			edc = null;
 			edc = new Array();
 			if (achievementData.data.hasOwnProperty("edc")) { // if there is already achievement data in the shared object
-				for (var j:int = 0; j < edcAchievementCount; j++) { // go through each achievement, and add it to a new array
+				for (var j: int = 0; j < edcAchievementCount; j++) { // go through each achievement, and add it to a new array
 					var target2: Array = this["edcAchievement" + (j + 1)] as Array; // targets each achievement number, up to total number of achievements
-					var tempArray:Array = achievementData.data.edc
+					var tempArray: Array = achievementData.data.edc
 					if (tempArray[j][3]) { //if the achievement was already completed, mark it as such
 						target2[3] = true;
 					}
 					edc.push(target2);
 				}
-				
-			}
-			else { //if there is no achievement data, aka new player
-				for (var i:int = 0; i < edcAchievementCount; i++) { //go through each achievement and add it
+
+			} else { //if there is no achievement data, aka new player
+				for (var i: int = 0; i < edcAchievementCount; i++) { //go through each achievement and add it
 					var target: Array = this["edcAchievement" + (i + 1)] as Array;
 					edc.push(target);
 				}
 			}
-			
+
 			achievementData.data.edc = edc; //sets the shared object info to whatever what just generated above
 			achievementData.flush(); //"commits" the data to disk
 
@@ -78,13 +77,15 @@
 					achievementData.data.numComplete += 1; //increases the number complete
 					achievementData.flush(); //saves the data to disk
 
+					var achievementComplete: AchievementComplete = new AchievementComplete(achievementName);
+					achievementComplete.x = 780.7;
+					achievementComplete.y = 42.95;
+					Main.instance.menuContainer.addChild(achievementComplete);
+
 					return;
 				}
 			}
-			var achievementComplete:AchievementComplete = new AchievementComplete(achievementName);
-			achievementComplete.x = 0;
-			achievementComplete.y = 0;
-			Main.instance.menuContainer.addChild(achievementComplete);
+
 		}
 
 	}
