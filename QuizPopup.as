@@ -31,6 +31,8 @@
 		private var thinkTime:int; //time the player is given to "think" for each quesiton
 		private var tempThinkTime:int; //temp version of thinkTime that is used to be modified, while keeping the original intact
 		
+		private var achievementToGrant:Array;
+		
 		private var questionTimer:Timer; //timer
 		
 		private var pass:Function; // function that is run should the player pass
@@ -38,7 +40,7 @@
 		private var fail:Function; // function is the run should the player fail
 		private var failParams:Array; // params that are used for the function should the player pass
 
-		public function QuizPopup(questionCount: int, subject: String, difficulty: String, thinkTime:int = 15, qType: String = "multiple", passingPercentage:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null) {
+		public function QuizPopup(questionCount: int, subject: String, difficulty: String, thinkTime:int = 15, qType: String = "multiple", passingPercentage:Number = 80, achievementToGrant:Array = null, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null) {
 			// constructor code
 			this.questionCount = questionCount; //converts the parameters given into local variables
 			this.topic = subject;
@@ -51,6 +53,7 @@
 			this.fail = fail;
 			this.failParams = failParams;
 			this.tempThinkTime = thinkTime;
+			this.achievementToGrant = achievementToGrant;
 			init();
 		}
 
@@ -157,7 +160,7 @@
 		}
 		
 		private function showResultPage(e:TimerEvent) {
-			quizEnding = new QuizEnding(correctCount, incorrectCount, passingPercentage);
+			quizEnding = new QuizEnding(correctCount, incorrectCount, passingPercentage, achievementToGrant);
 			addChild(quizEnding);
 			addEventListener(Event.ENTER_FRAME, waitToClose);
 		}

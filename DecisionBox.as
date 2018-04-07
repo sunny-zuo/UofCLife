@@ -83,7 +83,6 @@
 		private function noTrigger(event:MouseEvent):void{
 			if(no!= null){
 				//if no is a defined function
-				
 				no.apply(applyTarget, noParams);
 				//calls the no function upon click	
 			}

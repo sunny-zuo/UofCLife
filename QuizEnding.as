@@ -8,22 +8,24 @@
 		private var questionsIncorrect: int;
 		private var passingPercentage: int;
 		private var obtainedPercentage: int;
-		private var result:Boolean;
+		private var result: Boolean;
 		private var pass: Function;
 		private var passParams: Array;
 		private var fail: Function;
 		private var failParams: Array;
 		private var applyTarget: Object;
+		private var achievementToGrant: Array;
 
 		public var readyToClose: Boolean = false;
-		
-		private var achievementFront:AchievementFront = new AchievementFront;
-		
-		public function QuizEnding(questionsCorrect: int, questionsIncorrect: int, passingPercentage: Number, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
+
+		private var achievementFront: AchievementFront = new AchievementFront;
+
+		public function QuizEnding(questionsCorrect: int, questionsIncorrect: int, passingPercentage: Number, achievementToGrant: Array = null, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
 			// constructor code
 			this.questionsCorrect = questionsCorrect;
 			this.questionsIncorrect = questionsIncorrect;
 			this.passingPercentage = passingPercentage;
+			this.achievementToGrant = achievementToGrant;
 
 			this.pass = pass;
 			this.passParams = passParams;
@@ -40,8 +42,9 @@
 			if (obtainedPercentage >= passingPercentage) {
 				this.quizResult.text = "Congrats, you passed the quiz!";
 				result = true;
-				
-				achievementFront.grantAchievement("edc", "Quiz Novice");
+				if (achievementToGrant != null) {
+					achievementFront.grantAchievement(achievementToGrant[0], achievementToGrant[1]);
+				}
 			} else {
 				this.quizResult.text = "You failed!";
 				result = false;

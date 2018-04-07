@@ -13,6 +13,8 @@
 
 		public static var itemList: ItemList;
 		
+		public static var sharedObjectName:String = "xks3as28s9q-dskjadg894" //random string that's the name of the shared object file. Change if you need to reset achievement data.
+		
 		private var achievementFront:AchievementFront = new AchievementFront();
 
 		public var time:TimeController = new TimeController();
@@ -102,7 +104,8 @@
 			tempStranger = new Stranger(2, 2000, 0, ["I wonder what this sushi place is called", "If only they would kindly pay us", "Then we can put a sign on the store", "Don't you agree?", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [8], tempStranger], "You're a sensible young man", "Now if only #$&@% Sushi staff are as sensible as you...", ["fcn_skipToSayDialog", -1], "WHAT?!?!?!", "Its a reasonable price for advertisement...", ["fcn_skipToSayDialog", -1]]);
 			strangerList[1] = tempStranger;
 			
-			tempStranger = new Stranger(3, 1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [1, "Geography", "easy", 10, "multiple", 100], "fcn_skipToSayDialog", [4], tempStranger], ["fcn_clearDialog"] ,"Fight me scrub", ["fcn_skipToSayDialog", -1]]);
+			//tempStranger = new Stranger(3, 1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [1, "Geography", "easy", 10, "multiple", 100], "fcn_skipToSayDialog", [4], tempStranger], ["fcn_clearDialog"] ,"Fight me scrub", ["fcn_skipToSayDialog", -1]]);
+			tempStranger = new Stranger(3, 1550, 0, [["fcn_addQuizDialog"]]);
 			strangerList[2] = tempStranger;
 			
 			

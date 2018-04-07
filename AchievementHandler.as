@@ -3,7 +3,7 @@
 
 	public class AchievementHandler {
 
-		public var achievementData: SharedObject = SharedObject.getLocal("xks3a28s9q-dskjag894"); //random string that's the name of the shared object file. Change if you need to reset achievement data.
+		public var achievementData: SharedObject = SharedObject.getLocal(Main.sharedObjectName); //shared object name is a static in Main
 		/* Properties of the sharedObject:
 		  numComplete: number of achievements that have been complete
 		  numAchievements: number of achievements total

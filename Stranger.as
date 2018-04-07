@@ -4,6 +4,7 @@
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	import flash.text.TextFormat;
+	import flash.net.SharedObject;
 
 	public class Stranger extends MovieClip {
 	
@@ -307,7 +308,6 @@
 			*/
 			if (index >= 0 && index < dialog.length) {
 				//index exists
-
 				dialogTemp = dialog.slice(index);
 				//jump to index
 
@@ -316,14 +316,53 @@
 				//stop speech
 			}
 
-			sayDialog(); //runs function to have him talk
+			sayDialog(); //runs function to have him talk	
+		}
+		
+		private function jumpToTempDialog(skipCount:int):void {
+			dialogTemp.splice(0, skipCount);
+
+			sayDialog();
 		}
 
-		private function generateQuiz(questionCount: int, topic: String, difficulty: String, thinkTime: int = 15, qType: String = "multiple", passingGrade: Number = 80, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
-			MenuController.generateQuizPopUp(questionCount, topic, difficulty, thinkTime, qType, passingGrade, pass, passParams, fail, failParams, applyTarget);
+		private function generateQuiz(questionCount: int, topic: String, difficulty: String, thinkTime: int = 15, qType: String = "multiple", passingGrade: Number = 80, achievementToGrant:Array = null, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
+			MenuController.generateQuizPopUp(questionCount, topic, difficulty, thinkTime, qType, passingGrade, achievementToGrant, pass, passParams, fail, failParams, applyTarget);
 		}
-
+		
+		private function addQuizDialog():void {
+			var achievementData: SharedObject = SharedObject.getLocal(Main.sharedObjectName); //shared object name is a static in Main
+			if (achievementData.data.edc[0][0] == "Quiz Novice" && achievementData.data.edc[0][3] == false) { //if first quiz achievement isn't completed
+				dialogTemp.push("Geography is for nerds like me!");
+				dialogTemp.push("I dare thee to a geography dual!");
+				dialogTemp.push([MenuController.generateDecisionBox, "fcn_generateQuiz", [10, "Geography", "easy", 10, "multiple", 70, ["edc", "Quiz Novice"]], "fcn_jumpToTempDialog", [1], this]);
+				dialogTemp.push(["fcn_clearDialog"]);
+				dialogTemp.push("Fight me scrub");
+			}
+			else if (achievementData.data.edc[1][0] == "Quiz Pro" && achievementData.data.edc[1][3] == false) {
+				dialogTemp.push("Back for more, I see");
+				dialogTemp.push("You were just lucky the first time");
+				dialogTemp.push([MenuController.generateDecisionBox, "fcn_generateQuiz", [10, "Geography", "medium", 8, "multiple", 80, ["edc", "Quiz Pro"]], "fcn_jumpToTempDialog", [1], this]);
+				dialogTemp.push(["fcn_clearDialog"]);
+				dialogTemp.push("Chicken!");
+			}
+			else if (achievementData.data.edc[2][0] == "Quiz Expert" && achievementData.data.edc[2][3] == false) {
+				dialogTemp.push("I'll beat you this time!");
+				dialogTemp.push("srsly I'm good at this stuff");
+				dialogTemp.push([MenuController.generateDecisionBox, "fcn_generateQuiz", [10, "Geography", "hard", 8, "multiple", 90, ["edc", "Quiz Expert"]], "fcn_jumpToTempDialog", [1], this]);
+				dialogTemp.push(["fcn_clearDialog"]);
+				dialogTemp.push("Haha too scared?");
+			}
+			else if (achievementData.data.edc[3][0] == "Quiz Master" && achievementData.data.edc[3][3] == false) {
+				dialogTemp.push("YOU HAVE UNLOCKED MY FINAL FORM");
+				dialogTemp.push("PREPARE TO DIE!");
+				dialogTemp.push("5 Questions. 5 Seconds each.");
+				dialogTemp.push([MenuController.generateDecisionBox, "fcn_generateQuiz", [5, "Geography", "hard", 5, "multiple", 100, ["edc", "Quiz Master"]], "fcn_jumpToTempDialog", [1], this]);
+				dialogTemp.push(["fcn_clearDialog"]);
+				dialogTemp.push("GET REKT");
+			}
+		}
 		private function clearDialog(): void {
+			trace("done");
 			dialogTemp = [];
 		}
 
