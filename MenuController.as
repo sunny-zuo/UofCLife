@@ -33,6 +33,27 @@
 			Main.instance.menuContainer.addChild(tempDecisionBox);
 		}
 		
+		public static function generateShop(title:String="Shop", soldItems:Array=null, itemCost:Array=null):void
+		{
+			if(soldItems==null)
+			{
+				soldItems=new Array();
+				soldItems.push('_2');
+			}
+			if(itemCost==null)
+			{
+				itemCost=new Array();
+				itemCost.push(5);
+			}
+			var tempShopBox:Shop=new Shop(title, soldItems, itemCost);
+			tempShopBox.x=0.25*Main.stg.stageWidth;
+			tempShopBox.y=0.25* Main.stg.stageHeight;
+			
+			destroyPopup();
+			currentPopup = tempShopBox;
+			Main.instance.menuContainer.addChild(tempShopBox);
+		}
+		
 		public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, thinkTime:int = 15, qType:String = "multiple", passingGrade:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null):void{
 			/*
 			PARAMETERS:

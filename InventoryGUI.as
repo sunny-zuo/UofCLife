@@ -25,8 +25,11 @@
 		
 		private function init()
 		{
+			this.graphics.beginFill(0x000000);
+			this.graphics.drawRoundRect(-5,-5,0.8*Main.stg.stageWidth+10, 0.8*Main.stg.stageHeight+10, 30);
+			this.graphics.endFill();
 			this.graphics.beginFill(0xaaaaaa);
-			this.graphics.drawRect(0, 0, 0.8*Main.stg.stageWidth, 0.8*Main.stg.stageHeight);
+			this.graphics.drawRoundRect(0, 0, 0.8*Main.stg.stageWidth, 0.8*Main.stg.stageHeight, 30);
 			this.graphics.endFill();
 			this.x=0.1*Main.stg.stageWidth;
 			this.y=0.1*Main.stg.stageHeight;
@@ -43,8 +46,10 @@
 				itemText.width=50;
 				
 				var tempItem:MovieClip=new MovieClip();
+				tempItem.graphics.beginFill(0x000000);
+				tempItem.graphics.drawRoundRect((9)+(j*50+j*10),9, 52,52,10);
 				tempItem.graphics.beginFill(0xeeeeee);
-				tempItem.graphics.drawRect((10)+(j*50+j*10), 10, 50,50);
+				tempItem.graphics.drawRoundRect((10)+(j*50+j*10), 10, 50,50,10);
 				tempItem.graphics.endFill();
 				this.addChild(tempItem);
 				

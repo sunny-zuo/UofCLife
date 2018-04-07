@@ -109,7 +109,7 @@
 			tempStranger = new Stranger(4, 2000, 0, ["Hi I am the neighborhood bully.", "Give me $5",  "Thank you very much.", [inventory.removeItem, "_1", 5]]);
 			strangerList[3] = tempStranger;
 
-			tempStranger = new Stranger(5, 100, 0, ["Hello I am the owner of this sushi place", "When everything is finished you will be able to buy sushi from me."])
+			tempStranger = new Stranger(5, 100, 0, ["Hello I am the owner of this sushi place", "When everything is finished you will be able to buy sushi from me.", [MenuController.generateShop]])
 			strangerList[4] = tempStranger;
 			
 			
