@@ -362,7 +362,6 @@
 			}
 		}
 		private function clearDialog(): void {
-			trace("done");
 			dialogTemp = [];
 		}
 
