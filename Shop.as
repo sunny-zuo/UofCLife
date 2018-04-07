@@ -26,7 +26,7 @@
 		}
 		private function init()
 		{
-			trace(title);
+			//trace(title);
 			textFormat=new TextFormat();
 			textFormat.size=20;
 			textFormat.font='Comic Sans MS';
@@ -81,7 +81,7 @@
 		{
 			var cost=event.target._cost;
 			var item=event.target._item;
-			trace(cost, item);
+			//;trace(cost, item);
 			if(Main.instance.inventory.removeItem('_1', cost))
 			{
 				Main.instance.inventory.addItem(item,1);
