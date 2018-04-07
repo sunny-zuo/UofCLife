@@ -13,5 +13,6 @@
 			input = input.replace(/&rsquo;/g, "'");
 			input = input.replace(/&sup2;/g, "²");
 			input = input.replace(/&amp;/g, "&");
+			input = input.replace(/&iacute;/g, "í")
 			return(input);
 		}	}	}
