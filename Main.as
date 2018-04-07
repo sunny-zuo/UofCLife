@@ -4,7 +4,7 @@
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.utils.*;
-	import flash.desktop.NativeApplication;
+	//import flash.desktop.NativeApplication;
 
 
 	public class Main extends MovieClip {
@@ -170,8 +170,8 @@
 			inventory.inventory[0]=[ItemList._1[0], 15];
 			//trace(inventory.inventory[1])
 			
-			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, appDeactivated); //runs when app is closed
-			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, appActivated); //runs when app is opened
+			//NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, appDeactivated); //runs when app is closed
+			//NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, appActivated); //runs when app is opened
 		}
 		
 		private function appDeactivated(event:Event) {
