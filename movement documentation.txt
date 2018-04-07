@@ -1,0 +1,9 @@
+For the strangers scripted movement system, I have devised a set of commands to represent certain actions. These are entered into an array in text format and will be executed from first(0) to last(x).
+each command is its own array in the main array(ie: [ [command1, args], [command2, args] ] )
+
+WALKTO: Makes the stranger walk to an x posistion IN THE ROOM. [WALKTO, x]
+
+PAUSE: pauses the stranger for a set time(in frames). [PAUSE, time]
+
+GOTOROOM: makes the stranger go to a room, doesn't bother with doors. [GOTOROOM, room ID, xPos]
+
