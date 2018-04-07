@@ -15,7 +15,7 @@
 		
 		public static var sharedObjectName:String = "xks3as28s9q-dskjadg894" //random string that's the name of the shared object file. Change if you need to reset achievement data.
 		
-		private var achievementFront:AchievementFront = new AchievementFront();
+		public var achievementFront:AchievementFront = new AchievementFront();
 
 		public var time:TimeController = new TimeController();
 		
@@ -26,6 +26,8 @@
 		private var left: Boolean = false;
 		private var right: Boolean = false;
 		
+		private var inventoryButton:InventoryButton;
+		private var achievementButton:AchievementButton;
 		
 		public var doorList:Array;
 		public var roomList:Array;
@@ -147,7 +149,18 @@
 			inventory.startGUI();
 			
 			menuContainer.addChild(inventory);
+			
 			objectContainer.addChild(character);
+			
+			inventoryButton = new InventoryButton();
+			inventoryButton.x = 11;
+			inventoryButton.y = 11;
+			menuContainer.addChild(inventoryButton);
+			achievementButton = new AchievementButton();
+			achievementButton.x = 76;
+			achievementButton.y = 11;
+			menuContainer.addChild(achievementButton);
+			
 		
 			inventory.inventory[0]=[ItemList._01[0], 15];
 			inventory.inventory[1]=[ItemList._02[0], 1];

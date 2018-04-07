@@ -7,7 +7,6 @@
 	{
 		public var inventory:Array; //The actual array that holds all the players items.
 		public var inventoryOpen:Boolean=false;
-		private var inventoryButton:MenuButton;
 		private var inventoryGUI:InventoryGUI;
 		
 		
@@ -19,13 +18,9 @@
 		private function init()
 		{
 			inventory=new Array()
-			inventoryButton=new MenuButton();
-			inventoryButton.x=10;
-			inventoryButton.y=10;
 			//trace(Main.instance, Main.instance.inventory);
 			this.x=0;
 			this.y=0;
-			Main.instance.menuContainer.addChild(inventoryButton);
 		}
 
 		//Starts the inventory GUI script
