@@ -1,7 +1,6 @@
 ﻿package {
 
 	import flash.events.*;
-	import flash.events.KeyboardEvent;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.utils.*;
@@ -38,7 +37,6 @@
 		
 		public var objectContainer:MovieClip;
 		//contains all game objects in the game (excluding following menus)
-
 		public function Main() {
 			// constructor code
 			trace('start');
