@@ -1,6 +1,7 @@
 ﻿package {
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
+	import flash.events.Event;
 
 	public class AchievementFront extends MovieClip {
 
@@ -8,6 +9,8 @@
 		private var currentPageNumber: int = 1; //current page number
 		private var buildingSelected: int = 1; //building selected. 1 = edc
 		private var maxPageNumber: int; //largest value the page number can be
+		
+		public var displayOpen:Boolean = false;
 
 		private var achievementHandler: AchievementHandler = new AchievementHandler();
 
@@ -106,6 +109,15 @@
 				currentPageNumber -= 1; //else, reduce the page normally
 				updateDisplay(); //and update the display
 			}
+		}
+		
+		public function openAchievementDisplay():void {
+			Main.instance.menuContainer.addChild(this);
+			displayOpen = true;
+		}
+		public function closeAchievementDisplay():void {
+			this.parent.removeChild(this);
+			displayOpen = false;
 		}
 
 	}
