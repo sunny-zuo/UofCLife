@@ -112,6 +112,7 @@
 		}
 		
 		public function openAchievementDisplay():void {
+			updateDisplay();
 			Main.instance.menuContainer.addChild(this);
 			displayOpen = true;
 		}
