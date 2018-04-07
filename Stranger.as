@@ -4,12 +4,18 @@
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	import flash.text.TextFormat;
+<<<<<<< HEAD
 	import flash.net.SharedObject;
+=======
+	import com.adobe.tvsdk.mediacore.events.TimeChangeEvent;
+>>>>>>> stranger_room_changing
 
 	public class Stranger extends MovieClip {
 	
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
+		private var xDelta: DeltaAssist;		
+		
 		private var strangerName: String = "";
 		private var dialog: Array = new Array();
 		private var dialogTemp: Array = new Array();
@@ -22,10 +28,13 @@
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
 		public var xPos: Number; //where it's x will be
 		public var yPos: Number; //where it's y will be
-		private var wanderDist:Number = 100
+		private var wanderDist:Number = 100;
 		private var ID:int;//this is the ID the stranger uses to identify itself(must be unique!)
 		
-
+		public var movementDirections:Array = [];//an array to hold movement commands when doing scripted movements(see moevent documentation)
+		
+		private var intHolder:int;
+		
 		//movement variables
 		private var movementDirection: String = ""
 		var wanderTimer: Timer = new Timer(500);
@@ -67,8 +76,10 @@
 			this.strangerName = strangerName; //sets parameters to local variables
 			this.randomDistance = randomDistance;
 			this.canTalkRand = canTalkRand;
+			this.ID = ID
 			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
 			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
+			;
 
 			this.xPos = xPos;
 			this.yPos = yPos;
@@ -114,42 +125,45 @@
 			addChild(talkSymbol);
 
 			talkAssist = new DeltaAssist(talkSymbol, ["alpha"]);
+			xDelta = new DeltaAssist(this, ["x"]);
 
 			addEventListener(Event.ENTER_FRAME, talkSymbolFrame);
 			addEventListener(Event.ENTER_FRAME, move)
 			wanderTimer.addEventListener(TimerEvent.TIMER, wander);
 			wanderTimer.start()
-
+			
 		}
 
 		private function wander(event: TimerEvent): void {
-			if(wanderDist <= 0) {
-				removeEventListener(Event.ENTER_FRAME, wander)
-			}
-			if (movementDirection == "") {
-				if (Math.ceil(Math.random() * 5) == 5) {
-					if (Math.round(Math.random()) == 1) { //move directions
-						if (this.x > xPos - wanderDist) {
-							movementDirection = "LEFT"
+				if(wanderDist <= 0) {
+					wanderTimer.stop();
+					removeEventListener(TimerEvent.TIMER, wander);
+				}
+				if (movementDirection == "") {
+					if (Math.ceil(Math.random() * 5) == 5) {
+						if (Math.round(Math.random()) == 1) { //move directions
+							if (this.x > xPos - wanderDist) {
+								movementDirection = "LEFT"
+							} else {
+								//movementDirection == "RIGHT"
+							}
 						} else {
-							//movementDirection == "RIGHT"
-						}
-					} else {
-						if (this.x < xPos + wanderDist) {
-							movementDirection = "RIGHT"
-						} else {
-							//movementDirection = "LEFT"
+							if (this.x < xPos + wanderDist) {
+								movementDirection = "RIGHT"
+							} else {
+								//movementDirection = "LEFT"
+							}
 						}
 					}
-				}
-			} else {
-				if (Math.ceil(Math.random() * 3) == 3) {
-					movementDirection = ""
-				}
-			}
+				} else {
+					if (Math.ceil(Math.random() * 3) == 3) 
+						{
+						movementDirection = ""
+						}
+					}
 
+				
 		}
-
 
 		private function move(event: Event): void {
 			if (!talkingToCharacter) {
@@ -362,9 +376,95 @@
 			}
 		}
 		private function clearDialog(): void {
+			
+			
+
 			dialogTemp = [];
 		}
+		
+		private function searchForID(search:int):int {//searches through each room and each stranger to determine what room it is in
+			//Every room
+			for(var i:int = 0; i < Main.instance.roomList.length; i++)
+			{
+				var rt:int = -1;
+				//Every stranger in room
+				for(var j:int = 0; j < Main.instance.roomList[i].strangerArray.length; j++)
+				{
+					
+					if(Main.instance.roomList[i].strangerArray[j].ID == this.ID)//fix
+					{
+						if(search == 1)//returns the room pos
+						{
+							rt = i
+						} else if(search == 2) {//returns the stranger pos
+							rt = j
+						} 
+						break;
+					}
+				}
+				
+			}
+			return(rt);
+		}
 
+		public function startScriptedWalk():void{
+			intHolder = 0;
+			wanderTimer.stop();
+			addEventListener(Event.ENTER_FRAME, scriptedWalk);
+		}
+		
+		private function scriptedWalk(event: Event):void {
+			if(intHolder >= movementDirections.length)
+			{
+
+				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
+				return;
+			}
+			var walkSpeed:int = 5;
+			/*
+			DO:
+			allow the stranger to follow the scripted commands given
+			*/
+
+			//if the current command is move
+			if(movementDirections[intHolder][0] == "WALKTO")
+			{
+				if(movementDirections[intHolder][1] > x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2)))
+				{
+					movementDirection = "RIGHT";
+					
+				} else if(movementDirections[intHolder][1] < x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2))) 
+				{
+					movementDirection = "LEFT";
+				} else
+				{
+					movementDirection = "";
+					xPos = movementDirections[intHolder][1];
+					intHolder ++;
+				}
+			
+			} else if(movementDirections[intHolder][0] == "PAUSE") {
+				var waitingTimer: Timer = new Timer(movementDirections[intHolder][1]);
+				waitingTimer.addEventListener(TimerEvent.TIMER,waitTimer);
+				waitingTimer.start();
+				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
+			} else if(movementDirections[intHolder][0] == "GOTOROOM") {
+				//trace(Main.instance.roomList);
+				xPos = movementDirections[intHolder][2]
+				Main.instance.roomList[movementDirections[intHolder][1] - 1].addStrangerToRoom(this);
+				intHolder ++;
+			}
+
+
+		}
+		
+		private function waitTimer(event: TimerEvent):void {
+			intHolder++;
+			removeEventListener(TimerEvent.TIMER,waitTimer);
+			addEventListener(Event.ENTER_FRAME, scriptedWalk);
+		}
 	}
+		
+
 
 }
