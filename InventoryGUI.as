@@ -5,6 +5,7 @@
 	import flash.display.LoaderInfo;
 	import flash.text.TextField;
 	import flash.text.TextFormatAlign;
+	import flash.text.TextFormat;
 	import Controllers.TextController;
 	import flash.display.Sprite;
 	import flash.display.DisplayObject;
@@ -13,6 +14,7 @@
 	public class InventoryGUI extends MovieClip
 	{
 		private var itemHolder:Array=new Array();
+		private var textFormat:TextFormat=new TextFormat()
 		
 		private var itemText:TextField
 		public function InventoryGUI() 
@@ -28,13 +30,13 @@
 			this.graphics.endFill();
 			this.x=0.1*Main.stg.stageWidth;
 			this.y=0.1*Main.stg.stageHeight;
-
+			textFormat.bold=true;
 			//Creates the inventory GUI array which holds all the item pictures for the GUI
 			for(var j:int=0; j<Main.instance.inventory.inventory.length; j++)
 			{
 				itemText=new TextField();
 				itemText.defaultTextFormat=TextController.newTextFormat(10,0x0000ff,"Arial","left");
-				itemText.setTextFormat.bold=true;
+				itemText.setTextFormat(textFormat);
 				itemText.x=(10)+(j*50+j*10);
 				itemText.y=10;
 				itemText.text='';

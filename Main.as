@@ -90,13 +90,14 @@
 			}
 			//The Confession Board
 			var confessionBoard:ConfessionBoard = new ConfessionBoard(2600, -200);
-			
+			inventory = new Inventory();
+			inventory.startGUI();
 			
 			//STRANGER CONSTRUCTION
 			var tempStranger:Stranger;
 			strangerList = []
 			
-			tempStranger = new Stranger(1, 1000, 0, ["Accept this gift!", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [4], tempStranger], "Have this garbage! Haha loser...", [inventory.addItem, "_2", 1] ["fcn_skipToSayDialog", -1], "Why do you not want...", ["fcn_skipToSayDialog", -1]]);
+			tempStranger = new Stranger(1, 1000, 0, ["Accept this gift!", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [4], tempStranger], "Have this garbage! Haha loser...", [inventory.addItem, "_2", 1], ["fcn_skipToSayDialog", -1], "Why do you not want...", ["fcn_skipToSayDialog", -1]]);
 			strangerList[0] = tempStranger;
 			
 			tempStranger = new Stranger(2, 2000, 0, ["I wonder what this sushi place is called", "If only they would kindly pay us", "Then we can put a sign on the store", "Don't you agree?", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [8], tempStranger], "You're a sensible young man", "Now if only #$&@% Sushi staff are as sensible as you...", ["fcn_skipToSayDialog", -1], "WHAT?!?!?!", "Its a reasonable price for advertisement...", ["fcn_skipToSayDialog", -1]]);
@@ -105,10 +106,10 @@
 			tempStranger = new Stranger(3, 1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [1, "Geography", "easy", 10, "multiple", 100], "fcn_skipToSayDialog", [4], tempStranger], ["fcn_clearDialog"] ,"Fight me scrub", ["fcn_skipToSayDialog", -1]]);
 			strangerList[2] = tempStranger;
 
-			tempStranger = new Stranger(4, 2000, 0, ["Hi I am the neighborhood bully.", "Give me $5", [inventory.removeItem, "_1", 5], "Thank you very much."]);
+			tempStranger = new Stranger(4, 2000, 0, ["Hi I am the neighborhood bully.", "Give me $5",  "Thank you very much.", [inventory.removeItem, "_1", 5]]);
 			strangerList[3] = tempStranger;
 
-			tempStranger = new Stranger(5, 800, 0, ["Hello I am the owner of this sushi place", "When everything is finished you will be able to buy sushi from me."])
+			tempStranger = new Stranger(5, 100, 0, ["Hello I am the owner of this sushi place", "When everything is finished you will be able to buy sushi from me."])
 			strangerList[4] = tempStranger;
 			
 			
@@ -117,7 +118,7 @@
 			var tempRoom:Room;
 			roomList = []
 			
-			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0], strangerList[1]], [confessionBoard]);
+			tempRoom = new Room(4000, EducationBuilding, [doorList[0], doorList[2], doorList[4], doorList[6]], [strangerList[0], strangerList[1], strangerList[3]], [confessionBoard]);
 			roomList.push(tempRoom);
 			
 			tempRoom = new Room(1800, WashroomMale, [doorList[1]], []);
@@ -127,7 +128,7 @@
 			tempRoom = new Room(1000, WashroomFemale, [doorList[3]], []);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(800, BentoSushi, [doorList[5]], []);
+			tempRoom = new Room(800, BentoSushi, [doorList[5]], [strangerList[4]]);
 			roomList.push(tempRoom);
 			
 			tempRoom = new Room(1700, EducationClassroom0, [doorList[7]], [strangerList[2]]);
@@ -146,8 +147,7 @@
 			character = new Character();
 			character.x = 2200
 			character.y = 545
-			inventory = new Inventory();
-			inventory.startGUI();
+			
 			
 			menuContainer.addChild(inventory);
 			objectContainer.addChild(character);

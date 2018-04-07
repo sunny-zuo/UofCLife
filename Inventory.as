@@ -70,6 +70,7 @@
 					if(inventory[i]==null)
 					{
 						inventory[i]=[item, amount];
+						i=inventory.length;
 					}
 				}
 			} 
@@ -88,6 +89,11 @@
 				if(inventory[itemCheck[1]][1]>=amount)
 				{
 					inventory[itemCheck[1]][1]-=amount;
+					
+					if(inventory[itemCheck[1]][1]==amount)
+					{
+						inventory[itemCheck[1]]=null;
+					}
 					return true;
 				}
 				else if(inventory[itemCheck[1]][1<amount])
@@ -99,18 +105,33 @@
 			{
 				return false;
 			}
-
+			return false;
 		}
 
 		private function checkInventory(item:String):Array
 		{
+			/*
+			Parameters
+			item= String form of the item ID
+			DO:
+			The fucntion checks the inventory for a specific item and where in the inventory that item is in the array.
+			RETERNS Array
+			The 0th index of the return array is a boolean value to determin wheather the item is in the inventory (true if it is, false if not)
+			The 1st index of the return array is a int which is the location of the item in the inventory (if true) or null (if false)
+			*/
 			for(var i:int=0; i<inventory.length; i++)
 			{
-				if(inventory[i][0]==item)
+				
+				if(inventory[i]!=null)
 				{
-					return [true, i];
-					i=inventory.length;
+					
+					if(inventory[i][0]==item)
+					{
+						return [true, i];
+						i=inventory.length;
+					}
 				}
+				
 			}
 			return [false, null];
 		}
