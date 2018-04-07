@@ -6,17 +6,18 @@
 		public var roomWidth:Number;
 		public var backGround:MovieClip;
 		private var doorArray:Array;
-		private var strangerArray:Array;
+		public var strangerArray:Array;
 		private var otherArray:Array;
 		private var ID:int;
 		
-		public function Room(roomWidth:Number, backGroundClass:Class, doorArray:Array, strangerArray:Array, otherArray:Array = null, ID:int = 0) {
+		public function Room(ID:int, roomWidth:Number, backGroundClass:Class, doorArray:Array, strangerArray:Array, otherArray:Array = null) {
 			// constructor code
 			this.roomWidth = roomWidth;
 			this.backGround = backGround;
 			this.doorArray = doorArray;
 			this.strangerArray = strangerArray;
 			this.otherArray = otherArray;
+			this.ID = ID;
 			init(backGroundClass);
 		}
 		private function init(backGroundClass:Class): void {
@@ -51,12 +52,13 @@
 			door.parentRoom = this;
 		}
 		
-		private function addStrangerToRoom(stranger:Stranger):void{
+		public function addStrangerToRoom(stranger:Stranger):void{
 			stranger.x = stranger.xPos;
 			stranger.y = stranger.yPos;
 			addChild(stranger);
 		}
 		
+
 		private function addOtherToRoom(other:MovieClip):void{
 			other.x = other.xPos;
 			other.y = other.yPos;
