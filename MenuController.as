@@ -33,9 +33,7 @@
 			Main.instance.menuContainer.addChild(tempDecisionBox);
 		}
 		
-<<<<<<< HEAD
-		public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, thinkTime:int = 15, qType:String = "multiple", passingGrade:Number = 80, achievementToGrant:Array = null, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null):void{
-=======
+
 		public static function generateShop(title:String="Shop", soldItems:Array=null, itemCost:Array=null):void
 		{
 			if(soldItems==null)
@@ -57,8 +55,8 @@
 			Main.instance.menuContainer.addChild(tempShopBox);
 		}
 		
-		public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, thinkTime:int = 15, qType:String = "multiple", passingGrade:Number = 80, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null):void{
->>>>>>> Shopping
+		public static function generateQuizPopUp(questionCount:int, topic:String, difficulty:String, thinkTime:int = 15, qType:String = "multiple", passingGrade:Number = 80, achievementToGrant:Array = null, pass:Function = null, passParams:Array = null, fail:Function = null, failParams:Array = null, applyTarget:Object = null):void{
+
 			/*
 			PARAMETERS:
 			?????? Refer to the class
