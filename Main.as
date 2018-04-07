@@ -1,7 +1,6 @@
 ﻿package {
 
 	import flash.events.*;
-	import flash.events.KeyboardEvent;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.utils.*;
@@ -41,7 +40,6 @@
 		
 		public var objectContainer:MovieClip;
 		//contains all game objects in the game (excluding following menus)
-
 		public function Main() {
 			// constructor code
 			trace('start');
@@ -115,7 +113,7 @@
 			tempStranger = new Stranger(4, 2000, 0, ["Hi I am the neighborhood bully.", "Give me $5",  "Thank you very much.", [inventory.removeItem, "_1", 5]]);
 			strangerList[3] = tempStranger;
 
-			tempStranger = new Stranger(5, 100, 0, ["Hello I am the owner of this sushi place", "When everything is finished you will be able to buy sushi from me.", [MenuController.generateShop]])
+			tempStranger = new Stranger(5, 100, 0, ["Hello I am the owner of this sushi place", [MenuController.generateShop, 'Bento Sushi', ['_3', '_4'], [2, 1]]])
 			strangerList[4] = tempStranger;
 			
 			
