@@ -4,11 +4,9 @@
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	import flash.text.TextFormat;
-<<<<<<< HEAD
 	import flash.net.SharedObject;
-=======
-	import com.adobe.tvsdk.mediacore.events.TimeChangeEvent;
->>>>>>> stranger_room_changing
+
+	//import com.adobe.tvsdk.mediacore.events.TimeChangeEvent;
 
 	public class Stranger extends MovieClip {
 	
