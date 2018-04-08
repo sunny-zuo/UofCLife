@@ -68,10 +68,10 @@
 				tempButton.graphics.endFill();
 				tempButton.x=10;
 				tempButton.y=i*35+40;
-				tempButton.buttonMode=true;
 				tempButton._item=soldItems[i];
 				tempButton._cost=itemCost[i]
 				tempButton.addChild(tempText);
+				tempButton.buttonMode=true;
 				tempButton.addEventListener(MouseEvent.CLICK, buyItem);
 				this.addChild(tempButton);
 				buttonList[i]=tempButton;
@@ -79,9 +79,17 @@
 		}
 		private function buyItem(event:MouseEvent)
 		{
+			/*
+			PARAMETERS:
+			event: The mouse event from clicking the buy button in the shop
+			DO:
+			Checks if the player has enough money to buy the item and removes that much money
+			Adds 1 of the item that the player has bought
+			RETURNS:
+			Nothing
+			*/
 			var cost=event.target._cost;
 			var item=event.target._item;
-			//;trace(cost, item);
 			if(Main.instance.inventory.removeItem('_1', cost))
 			{
 				Main.instance.inventory.addItem(item,1);
@@ -92,7 +100,5 @@
 				subText.text="Transaction Failed"
 			}
 		}
-
 	}
-	
 }

@@ -1,7 +1,6 @@
 ﻿package  
 {
 	import flash.display.MovieClip;
-	//simport flash.display.graphics;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	
@@ -16,7 +15,10 @@
 		public function Box() 
 		{
 			// constructor code
-			
+			/*
+			Creates a generic box in the center of the stage which can be used in a menu 
+			Takes no arguements and returns nothing.
+			*/
 			init();
 		}
 		private function init()
