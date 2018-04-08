@@ -138,7 +138,7 @@
 			tempRoom = new Room(3, 1000, WashroomFemale, [doorList[3]], []);
 			roomList.push(tempRoom);
 			
-			tempRoom = new Room(4, 800, BentoSushi, [doorList[5]], []);
+			tempRoom = new Room(4, 800, BentoSushi, [doorList[5]], [strangerList[4]]);
 			roomList.push(tempRoom);
 			
 			tempRoom = new Room(5, 1700, EducationClassroom0, [doorList[7]], [strangerList[2]]);
