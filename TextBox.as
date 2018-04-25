@@ -23,7 +23,7 @@ package  {
 		private var displayString:String;
 		//message to be displayed in this text box
 		
-		private var textSource:Stranger;
+		private var textSource:Class;
 		//person who is spearking the text in this textbox
 		
 		//SCALING VARIABLES

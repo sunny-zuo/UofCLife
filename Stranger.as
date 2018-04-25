@@ -62,7 +62,7 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(ID:int, xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = 400) {
+		public function Stranger(ID:int, xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = -1) {
 			// constructor code
 
 			if (dialog == null) { //if there is no dialog given
@@ -77,7 +77,7 @@
 			this.ID = ID
 			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
 			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
-			;
+			
 
 			this.xPos = xPos;
 			this.yPos = yPos;
@@ -106,7 +106,7 @@
 			var nameBoxFormat: TextFormat = new TextFormat(); //creates textformat to modify namebox
 
 			nameBoxFormat.align = "center"; //centers the name so it stays centered regardless of name size
-			nameBoxFormat.size = 20; //increases size of name
+			nameBoxFormat.size = 20; //increases size of namesay
 
 			nameBox.x = -50; //sets x to the x of the character
 			nameBox.y = 15; //sets y to the y of the charater minus 40
@@ -164,6 +164,7 @@
 		}
 
 		private function move(event: Event): void {
+			
 			if (!talkingToCharacter) {
 				if (movementDirection == "LEFT" && x - (width / 2) > 0) {
 					this.x -= 5
@@ -380,41 +381,19 @@
 			dialogTemp = [];
 		}
 		
-		private function searchForID(search:int):int {//searches through each room and each stranger to determine what room it is in
-			//Every room
-			for(var i:int = 0; i < Main.instance.roomList.length; i++)
-			{
-				var rt:int = -1;
-				//Every stranger in room
-				for(var j:int = 0; j < Main.instance.roomList[i].strangerArray.length; j++)
-				{
-					
-					if(Main.instance.roomList[i].strangerArray[j].ID == this.ID)//fix
-					{
-						if(search == 1)//returns the room pos
-						{
-							rt = i
-						} else if(search == 2) {//returns the stranger pos
-							rt = j
-						} 
-						break;
-					}
-				}
-				
-			}
-			return(rt);
-		}
+
 
 		public function startScriptedWalk():void{
 			intHolder = 0;
 			wanderTimer.stop();
 			addEventListener(Event.ENTER_FRAME, scriptedWalk);
+			
 		}
 		
 		private function scriptedWalk(event: Event):void {
 			if(intHolder >= movementDirections.length)
 			{
-
+				trace("remove listener");
 				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
 				return;
 			}
@@ -423,33 +402,42 @@
 			DO:
 			allow the stranger to follow the scripted commands given
 			*/
-
+			
 			//if the current command is move
 			if(movementDirections[intHolder][0] == "WALKTO")
 			{
 				if(movementDirections[intHolder][1] > x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2)))
 				{
+					
 					movementDirection = "RIGHT";
 					
 				} else if(movementDirections[intHolder][1] < x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2))) 
 				{
 					movementDirection = "LEFT";
+					
 				} else
 				{
+
 					movementDirection = "";
 					xPos = movementDirections[intHolder][1];
 					intHolder ++;
 				}
 			
 			} else if(movementDirections[intHolder][0] == "PAUSE") {
+				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
 				var waitingTimer: Timer = new Timer(movementDirections[intHolder][1]);
 				waitingTimer.addEventListener(TimerEvent.TIMER,waitTimer);
 				waitingTimer.start();
-				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
+				
 			} else if(movementDirections[intHolder][0] == "GOTOROOM") {
-				//trace(Main.instance.roomList);
-				xPos = movementDirections[intHolder][2]
+				xPos = movementDirections[intHolder][2];
+				x = movementDirections[intHolder][2];
 				Main.instance.roomList[movementDirections[intHolder][1] - 1].addStrangerToRoom(this);
+				intHolder ++;
+			} else if(movementDirections[intHolder][0] == "END") {
+				if(movementDirections[intHolder][1] == true) {
+					wanderTimer.start();
+				}
 				intHolder ++;
 			}
 

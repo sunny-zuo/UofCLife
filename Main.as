@@ -20,6 +20,7 @@
 		public var time:TimeController = new TimeController();
 		
 		public var character: Character;
+		private var cat: Cat;
 		public var inventory:Inventory;
 		private var eduBld: Room;
 		private var enterSymbol: MovieClip;
@@ -103,17 +104,17 @@
 			strangerList[0] = tempStranger;
 			
 			tempStranger = new Stranger(2, 2000, 0, ["I wonder what this sushi place is called", "If only they would kindly pay us", "Then we can put a sign on the store", "Don't you agree?", [MenuController.generateDecisionBox, "fcn_sayDialog", [], "fcn_skipToSayDialog", [8], tempStranger], "You're a sensible young man", "Now if only #$&@% Sushi staff are as sensible as you...", ["fcn_skipToSayDialog", -1], "WHAT?!?!?!", "Its a reasonable price for advertisement...", ["fcn_skipToSayDialog", -1]]);
-			
-			time.addTimeEvent(
-			tempStranger, //object to affect
-			[1,5,8,1,1], //time to activate
-			[["WALKTO", 1500], ["GOTOROOM", 4, 40], ["PAUSE", 6000], ["GOTOROOM", 1, 1000]]//commands to execute
-			)
-			
+
 			strangerList[1] = tempStranger;
 			
-			//tempStranger = new Stranger(3, 1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [1, "Geography", "easy", 10, "multiple", 100], "fcn_skipToSayDialog", [4], tempStranger], ["fcn_clearDialog"] ,"Fight me scrub", ["fcn_skipToSayDialog", -1]]);
-			tempStranger = new Stranger(3, 1550, 0, [["fcn_addQuizDialog"]]);
+			tempStranger = new Stranger(3, 1550, 0, ["Geography is for nerds like me!", "I dare thee to a geography duel!", [MenuController.generateDecisionBox, "fcn_generateQuiz", [1, "Geography", "easy", 10, "multiple", 100], "fcn_skipToSayDialog", [4], tempStranger], ["fcn_clearDialog"] ,"Fight me scrub", ["fcn_skipToSayDialog", -1]]);
+			//tempStranger = new Stranger(3, 1550, 0, [["fcn_addQuizDialog"]]);
+			
+			time.addTimeEvent(
+			tempStranger, 
+			[0,10,8,-1,-1], 
+			[["WALKTO", 150], ["GOTOROOM", 1, 3000], ["WALKTO", 1600], ["GOTOROOM", 2, 1600]]);//activate every hour at 30 min
+		
 			strangerList[2] = tempStranger;
 
 			tempStranger = new Stranger(4, 2000, 0, ["Hi I am the neighborhood bully.", "Give me $5",  "Thank you very much.", [inventory.removeItem, "_1", 5]]);
@@ -157,11 +158,12 @@
 			character.x = 2200
 			character.y = 545
 			
+
 			
 			menuContainer.addChild(inventory);
 			
 			objectContainer.addChild(character);
-			
+	
 			inventoryButton = new InventoryButton();
 			inventoryButton.x = 11;
 			inventoryButton.y = 11;
@@ -203,5 +205,8 @@
 				clock.text = " seconds: " + time.getTime(0) + " minutes: " + time.getTime(1) + " hours: " + time.getTime(2) + " days: " + time.getTime(3);
 			
 		}
+		
+
+		
 	}
 }

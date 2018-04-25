@@ -6,7 +6,7 @@
 	
 	public class TimeController extends MovieClip
 	{
-		private var my_timer:Timer = new Timer(10);
+		private var my_timer:Timer = new Timer(1000);
 		public var time:Array = [1,1,8,1,1];//second(60), minute(60), hour(24), day(30), month(12)
 		
 		//parallel arrays
@@ -69,15 +69,15 @@
 			*/
 			for(var i:int = 0; i < activateTimes.length; i++)
 			{
-				
-				if(activateTimes[i][4] == time[4])//check to see if the month matches
+				if(activateTimes[i][4] == time[4] || activateTimes[i][4] == -1)//check to see if the month matches
 				{
-					if(activateTimes[i][3] == time[3])//check to see if the day matches
+					if(activateTimes[i][3] == time[3] || activateTimes[i][3] == -1)//check to see if the day matches
 					{
-						if(activateTimes[i][2] == time[2])//check to see if the hour matches
+						if(activateTimes[i][2] == time[2] || activateTimes[i][2] == -1)//check to see if the hour matches
 						{
-							if(activateTimes[i][1] == time[1])//check to see if the minute matches
+							if(activateTimes[i][1] == time[1] || activateTimes[i][1] == -1)//check to see if the minute matches
 							{
+								
 								if(activateTimes[i][0] == time[0])//check to see if the second matches
 								{
 									parentObjects[i].movementDirections = timeEvents[i];
@@ -134,7 +134,7 @@
 			*/
 			
 			this.timeEvents.push(timeEvent);
-			this.activateTimes.push(activateTime);
+			this.activateTimes.push(activateTime);//the activate times are an array going [second, minute, hour, day, month]. Second must have a number, -1 are blank times and can be inserted after the last time frame you want in acending order.
 			this.parentObjects.push(parentObject);
 		}
 	}

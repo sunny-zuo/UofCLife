@@ -1,9 +1,11 @@
 For the strangers scripted movement system, I have devised a set of commands to represent certain actions. These are entered into an array in text format and will be executed from first(0) to last(x).
 each command is its own array in the main array(ie: [ [command1, args], [command2, args] ] )
 
-WALKTO: Makes the stranger walk to an x posistion IN THE ROOM. [WALKTO, x]
+WALKTO: Makes the stranger walk to an x posistion IN THE ROOM. [WALKTO, x:int]
 
-PAUSE: pauses the stranger for a set time(in frames). [PAUSE, time]
+PAUSE: pauses the stranger for a set time(in frames). [PAUSE, time:int]
 
-GOTOROOM: makes the stranger go to a room, doesn't bother with doors. [GOTOROOM, room ID, xPos]
+GOTOROOM: makes the stranger go to a room, doesn't bother with doors. [GOTOROOM, room ID:int, xPos:int]
 
+END: this ends the movement command and gives closing arguments [END, wander:Boolean] 
+Note: if the stranger has a -1 wander distance when created, setting wander to true won't do anything
