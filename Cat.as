@@ -2,6 +2,8 @@
 	import flash.events.*;
 	import flash.display.MovieClip;
 	import flash.utils.*;
+	import flash.text.*;
+	
 	public class Cat extends MovieClip {
 
 
@@ -161,6 +163,12 @@
 			}
 
 			sayDialog(); //runs function to have him talk
+			//change his movementMode
+			if(movementMode == "WANDER"){
+				movementMode = "FOLLOW";
+			} else {
+				movementMode = "WANDER";
+			}
 		}
 		
 		private function sayDialog(): void { //function to have him say his lines that were given
@@ -183,8 +191,7 @@
 
 			if (dialogTemp[0] is String) {
 				//if the next object in line is a String, then talk
-				trace(this);
-				//textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
+				textBox = new TextBox(dialogTemp[0], this); //creates textBox using provided dialog array as text
 
 				textBox.y = -strHeight - 10;
 				//set textbox position so it appears above the person's head
@@ -236,6 +243,15 @@
 			timer.removeEventListener(TimerEvent.TIMER, continueSpeech); //eventlistener that detects when the timer is over
 			sayDialog(); //runs function to have him talk
 		}		
+		
+		private function closeTextbox(event: TimerEvent) {
+			//timerRand.removeEventListener(TimerEvent.TIMER, closeTextbox); //removes eventlistener for cleanup
+
+			if (textBox) { //removes the textbox after the timer passes
+				textBox.close();
+				textBox = null;
+			}
+		}
 		//make the cat be in the same room
 		//if(
 	}

@@ -343,6 +343,7 @@
 		}
 		
 		private function addQuizDialog():void {
+			
 			var achievementData: SharedObject = SharedObject.getLocal(Main.sharedObjectName); //shared object name is a static in Main
 			if (achievementData.data.edc[0][0] == "Quiz Novice" && achievementData.data.edc[0][3] == false) { //if first quiz achievement isn't completed
 				dialogTemp.push("Geography is for nerds like me!");
@@ -374,6 +375,7 @@
 				dialogTemp.push("GET REKT");
 			}
 		}
+		
 		private function clearDialog(): void {
 			
 			
@@ -381,8 +383,6 @@
 			dialogTemp = [];
 		}
 		
-
-
 		public function startScriptedWalk():void{
 			intHolder = 0;
 			wanderTimer.stop();

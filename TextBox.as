@@ -23,7 +23,7 @@ package  {
 		private var displayString:String;
 		//message to be displayed in this text box
 		
-		private var textSource:Class;
+		private var textSource:MovieClip;
 		//person who is spearking the text in this textbox
 		
 		//SCALING VARIABLES
@@ -34,7 +34,7 @@ package  {
 		private var textAlphaAssist:DeltaAssist;
 		//controls scaling of the text box (used for popping up and out)
 		
-		public function TextBox(displayString:String, textSource:Stranger) {
+		public function TextBox(displayString:String, textSource:MovieClip) {
 			/*CONSTRUCTOR
 			PARAMETERS:
 			displayString = Array of Strings that this text box will display
