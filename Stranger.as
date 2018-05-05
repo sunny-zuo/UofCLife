@@ -9,11 +9,11 @@
 	//import com.adobe.tvsdk.mediacore.events.TimeChangeEvent;
 
 	public class Stranger extends MovieClip {
-	
+
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
-		private var xDelta: DeltaAssist;		
-		
+		private var xDelta: DeltaAssist;
+
 		private var strangerName: String = "";
 		private var dialog: Array = new Array();
 		private var dialogTemp: Array = new Array();
@@ -26,13 +26,13 @@
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
 		public var xPos: Number; //where it's x will be
 		public var yPos: Number; //where it's y will be
-		private var wanderDist:Number = 100;
-		private var ID:int;//this is the ID the stranger uses to identify itself(must be unique!)
-		
-		public var movementDirections:Array = [];//an array to hold movement commands when doing scripted movements(see moevent documentation)
-		
-		private var intHolder:int;
-		
+		private var wanderDist: Number = 100;
+		private var ID: int; //this is the ID the stranger uses to identify itself(must be unique!)
+
+		public var movementDirections: Array = []; //an array to hold movement commands when doing scripted movements(see moevent documentation)
+
+		private var intHolder: int;
+
 		//movement variables
 		private var movementDirection: String = ""
 		var wanderTimer: Timer = new Timer(500);
@@ -62,7 +62,7 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(ID:int, xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = -1) {
+		public function Stranger(ID: int, xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance: Number = -1) {
 			// constructor code
 
 			if (dialog == null) { //if there is no dialog given
@@ -77,7 +77,7 @@
 			this.ID = ID
 			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
 			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
-			
+
 
 			this.xPos = xPos;
 			this.yPos = yPos;
@@ -129,42 +129,41 @@
 			addEventListener(Event.ENTER_FRAME, move)
 			wanderTimer.addEventListener(TimerEvent.TIMER, wander);
 			wanderTimer.start()
-			
+
 		}
 
 		private function wander(event: TimerEvent): void {
-				if(wanderDist <= 0) {
-					wanderTimer.stop();
-					removeEventListener(TimerEvent.TIMER, wander);
-				}
-				if (movementDirection == "") {
-					if (Math.ceil(Math.random() * 5) == 5) {
-						if (Math.round(Math.random()) == 1) { //move directions
-							if (this.x > xPos - wanderDist) {
-								movementDirection = "LEFT"
-							} else {
-								//movementDirection == "RIGHT"
-							}
+			if (wanderDist <= 0) {
+				wanderTimer.stop();
+				removeEventListener(TimerEvent.TIMER, wander);
+			}
+			if (movementDirection == "") {
+				if (Math.ceil(Math.random() * 5) == 5) {
+					if (Math.round(Math.random()) == 1) { //move directions
+						if (this.x > xPos - wanderDist) {
+							movementDirection = "LEFT"
 						} else {
-							if (this.x < xPos + wanderDist) {
-								movementDirection = "RIGHT"
-							} else {
-								//movementDirection = "LEFT"
-							}
+							//movementDirection == "RIGHT"
+						}
+					} else {
+						if (this.x < xPos + wanderDist) {
+							movementDirection = "RIGHT"
+						} else {
+							//movementDirection = "LEFT"
 						}
 					}
-				} else {
-					if (Math.ceil(Math.random() * 3) == 3) 
-						{
-						movementDirection = ""
-						}
-					}
+				}
+			} else {
+				if (Math.ceil(Math.random() * 3) == 3) {
+					movementDirection = ""
+				}
+			}
 
-				
+
 		}
 
 		private function move(event: Event): void {
-			
+
 			if (!talkingToCharacter) {
 				if (movementDirection == "LEFT" && x - (width / 2) > 0) {
 					this.x -= 5
@@ -331,19 +330,19 @@
 
 			sayDialog(); //runs function to have him talk	
 		}
-		
-		private function jumpToTempDialog(skipCount:int):void {
+
+		private function jumpToTempDialog(skipCount: int): void {
 			dialogTemp.splice(0, skipCount);
 
 			sayDialog();
 		}
 
-		private function generateQuiz(questionCount: int, topic: String, difficulty: String, thinkTime: int = 15, qType: String = "multiple", passingGrade: Number = 80, achievementToGrant:Array = null, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
+		private function generateQuiz(questionCount: int, topic: String, difficulty: String, thinkTime: int = 15, qType: String = "multiple", passingGrade: Number = 80, achievementToGrant: Array = null, pass: Function = null, passParams: Array = null, fail: Function = null, failParams: Array = null, applyTarget: Object = null) {
 			MenuController.generateQuizPopUp(questionCount, topic, difficulty, thinkTime, qType, passingGrade, achievementToGrant, pass, passParams, fail, failParams, applyTarget);
 		}
-		
-		private function addQuizDialog():void {
-			
+
+		private function addQuizDialog(): void {
+
 			var achievementData: SharedObject = SharedObject.getLocal(Main.sharedObjectName); //shared object name is a static in Main
 			if (achievementData.data.edc[0][0] == "Quiz Novice" && achievementData.data.edc[0][3] == false) { //if first quiz achievement isn't completed
 				dialogTemp.push("Geography is for nerds like me!");
@@ -351,22 +350,19 @@
 				dialogTemp.push([MenuController.generateDecisionBox, "fcn_generateQuiz", [10, "Geography", "easy", 10, "multiple", 70, ["edc", "Quiz Novice"]], "fcn_jumpToTempDialog", [1], this]);
 				dialogTemp.push(["fcn_clearDialog"]);
 				dialogTemp.push("Fight me scrub");
-			}
-			else if (achievementData.data.edc[1][0] == "Quiz Pro" && achievementData.data.edc[1][3] == false) {
+			} else if (achievementData.data.edc[1][0] == "Quiz Pro" && achievementData.data.edc[1][3] == false) {
 				dialogTemp.push("Back for more, I see");
 				dialogTemp.push("You were just lucky the first time");
 				dialogTemp.push([MenuController.generateDecisionBox, "fcn_generateQuiz", [10, "Geography", "medium", 8, "multiple", 80, ["edc", "Quiz Pro"]], "fcn_jumpToTempDialog", [1], this]);
 				dialogTemp.push(["fcn_clearDialog"]);
 				dialogTemp.push("Chicken!");
-			}
-			else if (achievementData.data.edc[2][0] == "Quiz Expert" && achievementData.data.edc[2][3] == false) {
+			} else if (achievementData.data.edc[2][0] == "Quiz Expert" && achievementData.data.edc[2][3] == false) {
 				dialogTemp.push("I'll beat you this time!");
 				dialogTemp.push("srsly I'm good at this stuff");
 				dialogTemp.push([MenuController.generateDecisionBox, "fcn_generateQuiz", [10, "Geography", "hard", 8, "multiple", 90, ["edc", "Quiz Expert"]], "fcn_jumpToTempDialog", [1], this]);
 				dialogTemp.push(["fcn_clearDialog"]);
 				dialogTemp.push("Haha too scared?");
-			}
-			else if (achievementData.data.edc[3][0] == "Quiz Master" && achievementData.data.edc[3][3] == false) {
+			} else if (achievementData.data.edc[3][0] == "Quiz Master" && achievementData.data.edc[3][3] == false) {
 				dialogTemp.push("YOU HAVE UNLOCKED MY FINAL FORM");
 				dialogTemp.push("PREPARE TO DIE!");
 				dialogTemp.push("5 Questions. 5 Seconds each.");
@@ -375,82 +371,74 @@
 				dialogTemp.push("GET REKT");
 			}
 		}
-		
-		private function clearDialog(): void {
-			
-			
 
+		private function clearDialog(): void {
 			dialogTemp = [];
 		}
-		
-		public function startScriptedWalk():void{
+
+		public function startScriptedWalk(): void {
 			intHolder = 0;
 			wanderTimer.stop();
 			addEventListener(Event.ENTER_FRAME, scriptedWalk);
-			
+
 		}
-		
-		private function scriptedWalk(event: Event):void {
-			if(intHolder >= movementDirections.length)
-			{
+
+		private function scriptedWalk(event: Event): void {
+			if (intHolder >= movementDirections.length) {
 				trace("remove listener");
 				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
 				return;
 			}
-			var walkSpeed:int = 5;
+			var walkSpeed: int = 5;
 			/*
 			DO:
 			allow the stranger to follow the scripted commands given
 			*/
-			
+
 			//if the current command is move
-			if(movementDirections[intHolder][0] == "WALKTO")
-			{
-				if(movementDirections[intHolder][1] > x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2)))
-				{
-					
+			if (movementDirections[intHolder][0] == "WALKTO") {
+				if (movementDirections[intHolder][1] > x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed * 2))) {
+
 					movementDirection = "RIGHT";
-					
-				} else if(movementDirections[intHolder][1] < x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2))) 
-				{
+
+				} else if (movementDirections[intHolder][1] < x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed * 2))) {
 					movementDirection = "LEFT";
-					
-				} else
-				{
+
+				} else {
 
 					movementDirection = "";
 					xPos = movementDirections[intHolder][1];
-					intHolder ++;
+					intHolder++;
 				}
-			
-			} else if(movementDirections[intHolder][0] == "PAUSE") {
+
+			} else if (movementDirections[intHolder][0] == "PAUSE") {
 				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
 				var waitingTimer: Timer = new Timer(movementDirections[intHolder][1]);
-				waitingTimer.addEventListener(TimerEvent.TIMER,waitTimer);
+				waitingTimer.addEventListener(TimerEvent.TIMER, waitTimer);
 				waitingTimer.start();
-				
-			} else if(movementDirections[intHolder][0] == "GOTOROOM") {
+
+			} else if (movementDirections[intHolder][0] == "GOTOROOM") {
 				xPos = movementDirections[intHolder][2];
 				x = movementDirections[intHolder][2];
-				Main.instance.roomList[movementDirections[intHolder][1] - 1].addStrangerToRoom(this);
-				intHolder ++;
-			} else if(movementDirections[intHolder][0] == "END") {
-				if(movementDirections[intHolder][1] == true) {
+				Main.instance.roomList[movementDirections[intHolder][1]].addStrangerToRoom(this);
+				intHolder++;
+			} else if (movementDirections[intHolder][0] == "END") {
+				if (movementDirections[intHolder][1] == true) {
 					wanderTimer.start();
 				}
-				intHolder ++;
+				intHolder++;
 			}
 
 
 		}
-		
-		private function waitTimer(event: TimerEvent):void {
+
+		private function waitTimer(event: TimerEvent): void {
 			intHolder++;
-			removeEventListener(TimerEvent.TIMER,waitTimer);
+			removeEventListener(TimerEvent.TIMER, waitTimer);
 			addEventListener(Event.ENTER_FRAME, scriptedWalk);
 		}
 	}
-		
+
 
 
 }

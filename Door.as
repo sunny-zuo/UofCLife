@@ -9,16 +9,18 @@
 		private var enterSymbol;
 		public var xPos: Number;
 		public var yPos: Number;
+		public var roomID:Number;
 		public var parentRoom: Room;
 		public var linkDoor:Door;
 		private var doorArt: MovieClip;
 		private var characterIsCloseToDoor:Boolean = false;
 		
 
-		public function Door(doorType: Class, xPos: Number, yPos: Number) {
+		public function Door(doorType: Class, xPos: Number, yPos: Number, roomID:int) {
 			// constructor code
 			this.xPos = xPos;
 			this.yPos = yPos;
+			this.roomID = roomID;
 			//character = Main.instance.character;
 			init(doorType)
 		}
@@ -66,8 +68,7 @@
 			if(characterIsCloseToDoor) {
 				Main.instance.character.allowPlayerControl = false; //prevents the player from moving
 				Main.instance.character.moveCharToDoor(this); //moves the player to the door automatically using delta
-				
-				
+				Main.instance.currentRoomNum = roomID;
 			}
 		}
 	}

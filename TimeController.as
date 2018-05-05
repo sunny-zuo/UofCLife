@@ -7,7 +7,7 @@
 	public class TimeController extends MovieClip
 	{
 		private var my_timer:Timer = new Timer(1000);
-		public var time:Array = [1,1,8,1,1];//second(60), minute(60), hour(24), day(30), month(12)
+		public var time:Array = [1,9,8,1,1];//second(60), minute(60), hour(24), day(30), month(12)
 		
 		//parallel arrays
 		private var activateTimes:Array = [];//array for activateTimes
