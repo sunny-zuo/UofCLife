@@ -17,7 +17,9 @@
 
 		public static var sharedObjectName: String = "xks3as28s9q-dskjadg894" //random string that's the name of the shared object file. Change if you need to reset achievement data.
 		private var savedData: SharedObject;
-		private var version: Number
+		private var version: Number;
+		
+		private var application: NativeApplication;
 
 		public var achievementFront: AchievementFront = new AchievementFront();
 
@@ -64,8 +66,9 @@
 			stage.addChild(menuContainer);
 			
 			start();
-			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, appDeactivated); //runs when app is closed
-			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, appActivated); //runs when app is opened
+			application = NativeApplication.nativeApplication; 
+			application.addEventListener(Event.DEACTIVATE, appDeactivated); //runs when app is closed
+			application.addEventListener(Event.ACTIVATE, appActivated); //runs when app is opened
 		}
 
 		private function start(): void {
