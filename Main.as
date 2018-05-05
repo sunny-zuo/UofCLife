@@ -222,6 +222,10 @@
 			achievementButton.y = 11;
 			menuContainer.addChild(achievementButton);
 			
+			if (savedData.data.currentRoom == undefined) {
+				savedData.data.currentRoom = 0;
+			}
+			
 			//generates room and character
 			currentRoom = roomList[savedData.data.currentRoom];
 			currentRoom.y = stageHeight;
