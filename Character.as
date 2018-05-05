@@ -8,7 +8,7 @@
 
 	public class Character extends MovieClip {
 		private var mouseDown: Boolean = false; //left and right booleans
-		private var characterMovementDirection = "IDLE"
+		public var characterMovementDirection = "IDLE"
 		private var speed: int = 10; //the player speed
 		private var xDelta: DeltaAssist;
 		private var tempHolder;
@@ -37,11 +37,12 @@
 			stage.addEventListener(MouseEvent.MOUSE_UP, MouseRelease);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, MousePress);
 			removeEventListener(Event.ADDED_TO_STAGE, addedToStage)
-
+			
 		}
 
 		//moves the character left and right
 		private function eFrame(event: Event): void {
+			//trace(x);
 			if (allowCharMove) {
 				if (allowPlayerControl) {
 					if (mouseDown) { //updates the characters move state

@@ -36,6 +36,14 @@
 
 		public static function generateShop(title:String="Shop", soldItems:Array=null, itemCost:Array=null):void
 		{
+			/*
+			PARAMETERS:
+			title: A string to appear at the the top of the shop that is the name of the shop (Example: Bento Sushi)
+			soldItems: An array of items sold in the shop
+			itemCost: An array of the cost of each items sold in the shop (Must have 1 to 1 corispondance with soldItems)
+			DO:
+			Creates a generic shop GUI.
+			*/
 			if(soldItems==null)
 			{
 				soldItems=new Array();

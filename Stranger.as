@@ -6,10 +6,14 @@
 	import flash.text.TextFormat;
 	import flash.net.SharedObject;
 
+	//import com.adobe.tvsdk.mediacore.events.TimeChangeEvent;
+
 	public class Stranger extends MovieClip {
 	
 		private var randomDialog: Array = new Array(); //creates array that will store random dialog
 
+		private var xDelta: DeltaAssist;		
+		
 		private var strangerName: String = "";
 		private var dialog: Array = new Array();
 		private var dialogTemp: Array = new Array();
@@ -22,10 +26,13 @@
 		private var strHeight: Number; //static height of the stranger when created (also where text boxes should spawn)
 		public var xPos: Number; //where it's x will be
 		public var yPos: Number; //where it's y will be
-		private var wanderDist:Number = 100
+		private var wanderDist:Number = 100;
 		private var ID:int;//this is the ID the stranger uses to identify itself(must be unique!)
 		
-
+		public var movementDirections:Array = [];//an array to hold movement commands when doing scripted movements(see moevent documentation)
+		
+		private var intHolder:int;
+		
 		//movement variables
 		private var movementDirection: String = ""
 		var wanderTimer: Timer = new Timer(500);
@@ -55,7 +62,7 @@
 		//dialogRand is the random dialog that he will say
 
 		//Only required parameter is the dialog of the person
-		public function Stranger(ID:int, xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = 400) {
+		public function Stranger(ID:int, xPos: Number, yPos: Number, dialog: Array = null, strangerName: String = "", canTalk: Boolean = true, canTalkRand: Boolean = false, randomDistance: int = 1000, dialogTimer: Number = 4, dialogRandTimer: Number = 4, randomDialog: Array = null, wanderDistance:Number = -1) {
 			// constructor code
 
 			if (dialog == null) { //if there is no dialog given
@@ -67,8 +74,10 @@
 			this.strangerName = strangerName; //sets parameters to local variables
 			this.randomDistance = randomDistance;
 			this.canTalkRand = canTalkRand;
+			this.ID = ID
 			this.timer = new Timer(dialogTimer * 1000); //creates a timer based on value provided, multiplied by 1000 so seconds becomes the input
 			this.timerRand = new Timer(dialogRandTimer * 1000); //creates a timer based on value provided
+			
 
 			this.xPos = xPos;
 			this.yPos = yPos;
@@ -97,7 +106,7 @@
 			var nameBoxFormat: TextFormat = new TextFormat(); //creates textformat to modify namebox
 
 			nameBoxFormat.align = "center"; //centers the name so it stays centered regardless of name size
-			nameBoxFormat.size = 20; //increases size of name
+			nameBoxFormat.size = 20; //increases size of namesay
 
 			nameBox.x = -50; //sets x to the x of the character
 			nameBox.y = 15; //sets y to the y of the charater minus 40
@@ -114,44 +123,48 @@
 			addChild(talkSymbol);
 
 			talkAssist = new DeltaAssist(talkSymbol, ["alpha"]);
+			xDelta = new DeltaAssist(this, ["x"]);
 
 			addEventListener(Event.ENTER_FRAME, talkSymbolFrame);
 			addEventListener(Event.ENTER_FRAME, move)
 			wanderTimer.addEventListener(TimerEvent.TIMER, wander);
 			wanderTimer.start()
-
+			
 		}
 
 		private function wander(event: TimerEvent): void {
-			if(wanderDist <= 0) {
-				removeEventListener(Event.ENTER_FRAME, wander)
-			}
-			if (movementDirection == "") {
-				if (Math.ceil(Math.random() * 5) == 5) {
-					if (Math.round(Math.random()) == 1) { //move directions
-						if (this.x > xPos - wanderDist) {
-							movementDirection = "LEFT"
+				if(wanderDist <= 0) {
+					wanderTimer.stop();
+					removeEventListener(TimerEvent.TIMER, wander);
+				}
+				if (movementDirection == "") {
+					if (Math.ceil(Math.random() * 5) == 5) {
+						if (Math.round(Math.random()) == 1) { //move directions
+							if (this.x > xPos - wanderDist) {
+								movementDirection = "LEFT"
+							} else {
+								//movementDirection == "RIGHT"
+							}
 						} else {
-							//movementDirection == "RIGHT"
-						}
-					} else {
-						if (this.x < xPos + wanderDist) {
-							movementDirection = "RIGHT"
-						} else {
-							//movementDirection = "LEFT"
+							if (this.x < xPos + wanderDist) {
+								movementDirection = "RIGHT"
+							} else {
+								//movementDirection = "LEFT"
+							}
 						}
 					}
-				}
-			} else {
-				if (Math.ceil(Math.random() * 3) == 3) {
-					movementDirection = ""
-				}
-			}
+				} else {
+					if (Math.ceil(Math.random() * 3) == 3) 
+						{
+						movementDirection = ""
+						}
+					}
 
+				
 		}
 
-
 		private function move(event: Event): void {
+			
 			if (!talkingToCharacter) {
 				if (movementDirection == "LEFT" && x - (width / 2) > 0) {
 					this.x -= 5
@@ -330,6 +343,7 @@
 		}
 		
 		private function addQuizDialog():void {
+			
 			var achievementData: SharedObject = SharedObject.getLocal(Main.sharedObjectName); //shared object name is a static in Main
 			if (achievementData.data.edc[0][0] == "Quiz Novice" && achievementData.data.edc[0][3] == false) { //if first quiz achievement isn't completed
 				dialogTemp.push("Geography is for nerds like me!");
@@ -361,10 +375,82 @@
 				dialogTemp.push("GET REKT");
 			}
 		}
+		
 		private function clearDialog(): void {
+			
+			
+
 			dialogTemp = [];
 		}
+		
+		public function startScriptedWalk():void{
+			intHolder = 0;
+			wanderTimer.stop();
+			addEventListener(Event.ENTER_FRAME, scriptedWalk);
+			
+		}
+		
+		private function scriptedWalk(event: Event):void {
+			if(intHolder >= movementDirections.length)
+			{
+				trace("remove listener");
+				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
+				return;
+			}
+			var walkSpeed:int = 5;
+			/*
+			DO:
+			allow the stranger to follow the scripted commands given
+			*/
+			
+			//if the current command is move
+			if(movementDirections[intHolder][0] == "WALKTO")
+			{
+				if(movementDirections[intHolder][1] > x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2)))
+				{
+					
+					movementDirection = "RIGHT";
+					
+				} else if(movementDirections[intHolder][1] < x && (Math.abs(movementDirections[intHolder][1] - x) >= Math.abs(walkSpeed*2))) 
+				{
+					movementDirection = "LEFT";
+					
+				} else
+				{
 
+					movementDirection = "";
+					xPos = movementDirections[intHolder][1];
+					intHolder ++;
+				}
+			
+			} else if(movementDirections[intHolder][0] == "PAUSE") {
+				removeEventListener(Event.ENTER_FRAME, scriptedWalk);
+				var waitingTimer: Timer = new Timer(movementDirections[intHolder][1]);
+				waitingTimer.addEventListener(TimerEvent.TIMER,waitTimer);
+				waitingTimer.start();
+				
+			} else if(movementDirections[intHolder][0] == "GOTOROOM") {
+				xPos = movementDirections[intHolder][2];
+				x = movementDirections[intHolder][2];
+				Main.instance.roomList[movementDirections[intHolder][1] - 1].addStrangerToRoom(this);
+				intHolder ++;
+			} else if(movementDirections[intHolder][0] == "END") {
+				if(movementDirections[intHolder][1] == true) {
+					wanderTimer.start();
+				}
+				intHolder ++;
+			}
+
+
+		}
+		
+		private function waitTimer(event: TimerEvent):void {
+			intHolder++;
+			removeEventListener(TimerEvent.TIMER,waitTimer);
+			addEventListener(Event.ENTER_FRAME, scriptedWalk);
+		}
 	}
+		
+
 
 }

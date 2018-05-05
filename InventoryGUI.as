@@ -34,11 +34,14 @@
 			this.x=0.1*Main.stg.stageWidth;
 			this.y=0.1*Main.stg.stageHeight;
 			textFormat.bold=true;
+			textFormat.font="Arial";
+			textFormat.size=10;
+			textFormat.color=0x0000ff;
 			//Creates the inventory GUI array which holds all the item pictures for the GUI
 			for(var j:int=0; j<Main.instance.inventory.inventory.length; j++)
 			{
 				itemText=new TextField();
-				itemText.defaultTextFormat=TextController.newTextFormat(10,0x0000ff,"Arial","left");
+				itemText.defaultTextFormat=textFormat;
 				itemText.setTextFormat(textFormat);
 				itemText.x=(10)+(j*50+j*10);
 				itemText.y=10;
@@ -96,7 +99,5 @@
 				}
 			}
 		}
-
 	}
-	
 }
