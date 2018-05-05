@@ -33,7 +33,8 @@
 		private var left: Boolean = false;
 		private var right: Boolean = false;
 		
-		private var stageHeight:Number = 540
+		private var stageHeight:Number = 540;
+		private var stageWidth:Number = 960;
 
 		public var initComplete: Boolean = false;
 
@@ -273,12 +274,12 @@
 		private function vCam(event: Event): void {
 			//trace(getQualifiedClassName(currentRoom.backGround));
 			//trace(-character.x + stage.stageWidth/2, stage.stageWidth - currentRoom.roomWidth - 100);
-			if (-character.x + stage.stageWidth / 2 > 100) {
+			if (-character.x + stageWidth / 2 > 100) {
 				objectContainer.x += (100 - objectContainer.x) * 0.25;
-			} else if (-character.x + stage.stageWidth / 2 < stage.stageWidth - currentRoom.roomWidth - 100) {
-				objectContainer.x += (stage.stageWidth - currentRoom.roomWidth - 100 - objectContainer.x) * 0.25;
+			} else if (-character.x + stageWidth / 2 < stageWidth - currentRoom.roomWidth - 100) {
+				objectContainer.x += (stageWidth - currentRoom.roomWidth - 100 - objectContainer.x) * 0.25;
 			} else {
-				objectContainer.x += (-character.x + stage.stageWidth / 2 - objectContainer.x) * 0.25;
+				objectContainer.x += (-character.x + stageWidth / 2 - objectContainer.x) * 0.25;
 			}
 
 			clock.text = " seconds: " + time.getTime(0) + " minutes: " + time.getTime(1) + " hours: " + time.getTime(2) + " days: " + time.getTime(3);
