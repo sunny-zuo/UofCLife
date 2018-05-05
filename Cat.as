@@ -123,7 +123,7 @@
 					gotoAndStop("idleRight");
 				}
 			} else {
-				trace("unknowen movement direction" + movementDirection);
+				//trace("unknowen movement direction" + movementDirection);
 			}
 		}
 

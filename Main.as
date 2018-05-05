@@ -30,6 +30,8 @@
 		private var enterSymbol: MovieClip;
 		private var left: Boolean = false;
 		private var right: Boolean = false;
+		
+		private var stageHeight:Number = 540
 
 		public var initComplete: Boolean = false;
 
@@ -52,12 +54,6 @@
 		public function Main() {
 			// constructor code
 			savedData = SharedObject.getLocal("save");
-			start();
-			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, appDeactivated); //runs when app is closed
-			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, appActivated); //runs when app is opened
-		}
-
-		private function start(): void {
 			instance = this;
 			stg = stage;
 
@@ -66,7 +62,17 @@
 
 			menuContainer = new MovieClip();
 			stage.addChild(menuContainer);
+			
+			start();
+			NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, appDeactivated); //runs when app is closed
+			NativeApplication.nativeApplication.addEventListener(Event.ACTIVATE, appActivated); //runs when app is opened
+		}
 
+		private function start(): void {
+			
+			menuContainer.removeChildren();
+			objectContainer.removeChildren();
+			
 			//DOOR CONSTRUCTION
 			var tempDoor: Door;
 			doorList = [];
@@ -212,7 +218,18 @@
 			achievementButton.x = 76;
 			achievementButton.y = 11;
 			menuContainer.addChild(achievementButton);
+			
+			//generates room and character
+			currentRoom = roomList[savedData.data.currentRoom];
+			currentRoom.y = stageHeight;
+			objectContainer.addChildAt(currentRoom, 0);
+			currentRoomNum = savedData.data.currentRoom
 
+			character = new Character();
+			character.x = Number(savedData.data.characterPos[0]);
+			character.y = Number(savedData.data.characterPos[1])
+			objectContainer.addChild(character);
+			
 
 			inventory.inventory[0] = [ItemList._1[0], 15];
 			//trace(inventory.inventory[1])
@@ -227,11 +244,15 @@
 			//code runs when the app is closed by the user
 			savedData.data.characterPos[0] = character.x;
 			savedData.data.characterPos[1] = character.y;
-			
 			savedData.data.currentRoom = currentRoomNum;
-
-			objectContainer.removeChild(currentRoom);
-			objectContainer.removeChild(character);
+			
+			trace("after deactivated, x = " + savedData.data.characterPos[0] + " and y = " + savedData.data.characterPos[1])
+			
+			menuContainer.removeChildren();
+			objectContainer.removeChildren();
+			
+			removeEventListener(Event.ENTER_FRAME, vCam);
+			
 			savedData.flush();
 		}
 
@@ -240,16 +261,10 @@
 				savedData.data.currentRoom = 0;
 			}
 			//code runs when the app is opened by the user
-			currentRoom = roomList[savedData.data.currentRoom];
-			currentRoom.y = stg.stageHeight;
-			objectContainer.addChildAt(currentRoom, 0);
-			currentRoomNum = savedData.data.currentRoom
-
-			character = new Character();
-			character.x = Number(savedData.data.characterPos[0]);
-			character.y = Number(savedData.data.characterPos[1])
-			objectContainer.addChild(character);
-
+			
+			start();
+			
+			trace("after activated, x = " + character.x + " and y = " + character.y)
 		}
 
 		private function vCam(event: Event): void {
