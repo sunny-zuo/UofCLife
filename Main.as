@@ -245,9 +245,7 @@
 			savedData.data.characterPos[0] = character.x;
 			savedData.data.characterPos[1] = character.y;
 			savedData.data.currentRoom = currentRoomNum;
-			
-			trace("after deactivated, x = " + savedData.data.characterPos[0] + " and y = " + savedData.data.characterPos[1])
-			
+	
 			menuContainer.removeChildren();
 			objectContainer.removeChildren();
 			
@@ -263,8 +261,6 @@
 			//code runs when the app is opened by the user
 			
 			start();
-			
-			trace("after activated, x = " + character.x + " and y = " + character.y)
 		}
 
 		private function vCam(event: Event): void {
